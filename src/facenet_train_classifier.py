@@ -221,7 +221,14 @@ def main(args):
 
             if pretrained_model:
                 print('Restoring pretrained model: %s' % pretrained_model)
-                saver.restore(sess, pretrained_model)
+                # saver.restore(sess, pretrained_model)
+                # Load the model
+                print('Model directory: %s' % pretrained_model)
+                meta_file, ckpt_file = facenet.get_model_filenames(os.path.expanduser(pretrained_model))
+                
+                print('Metagraph file: %s' % meta_file)
+                print('Checkpoint file: %s' % ckpt_file)
+                facenet.load_model(pretrained_model, meta_file, ckpt_file)
 
             # Training and validation loop
             print('Running training')
