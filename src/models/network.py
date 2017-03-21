@@ -67,13 +67,12 @@ def convLinear(inpOp, nIn, nOut, kH, kW, dH, dW, padType, name, phase_train=True
     return conv_bn
 
 def convMfm(inpOp, nIn, nOut, kH, kW, dH, dW, padType, name, phase_train=True, use_batch_norm=True, weight_decay=0.0):
-    with tf.variable_scope(name):
-        net_1 = convLinear(inpOp, nIn, nOut, kH, kW, dH, dW, padType, name+'1', phase_train, use_batch_norm, weight_decay)
-        net_2 = convLinear(inpOp, nIn, nOut, kH, kW, dH, dW, padType, name+'2', phase_train, use_batch_norm, weight_decay)
-        out = tf.maximum(net_1, net_2)
+    net_1 = convLinear(inpOp, nIn, nOut, kH, kW, dH, dW, padType, name+'_1', phase_train, use_batch_norm, weight_decay)
+    net_2 = convLinear(inpOp, nIn, nOut, kH, kW, dH, dW, padType, name+'_2', phase_train, use_batch_norm, weight_decay)
+    out = tf.maximum(net_1, net_2)
 
     return out
-    
+
 def affine(inpOp, nIn, nOut, name, weight_decay=0.0):
     with tf.variable_scope(name):
         l2_regularizer = lambda t: l2_loss(t, weight=weight_decay)
