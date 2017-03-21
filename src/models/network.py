@@ -49,6 +49,31 @@ def conv(inpOp, nIn, nOut, kH, kW, dH, dW, padType, name, phase_train=True, use_
         conv1 = tf.nn.relu(bias)
     return conv1
 
+def convLinear(inpOp, nIn, nOut, kH, kW, dH, dW, padType, name, phase_train=True, use_batch_norm=True, weight_decay=0.0):
+    with tf.variable_scope(name):
+        l2_regularizer = lambda t: l2_loss(t, weight=weight_decay)
+        kernel = tf.get_variable("weights", [kH, kW, nIn, nOut],
+            initializer=tf.truncated_normal_initializer(stddev=1e-1),
+            regularizer=l2_regularizer, dtype=inpOp.dtype)
+        cnv = tf.nn.conv2d(inpOp, kernel, [1, dH, dW, 1], padding=padType)
+        
+        if use_batch_norm:
+            conv_bn = batch_norm(cnv, phase_train)
+        else:
+            conv_bn = cnv
+        # biases = tf.get_variable("biases", [nOut], initializer=tf.constant_initializer(), dtype=inpOp.dtype)
+        # bias = tf.nn.bias_add(conv_bn, biases)
+        # conv1 = tf.nn.relu(bias)
+    return conv_bn
+
+def convMfm(inpOp, nIn, nOut, kH, kW, dH, dW, padType, name, phase_train=True, use_batch_norm=True, weight_decay=0.0):
+    with tf.variable_scope(name):
+        net_1 = convLinear(inpOp, nIn, nOut, kH, kW, dH, dW, padType, name+'1', phase_train, use_batch_norm, weight_decay)
+        net_2 = convLinear(inpOp, nIn, nOut, kH, kW, dH, dW, padType, name+'2', phase_train, use_batch_norm, weight_decay)
+        out = tf.maximum(net_1, net_2)
+
+    return out
+    
 def affine(inpOp, nIn, nOut, name, weight_decay=0.0):
     with tf.variable_scope(name):
         l2_regularizer = lambda t: l2_loss(t, weight=weight_decay)
@@ -110,6 +135,11 @@ def apool(inpOp, kH, kW, dH, dW, padding, name):
                               strides=[1, dH, dW, 1],
                               padding=padding)
     return avgpool
+
+# def mfmpool(input1, input2, name):
+#     with tf.variable_scope(name):
+#         res = tf.maximum(input1, input2)
+#     return res
 
 def batch_norm(x, phase_train):
     """
