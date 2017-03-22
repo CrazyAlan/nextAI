@@ -76,7 +76,7 @@ def lightened_v1(inputs, is_training=True,
     """
     end_points = {}
   
-    with tf.variable_scope(scope, 'InceptionResnetV1', [inputs], reuse=reuse):
+    with tf.variable_scope(scope, 'LightenedV1', [inputs], reuse=reuse):
         with slim.arg_scope([slim.batch_norm, slim.dropout],
                             is_training=is_training):
             with slim.arg_scope([slim.conv2d, slim.max_pool2d, slim.avg_pool2d],
