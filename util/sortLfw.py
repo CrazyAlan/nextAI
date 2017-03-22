@@ -16,6 +16,10 @@ def main(args):
 	name_dic = {}
 	for person in persons:
 		person_folder=os.path.join(os.path.expanduser(args.data_dir),person)
+		if not os.path.isdir(person_folder):
+			print('not folder')
+			continue
+		# person_folder=os.path.join(os.path.expanduser(args.data_dir),person)
 		name_dic[person] = len(os.listdir(person_folder))
 
 	sorted_x = sorted(name_dic.items(), key=operator.itemgetter(1))
