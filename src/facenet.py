@@ -95,6 +95,14 @@ def get_image_paths_and_labels(dataset):
         labels_flat += [i] * len(dataset[i].image_paths)
     return image_paths_flat, labels_flat
 
+def get_image_paths_and_labels_name(dataset):
+    image_paths_flat = []
+    labels_flat = []
+    for i in range(len(dataset)):
+        image_paths_flat += dataset[i].image_paths
+        labels_flat += [dataset[i].name] * len(dataset[i].image_paths)
+    return image_paths_flat, labels_flat
+
 def shuffle_examples(image_paths, labels):
     shuffle_list = list(zip(image_paths, labels))
     random.shuffle(shuffle_list)

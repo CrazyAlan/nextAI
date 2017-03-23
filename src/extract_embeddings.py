@@ -50,7 +50,7 @@ def main(args):
             # Read the file containing the pairs used for testing
             # pairs = lfw.read_pairs(os.path.expanduser(args.lfw_pairs))
             test_set = facenet.get_dataset(args.data_dir)
-            paths, label_list = facenet.get_image_paths_and_labels(test_set)
+            paths, label_list = facenet.get_image_paths_and_labels_name(test_set)
             print('Total number of images: %d' % len(label_list))
             # print('Total number of examples: %d' % len(image_list))
         

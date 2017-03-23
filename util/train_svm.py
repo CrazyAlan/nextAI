@@ -32,7 +32,7 @@ def main(args):
 
 		model.fit(X_trained, y_trained)
 
-		print(np.count_nonzero(model.predict(X_test) - y_test), len(y_test))
+		print('accuracy', np.count_nonzero(model.predict(X_test)==y_test)/float(len(y_test)))
 
 def parse_arguments(argv):
 	parser = argparse.ArgumentParser()
