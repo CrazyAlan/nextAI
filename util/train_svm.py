@@ -9,7 +9,7 @@ from sklearn import svm
 import sys
 
 
-def main(args):
+def train(args):
 	npfile = np.load(args.npz_file_dir)
 	X=npfile['emb_array']
 	y=npfile['label']
@@ -47,4 +47,4 @@ def parse_arguments(argv):
 	return parser.parse_args(argv)
 
 if __name__ == '__main__':
-	main(parse_arguments(sys.argv[1:]))
+	train(parse_arguments(sys.argv[1:]))

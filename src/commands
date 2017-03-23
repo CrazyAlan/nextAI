@@ -9,7 +9,13 @@ python src/facenet_train_classifier.py --logs_base_dir ~/remote/logs/facenet/lig
 
 for N in {1..4}; do python src/align/align_dataset_mtcnn.py ~/datasets/lfw/raw ~/remote/datasets/lfw/lfw_mtcnnpy_128 --image_size 128 --margin 24 --random_order --gpu_memory_fraction 0.2 & done
 
+python src/align/train_person_recognition.py --input_dir ~/remote/datasets/lfw/lfw_svm_10_raw --output_dir ~/remote/datasets/lfw/lfw_mtcnnpy_128_raw --image_size 128 --margin 24 --random_order --model_dir /home/xca64/remote/models/facenet/lightened/20170321-222346 --feature_dir /home/xca64/remote/feature/lfw_svm_10 --feature_name emb_array 
+
+
 python src/extract_embeddings.py --data_dir /home/xca64/remote/datasets/lfw/lfw_svm_10 --feature_dir /home/xca64/remote/feature/lfw_svm_10 --model_dir /home/xca64/remote/models/facenet/20170216-091149 --feature_name emb_array
+
+
+
  
 python util/sortLfw.py --data_dir /home/xca64/datasets/lfw/lfw_mtcnnpy_160 --output_dir /home/xca64/remote/datasets/lfw/lfw_svm_10 --size 10 --per_imgs 20
 
