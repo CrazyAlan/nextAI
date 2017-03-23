@@ -1,0 +1,16 @@
+python src/facenet_train_classifier.py --logs_base_dir ~/remote/logs/facenet/ --models_base_dir ~/remote/models/facenet/ --data_dir ~/remote/datasets/casia/casia_maxpy_mtcnnpy_182 --image_size 160 --model_def models.inception_resnet_v1 --lfw_dir ~/datasets/lfw/lfw_mtcnnpy_160 --optimizer RMSPROP --learning_rate -1 --max_nrof_epochs 80 --keep_probability 0.8 --random_crop --random_flip --learning_rate_schedule_file data/learning_rate_schedule_classifier_casia.txt --weight_decay 5e-5 --center_loss_factor 1e-4 --center_loss_alfa 0.9 --batch_size 45 --pretrained_model /home/xca64/remote/models/facenet/20170320-132730 --gpu_memory_fraction 0.5 
+
+python src/facenet_train_classifier.py --logs_base_dir ~/remote/logs/facenet/lightened --models_base_dir ~/remote/models/facenet/lightened/ --data_dir ~/remote/datasets/casia/casia_maxpy_mtcnnpy_182 --image_size 128 --model_def models.lightened --lfw_dir ~/remote/datasets/lfw/lfw_mtcnnpy_144 --optimizer RMSPROP --learning_rate -1 --max_nrof_epochs 80 --keep_probability 0.8 --random_crop --random_flip --learning_rate_schedule_file data/learning_rate_schedule_classifier_casia.txt --weight_decay 5e-5 --center_loss_factor 1e-4 --center_loss_alfa 0.9 --batch_size 40 --gpu_memory_fraction 0.3 --pretrained_model /home/xca64/remote/models/facenet/lightened/20170320-201954
+
+
+python src/facenet_train_classifier.py --logs_base_dir ~/remote/logs/facenet/lightened --models_base_dir ~/remote/models/facenet/lightened/ --data_dir ~/remote/datasets/casia/casia_maxpy_mtcnnpy_182 --image_size 128 --model_def models.lightened --lfw_dir ~/datasets/lfw/lfw_mtcnnpy_160 --optimizer RMSPROP --learning_rate -1 --max_nrof_epochs 80 --keep_probability 0.8 --random_crop --random_flip --learning_rate_schedule_file data/learning_rate_schedule_classifier_casia.txt --weight_decay 5e-5 --center_loss_factor 1e-4 --center_loss_alfa 0.9 --batch_size 30 --gpu_memory_fraction 0.3
+
+python src/facenet_train_classifier.py --logs_base_dir ~/remote/logs/facenet/lightened --models_base_dir ~/remote/models/facenet/lightened/ --data_dir ~/remote/datasets/casia/casia_maxpy_mtcnnpy_144 --image_size 128 --model_def models.lightened --lfw_dir /home/xca64/remote/datasets/lfw/lfw_mtcnnpy_128 --optimizer RMSPROP --learning_rate 0.05 --max_nrof_epochs 80 --keep_probability 0.8 --random_crop --random_flip --learning_rate_schedule_file data/learning_rate_schedule_classifier_casia.txt --weight_decay 5e-5 --center_loss_factor 1e-4 --center_loss_alfa 0.9 --batch_size 45 --pretrained_model /home/xca64/remote/models/facenet/lightened/20170321-134041
+
+for N in {1..4}; do python src/align/align_dataset_mtcnn.py ~/datasets/lfw/raw ~/remote/datasets/lfw/lfw_mtcnnpy_128 --image_size 128 --margin 24 --random_order --gpu_memory_fraction 0.2 & done
+
+python src/extract_embeddings.py --data_dir /home/xca64/remote/datasets/lfw/lfw_svm_10 --feature_dir /home/xca64/remote/feature/lfw_svm_10 --model_dir /home/xca64/remote/models/facenet/20170216-091149 --feature_name emb_array
+ 
+python util/sortLfw.py --data_dir /home/xca64/datasets/lfw/lfw_mtcnnpy_160 --output_dir /home/xca64/remote/datasets/lfw/lfw_svm_10 --size 10 --per_imgs 20
+
+python util/train_svm.py --npz_file_dir /home/xca64/remote/feature/lfw_svm_10/emb_array.npz --C 4 --gamma 1
