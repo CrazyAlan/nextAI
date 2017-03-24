@@ -19,4 +19,6 @@ python src/extract_embeddings.py --data_dir /home/xca64/remote/datasets/lfw/lfw_
  
 python util/sortLfw.py --data_dir /home/xca64/datasets/lfw/lfw_mtcnnpy_160 --output_dir /home/xca64/remote/datasets/lfw/lfw_svm_10 --size 10 --per_imgs 20
 
-python util/train_svm.py --npz_file_dir /home/xca64/remote/feature/lfw_svm_10/emb_array.npz --C 4 --gamma 1
+python util/train_svm.py --npz_file_dir /home/xca64/remote/feature/lfw_svm_10/emb_array.npz --C 4 --svm_model_dir ~/remote/models/svm --gamma 1
+
+python src/align/recognize_person.py --input_dir /home/xca64/remote/datasets/lfw/lfw_svm_10_raw --image_size 128 --margin 24 --model_dir /home/xca64/remote/models/facenet/lightened/20170321-222346 --svm_model_dir 
