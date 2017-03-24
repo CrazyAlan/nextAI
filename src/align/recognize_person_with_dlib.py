@@ -84,7 +84,7 @@ def main(args):
         for image_path in cls.image_paths:
             nrof_images_total += 1
             # filename = os.path.splitext(os.path.split(image_path)[1])[0]
-            # print(image_path)
+            print(image_path)
             try:
                 img = misc.imread(image_path)
             except (IOError, ValueError, IndexError) as e:
