@@ -52,11 +52,14 @@ def main(args):
     # Load extracting feature model
     print('Model directory: %s' % args.model_dir)
     
+    #Using dlib to detect face
+    detector = dlib.get_frontal_face_detector()
+
     with tf.Graph().as_default():
         gpu_options = tf.GPUOptions(per_process_gpu_memory_fraction=args.gpu_memory_fraction)
         sess = tf.Session(config=tf.ConfigProto(gpu_options=gpu_options, log_device_placement=False))
         with sess.as_default():
-            pnet, rnet, onet = align.detect_face.create_mtcnn(sess, None)
+            # pnet, rnet, onet = align.detect_face.create_mtcnn(sess, None)
             
             #Loading extracting feature network
             print('Loading network used to extract features')
@@ -72,14 +75,12 @@ def main(args):
             image_size = images_placeholder.get_shape()[1]
             embedding_size = embeddings.get_shape()[1]
 
-    minsize = 20 # minimum size of face
-    threshold = [ 0.6, 0.7, 0.7 ]  # three steps's threshold
-    factor = 0.709 # scale factor
+   
 
     # Add a random key to the filename to allow alignment using multiple processes
     random_key = np.random.randint(0, high=99999)
     bounding_boxes_filename = os.path.join(output_dir, 'bounding_boxes_%05d.txt' % random_key)
-    
+
     ## Loaidng extract feature graph
 
     with open(bounding_boxes_filename, "w") as text_file:
@@ -112,8 +113,13 @@ def main(args):
                         if img.ndim == 2:
                             img = facenet.to_rgb(img)
                         img = img[:,:,0:3]
-    
-                        bounding_boxes, _ = align.detect_face.detect_face(img, minsize, pnet, rnet, onet, threshold, factor)
+
+                        bounding_boxes = []
+                        dets = detector(img, 1)
+                        for i, d in enumerate(dets):
+                            bounding_boxes.append([d.left(), d.top(), d.right(), d.bottom()])
+                            
+                        bounding_boxes=np.asarray(bounding_boxes)
                         nrof_faces = bounding_boxes.shape[0]
                         if nrof_faces>0:
                             det = bounding_boxes[:,0:4]
