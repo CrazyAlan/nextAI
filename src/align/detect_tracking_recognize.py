@@ -59,7 +59,7 @@ def main(args):
     tracker = dlib.correlation_tracker()
     vid = imageio.get_reader(filename,  'ffmpeg')
     win = dlib.image_window()
-    nums=range(100)
+    nums=range(1000)
 
     ##SVM model to predict images
     svm_model = joblib.load(os.path.join(os.path.expanduser(args.svm_model_dir),'model.pkl')) 
@@ -107,24 +107,25 @@ def main(args):
         win.clear_overlay()
         win.set_image(img)
         win.add_overlay(tracker.get_position())
-        dlib.hit_enter_to_continue()
+        win.set_title('Xiaochuan')
+        # dlib.hit_enter_to_continue()
     # print('Total number of images: %d' % nrof_images_total)
     # print('Number of successfully aligned images: %d' % nrof_successfully_aligned)
     
-    #Extracting features 
-    print('\n\nStarting to extract features')
-    print('Crop pics spend %.3f seconds'% (time.time()-t))
-    # Run forward pass to calculate embeddings
-    t=time.time()
+    # #Extracting features 
+    # print('\n\nStarting to extract features')
+    # print('Crop pics spend %.3f seconds'% (time.time()-t))
+    # # Run forward pass to calculate embeddings
+    # t=time.time()
     
-    print('Extract feature spend %.3f seconds'% (time.time()-t))
+    # print('Extract feature spend %.3f seconds'% (time.time()-t))
 
-    ##Run SVM to predict images
+    # ##Run SVM to predict images
   
-    predicted_label = svm_model.predict(emb_array)
-    print('Classifier spend %.3f seconds'% (time.time()-t))
-    print('Predicted Persons')
-    print(predicted_label)
+    # predicted_label = svm_model.predict(emb_array)
+    # print('Classifier spend %.3f seconds'% (time.time()-t))
+    # print('Predicted Persons')
+    # print(predicted_label)
     # if not os.path.isdir(args.feature_dir):  # Create the feature directory if it doesn't exist
     #     os.makedirs(args.feature_dir)
     # file_name = os.path.join(os.path.expanduser(args.feature_dir),args.feature_name)
