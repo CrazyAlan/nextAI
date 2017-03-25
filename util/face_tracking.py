@@ -45,35 +45,55 @@ import numpy as np
 import dlib
 from scipy import misc
 import imageio
+import time
+
+detector = dlib.get_frontal_face_detector()
 
 # Path to the video frames
-filename = '/cs/vml2/xca64/GitHub/pics/me.mp4'
+filename = '/cs/vml2/xca64/GitHub/pics/Two.mov'
 
 # Create the correlation tracker - the object needs to be initialized
 # before it can be used
-tracker = dlib.correlation_tracker()
 vid = imageio.get_reader(filename,  'ffmpeg')
 
 win = dlib.image_window()
-nums=range(100)
+nums=range(189,300)
 # We will track the frames as we load them off of disk
+trackers = []
+positions = dlib.rectangles()
+
 for num in nums:
     print("Processing Frame {}".format(num))
     img = np.array(vid.get_data(num),dtype=np.uint8)
  
 
     # We need to initialize the tracker on the first frame
-    if num == 0:
+    if num == nums[0]:
         # Start a track on the juice box. If you look at the first frame you
         # will see that the juice box is contained within the bounding
         # box (74, 67, 112, 153).
-        tracker.start_track(img, dlib.rectangle(74, 67, 112, 153))
+        dets = detector(img, 1)
+        print(type(dets))
+        trackers = []
+        for i, det in enumerate(dets):        
+            trackers.append(dlib.correlation_tracker())
+            trackers[i].start_track(img, det)
+
+        print('Number of dets', len(dets))
+        continue
+        
     else:
         # Else we just attempt to track from the previous frame
-        tracker.update(img)
+        positions.clear()
+        for tracker in trackers:
+            tracker.update(img)
+            d=tracker.get_position()
+            print d.left(), d.top(), d.right(), d.bottom()
+            positions.append(dlib.rectangle(int(d.left()), int(d.top()), int(d.right()), int(d.bottom())))
+
+    print(positions)
 
     win.clear_overlay()
     win.set_image(img)
-    win.add_overlay(tracker.get_position())
-    dlib.hit_enter_to_continue()
-
+    win.add_overlay(positions)
+    # dlib.hit_enter_to_continue()
