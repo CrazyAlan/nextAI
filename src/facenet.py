@@ -273,6 +273,27 @@ def load_data(image_paths, do_random_crop, do_random_flip, image_size, do_prewhi
         images[i,:,:,:] = img
     return images
 
+def pre_precoss_data(img, do_random_crop, do_random_flip, do_prewhiten=True):
+    if img.ndim == 2:
+        img = to_rgb(img)
+    if do_prewhiten:
+        img = prewhiten(img)
+    # img = crop(img, do_random_crop, image_size)
+    img = flip(img, do_random_flip)
+    return img
+
+
+def load_images(image_paths,image_size):
+    nrof_samples = len(image_paths)
+    images = np.zeros((nrof_samples, image_size, image_size, 3))
+    for i in range(nrof_samples):
+        img = misc.imread(image_paths[i])
+        if img.ndim == 2:
+            img = to_rgb(img)
+
+        images[i,:,:,:] = img
+    return images
+
 def get_label_batch(label_data, batch_size, batch_index):
     nrof_examples = np.size(label_data, 0)
     j = batch_index*batch_size % nrof_examples

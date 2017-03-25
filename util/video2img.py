@@ -47,8 +47,7 @@ def main(args):
     #Video information
     vid = imageio.get_reader(args.input_dir,  'ffmpeg')
     win = dlib.image_window()
-
-    nums=range(10,70,3)
+    nums=range(args.start,args.start+60,3)
     
     output_dir = os.path.expanduser(args.output_dir)
     if not os.path.exists(output_dir):
@@ -70,7 +69,8 @@ def parse_arguments(argv):
 
     parser.add_argument('--image_ratio', type=float,
         help='Resize ratio', default=0.3)
-    
+    parser.add_argument('--start', type=int,
+        help='Frame start', default=10)    
     return parser.parse_args(argv)
 
 if __name__ == '__main__':

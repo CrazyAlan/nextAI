@@ -41,10 +41,9 @@ import time
 import dlib
 import imageio
 
-filename = '/cs/vml2/xca64/GitHub/pics/me.mp4'
 
 def main(args):
-    sleep(random.random())
+
 
     # Store some git revision info in a text file in the log directory
     # facenet.store_revision_info(src_path, output_dir, ' '.join(sys.argv))
@@ -57,9 +56,9 @@ def main(args):
     
     #Video information
     tracker = dlib.correlation_tracker()
-    vid = imageio.get_reader(filename,  'ffmpeg')
+    vid = imageio.get_reader(args.input_video,  'ffmpeg')
     win = dlib.image_window()
-    nums=range(1000)
+    nums=range(100)
 
     ##SVM model to predict images
     svm_model = joblib.load(os.path.join(os.path.expanduser(args.svm_model_dir),'model.pkl')) 
@@ -108,7 +107,7 @@ def main(args):
         win.set_image(img)
         win.add_overlay(tracker.get_position())
         win.set_title('Xiaochuan')
-        # dlib.hit_enter_to_continue()
+        dlib.hit_enter_to_continue()
     # print('Total number of images: %d' % nrof_images_total)
     # print('Number of successfully aligned images: %d' % nrof_successfully_aligned)
     
@@ -168,14 +167,14 @@ def detect_resize(img, detector, args, CROP_IMAGE=False):
             bb[3] = np.minimum(det[3]+args.margin/2, img_size[0])
             cropped = img[bb[1]:bb[3],bb[0]:bb[2],:]
             scaled = misc.imresize(cropped, (args.image_size, args.image_size), interp='bilinear')
-    
+            scaled=facenet.pre_precoss_data(scaled, False, False)
             # misc.imsave(output_filename, scaled)
             return scaled, bounding_boxes
 
 def parse_arguments(argv):
     parser = argparse.ArgumentParser()
     
-    parser.add_argument('--input_dir', type=str, help='Directory with unaligned images.')
+    parser.add_argument('--input_video', type=str, help='Path to video.', default='/cs/vml2/xca64/GitHub/pics/me.mp4')
 
     parser.add_argument('--image_size', type=int,
         help='Image size (height, width) in pixels.', default=182)

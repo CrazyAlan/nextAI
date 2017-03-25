@@ -126,7 +126,7 @@ def main(args):
                     scaled = misc.imresize(cropped, (args.image_size, args.image_size), interp='bilinear')
                     nrof_successfully_aligned += 1
                     # misc.imsave(output_filename, scaled)
-                    imgs_set.append(scaled)
+                    imgs_set.append(facenet.pre_precoss_data(scaled, False, False))
 
                             
     print('Total number of images: %d' % nrof_images_total)
