@@ -74,7 +74,7 @@ def main(args):
 
     ##SVM model to predict images
     svm_model = joblib.load(os.path.join(os.path.expanduser(args.svm_model_dir),'model.pkl')) 
-
+    person_label = []
 
     with tf.Graph().as_default():
         gpu_options = tf.GPUOptions(per_process_gpu_memory_fraction=args.gpu_memory_fraction)
@@ -128,7 +128,6 @@ def main(args):
             
 
         else:
-            # print('Befor Process is', proc.is_alive())
         # Else we just attempt to track from the previous frame
             positions.clear()
             if len(trackers) > 0:
@@ -142,7 +141,7 @@ def main(args):
         win.set_image(img)
         win.add_overlay(positions)
 
-        # win.set_title('Xiaochuan')
+        win.set_title('-'.join(person_label))
         # dlib.hit_enter_to_continue()
     proc.join()    
 
