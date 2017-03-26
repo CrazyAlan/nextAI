@@ -48,19 +48,22 @@ import sys
 from scipy import misc
 import dlib
 # from skimage import io
-
+import time
 
 detector = dlib.get_frontal_face_detector()
 win = dlib.image_window()
 
 # for f in sys.argv[1:]:
-f='/home/xca64/remote/datasets/lfw/lfw_svm_10_raw/Xiaochuan/xiaochuan.jpg'
+f='/home/xca64/remote/datasets/lfw/Two/177.jpg'
 print("Processing file: {}".format(f))
 img = misc.imread(f)
 # The 1 in the second argument indicates that we should upsample the image
 # 1 time.  This will make everything bigger and allow us to detect more
 # faces.
+t=time.time()
 dets = detector(img, 1)
+duration=time.time()-t
+print('Duration', duration)
 print("Number of faces detected: {}".format(len(dets)))
 
 

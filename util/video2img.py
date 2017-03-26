@@ -36,7 +36,7 @@ from sklearn.externals import joblib
 import time
 import dlib
 import imageio
-
+import shutil
 
 def main(args):
 
@@ -46,17 +46,24 @@ def main(args):
     
     #Video information
     vid = imageio.get_reader(args.input_dir,  'ffmpeg')
+    vid_length = vid.get_length()
     win = dlib.image_window()
-    nums=range(args.start,args.start+60,3)
+    nums=range(args.start,vid_length,args.interval)
     
     output_dir = os.path.expanduser(args.output_dir)
     if not os.path.exists(output_dir):
         os.makedirs(output_dir)
+    else:
+        shutil.rmtree(output_dir)
+        os.makedirs(output_dir)
 
-    for num in nums:
+
+    for i, num in enumerate(nums):
+        if i >= args.nrof_imgs:
+            break
         print("Processing Frame {}".format(num))
         img = np.array(vid.get_data(num),dtype=np.uint8)
-        file_name = os.path.join(output_dir,str(num)+'.jpg')
+        file_name = os.path.join(output_dir,str(i)+'.jpg')
         scaled = misc.imresize(img, args.image_ratio, interp='bilinear')
         imageio.imwrite(file_name, scaled)
 
@@ -70,7 +77,11 @@ def parse_arguments(argv):
     parser.add_argument('--image_ratio', type=float,
         help='Resize ratio', default=0.3)
     parser.add_argument('--start', type=int,
-        help='Frame start', default=10)    
+        help='Frame start', default=10)
+    parser.add_argument('--nrof_imgs', type=int,
+        help='Number of total images', default=20)     
+    parser.add_argument('--interval', type=int,
+        help='Intervals ', default=3)  
     return parser.parse_args(argv)
 
 if __name__ == '__main__':
