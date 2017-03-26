@@ -62,7 +62,7 @@ def main(args):
     tracker = dlib.correlation_tracker()
     vid = imageio.get_reader(args.input_video,  'ffmpeg')
     win = dlib.image_window()
-    nums=range(10,vid.get_length())
+    nums=range(20,vid.get_length())
 
     #Multi Process Info
     proc = None
@@ -102,6 +102,8 @@ def main(args):
         time.sleep(0.01)
         img = np.array(vid.get_data(num),dtype=np.uint8)
         if num%interval == 0:
+            if num+interval >= nums[-1]:
+                break
             img_next = np.array(vid.get_data(num+interval),dtype=np.uint8)
             
             if proc != None:
