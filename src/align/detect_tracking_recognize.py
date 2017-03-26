@@ -62,7 +62,7 @@ def main(args):
     tracker = dlib.correlation_tracker()
     vid = imageio.get_reader(args.input_video,  'ffmpeg')
     win = dlib.image_window()
-    nums=range(20,vid.get_length())
+    nums=range(40,vid.get_length())
 
     #Multi Process Info
     proc = None
@@ -141,7 +141,7 @@ def main(args):
 
         win.clear_overlay()
         win.set_image(img)
-        win.add_overlay(positions)
+        win.add_overlay(positions, color=dlib.rgb_pixel(0,254,0))
 
         win.set_title('-'.join(person_label))
         # dlib.hit_enter_to_continue()
