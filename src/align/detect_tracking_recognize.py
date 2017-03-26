@@ -41,6 +41,7 @@ import time
 import dlib
 import imageio
 from multiprocessing import Process, Pipe, Lock   
+import threading
 
 
 def main(args):
@@ -61,7 +62,7 @@ def main(args):
     tracker = dlib.correlation_tracker()
     vid = imageio.get_reader(args.input_video,  'ffmpeg')
     win = dlib.image_window()
-    nums=range(120,250)
+    nums=range(260)
 
     #Multi Process Info
     proc = None
@@ -69,7 +70,7 @@ def main(args):
     parent_conn, child_conn = Pipe()
 
     #Detection Interval
-    interval = 10
+    interval = 20
 
     ##SVM model to predict images
     svm_model = joblib.load(os.path.join(os.path.expanduser(args.svm_model_dir),'model.pkl')) 
@@ -98,7 +99,7 @@ def main(args):
 
     for num in nums:
         print("Processing Frame {}".format(num))
-        time.sleep(0.03)
+        time.sleep(0.01)
         img = np.array(vid.get_data(num),dtype=np.uint8)
         if num%interval == 0:
             img_next = np.array(vid.get_data(num+interval),dtype=np.uint8)
@@ -111,11 +112,11 @@ def main(args):
                     image_sets = crop_image(img, dets, args)
                     print(np.shape(image_sets))
                     feed_dict = { images_placeholder:image_sets, phase_train_placeholder:False }
-                    predicted_label(sess, feed_dict, embeddings, svm_model)
-                    # emb_array = sess.run(embeddings, feed_dict=feed_dict)
-                    # predicted_label = svm_model.predict(emb_array)
-                    # print('Predicted Persons')
-                    # print(predicted_label)
+                    person_label = predicted_label(sess, feed_dict, embeddings, svm_model)
+
+                    # t = threading.Thread(target=predicted_label, args = (sess, feed_dict, embeddings, svm_model))
+                    # t.daemon = True
+                    # t.start()
 
                 nrof_person = len(dets)
 
@@ -127,7 +128,7 @@ def main(args):
             
 
         else:
-            print('Befor Process is', proc.is_alive())
+            # print('Befor Process is', proc.is_alive())
         # Else we just attempt to track from the previous frame
             positions.clear()
             if len(trackers) > 0:
@@ -178,10 +179,12 @@ def predicted_label(sess, feed_dict, embeddings, svm_model):
     
     # Predicting people label
     # feed_dict = { images_placeholder:[scaled], phase_train_placeholder:False }
+    t = time.time()
     emb_array = sess.run(embeddings, feed_dict=feed_dict)
-    predicted_label = svm_model.predict(emb_array)
-    print('Predicted Persons')
-    print(predicted_label)
+    person_label = svm_model.predict(emb_array)
+    print('Predicted Persons, spending time ', time.time()-t)
+    print(person_label)
+    return person_label
 
 def detect_resize(conn, img, detector):
     
