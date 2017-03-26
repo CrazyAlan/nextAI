@@ -1,0 +1,18 @@
+arguments: ../src/align/train_person_recognition_with_dlib.py --input_dir ../Content/People --output_dir ../Content/People_Cropped --image_size 128 --margin 24 --model_dir ../Content/NetworkModel/20170321-222346 --feature_dir ../Content/PeopleFeature --feature_name emb_array
+--------------------
+git hash: baf222f7757df77eae473de9cc5dfb0fad5ada51
+--------------------
+diff --git a/util/face_tracking.py b/util/face_tracking.py
+index ee1d813..79b13ed 100644
+--- a/util/face_tracking.py
++++ b/util/face_tracking.py
+@@ -64,8 +64,7 @@ def update_tracker(trackers, dets, img):
+         trackers.append(dlib.correlation_tracker())
+         trackers[i].start_track(img, det)
+ 
+-def ():
+-    pass
++
+ detector = dlib.get_frontal_face_detector()
+ 
+ # Path to the video frames

@@ -1,0 +1,4 @@
+model_checkpoint_path: "/home/xca64/remote/models/facenet/lightened/20170321-222346/model-20170321-222346.ckpt-80000"
+all_model_checkpoint_paths: "/home/xca64/remote/models/facenet/lightened/20170321-222346/model-20170321-222346.ckpt-78000"
+all_model_checkpoint_paths: "/home/xca64/remote/models/facenet/lightened/20170321-222346/model-20170321-222346.ckpt-79000"
+all_model_checkpoint_paths: "/home/xca64/remote/models/facenet/lightened/20170321-222346/model-20170321-222346.ckpt-80000"

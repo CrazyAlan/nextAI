@@ -64,8 +64,7 @@ def update_tracker(trackers, dets, img):
         trackers.append(dlib.correlation_tracker())
         trackers[i].start_track(img, det)
 
-def ():
-    pass
+
 detector = dlib.get_frontal_face_detector()
 
 # Path to the video frames
