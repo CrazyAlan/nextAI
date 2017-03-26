@@ -37,6 +37,7 @@ import random
 from time import sleep
 import math
 import dlib
+from subprocess import call
 
 def main(args):
     sleep(random.random())
@@ -185,6 +186,8 @@ def parse_arguments(argv):
         help='Number of images to process in a batch in the LFW test set.', default=50)
     parser.add_argument('--feature_dir', type=str, default='~/remote/feature',
         help='Path to store extracted feature with label')    
+    parser.add_argument('--svm_model_dir', type=str, default='~/remote/models/svm',
+        help='Path to store extracted feature with label')    
     parser.add_argument('--feature_name', type=str, default='emb_with_label',
         help='Feature name')
     parser.add_argument('--image_size', type=int,
@@ -197,6 +200,8 @@ def parse_arguments(argv):
         help='Upper bound on the amount of GPU memory that will be used by the process.', default=1.0)
     parser.add_argument('--model_dir', type=str,
         help='Directory containing the metagraph (.meta) file and the checkpoint (ckpt) file containing model parameters')
+    parser.add_argument('--train_svm', 
+        help='Whether to train svm together or not', action='store_true')
 
     return parser.parse_args(argv)
 

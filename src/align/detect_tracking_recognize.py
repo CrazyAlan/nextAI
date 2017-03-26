@@ -62,7 +62,7 @@ def main(args):
     tracker = dlib.correlation_tracker()
     vid = imageio.get_reader(args.input_video,  'ffmpeg')
     win = dlib.image_window()
-    nums=range(260)
+    nums=range(10,vid.get_length())
 
     #Multi Process Info
     proc = None
