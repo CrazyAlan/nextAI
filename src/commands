@@ -7,6 +7,10 @@ python src/facenet_train_classifier.py --logs_base_dir ~/remote/logs/facenet/lig
 
 python src/facenet_train_classifier.py --logs_base_dir ~/remote/logs/facenet/lightened --models_base_dir ~/remote/models/facenet/lightened/ --data_dir ~/remote/datasets/casia/casia_maxpy_mtcnnpy_144 --image_size 128 --model_def models.lightened --lfw_dir /home/xca64/remote/datasets/lfw/lfw_mtcnnpy_128 --optimizer RMSPROP --learning_rate 0.05 --max_nrof_epochs 80 --keep_probability 0.8 --random_crop --random_flip --learning_rate_schedule_file data/learning_rate_schedule_classifier_casia.txt --weight_decay 5e-5 --center_loss_factor 1e-4 --center_loss_alfa 0.9 --batch_size 45 --pretrained_model /home/xca64/remote/models/facenet/lightened/20170321-134041
 
+python src/facenet_train_classifier.py --logs_base_dir ~/remote/logs/facenet/lightened_v2 --models_base_dir ~/remote/models/facenet/lightened_v2/ --data_dir /home/xca64/remote/datasets/casia/casia_dlib_144 --image_size 128 --model_def models.lightened_v2 --lfw_dir /home/xca64/remote/datasets/lfw/lfw_mtcnnpy_128 --optimizer RMSPROP --learning_rate 0.0001 --max_nrof_epochs 80 --keep_probability 0.8 --random_crop --random_flip --learning_rate_schedule_file data/learning_rate_schedule_classifier_casia.txt --weight_decay 5e-5 --center_loss_factor 1e-4 --center_loss_alfa 0.9 --batch_size 45 --pretrained_model /home/xca64/remote/models/facenet/lightened_v2
+
+
+
 for N in {1..4}; do python src/align/align_dataset_mtcnn.py ~/datasets/lfw/raw ~/remote/datasets/lfw/lfw_mtcnnpy_128 --image_size 128 --margin 24 --random_order --gpu_memory_fraction 0.2 & done
 
 python src/align/train_person_recognition.py --input_dir ~/remote/datasets/lfw/lfw_svm_10_raw --output_dir ~/remote/datasets/lfw/lfw_mtcnnpy_128_raw --image_size 128 --margin 24 --random_order --model_dir /home/xca64/remote/models/facenet/lightened/20170321-222346 --feature_dir /home/xca64/remote/feature/lfw_svm_10 --feature_name emb_array 
