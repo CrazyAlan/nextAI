@@ -1,665 +1,2303 @@
 arguments: ../src/align/train_person_recognition_with_dlib.py --input_dir ../Content/People --output_dir ../Content/People_Cropped --image_size 128 --margin 24 --model_dir ../Content/NetworkModel/20170321-222346 --feature_dir ../Content/PeopleFeature --feature_name emb_array
 --------------------
-git hash: 5aa4aca44e8f748591561c674cc91dcd527efee5
+git hash: c6865ad86f4cfcff54d80895174d0c42bcdf1d7f
 --------------------
-diff --git a/.travis.yml b/.travis.yml
-deleted file mode 100644
-index 4006eaa..0000000
---- a/.travis.yml
-+++ /dev/null
-@@ -1,16 +0,0 @@
--language: python
--sudo: required
--python:
--  - "2.7"
--# command to install dependencies
--install:
--# numpy not using wheel to avoid problem described in 
--#  https://github.com/tensorflow/tensorflow/issues/6968
--  - pip install --no-binary numpy --upgrade numpy
--  - pip install -r requirements.txt
--# command to run tests
--script:
--  - export PYTHONPATH=./src:./src/models:./src/align
--  - python -m unittest discover -s test --pattern=*.py 1>&2
--dist: trusty
--
-diff --git a/Content/PeopleFeature/emb_array.npz b/Content/PeopleFeature/emb_array.npz
-index f102197..4e0ad76 100644
-Binary files a/Content/PeopleFeature/emb_array.npz and b/Content/PeopleFeature/emb_array.npz differ
 diff --git a/Content/People_Cropped/revision_info.txt b/Content/People_Cropped/revision_info.txt
-index ae78ac1..3deba10 100644
+index 78482a1..254bff8 100644
 --- a/Content/People_Cropped/revision_info.txt
 +++ b/Content/People_Cropped/revision_info.txt
-@@ -1,18 +1,116 @@
+@@ -1,665 +1,1169 @@
  arguments: ../src/align/train_person_recognition_with_dlib.py --input_dir ../Content/People --output_dir ../Content/People_Cropped --image_size 128 --margin 24 --model_dir ../Content/NetworkModel/20170321-222346 --feature_dir ../Content/PeopleFeature --feature_name emb_array
  --------------------
--git hash: baf222f7757df77eae473de9cc5dfb0fad5ada51
-+git hash: 5aa4aca44e8f748591561c674cc91dcd527efee5
+-git hash: 5aa4aca44e8f748591561c674cc91dcd527efee5
++git hash: c6865ad86f4cfcff54d80895174d0c42bcdf1d7f
  --------------------
--diff --git a/util/face_tracking.py b/util/face_tracking.py
--index ee1d813..79b13ed 100644
----- a/util/face_tracking.py
--+++ b/util/face_tracking.py
--@@ -64,8 +64,7 @@ def update_tracker(trackers, dets, img):
--         trackers.append(dlib.correlation_tracker())
--         trackers[i].start_track(img, det)
-+diff --git a/.travis.yml b/.travis.yml
-+deleted file mode 100644
-+index 4006eaa..0000000
-+--- a/.travis.yml
-++++ /dev/null
-+@@ -1,16 +0,0 @@
-+-language: python
-+-sudo: required
-+-python:
-+-  - "2.7"
-+-# command to install dependencies
-+-install:
-+-# numpy not using wheel to avoid problem described in 
-+-#  https://github.com/tensorflow/tensorflow/issues/6968
-+-  - pip install --no-binary numpy --upgrade numpy
-+-  - pip install -r requirements.txt
-+-# command to run tests
-+-script:
-+-  - export PYTHONPATH=./src:./src/models:./src/align
-+-  - python -m unittest discover -s test --pattern=*.py 1>&2
-+-dist: trusty
-+-
-+diff --git a/README.md b/README.md
-+index 5cf3265..556a5b2 100644
-+--- a/README.md
-++++ b/README.md
-+@@ -1,12 +1,11 @@
-+ #Install anaconda 
-  
---def ():
---    pass
-++Needed Library
- +
-- detector = dlib.get_frontal_face_detector()
-++1. opencv: pip install opencv-python
-++2. dlib: pip install dlib
-++3. pip install imageio
-  
-- # Path to the video frames
-\ No newline at end of file
-+-#Train and save feature 
-+-python src/align/train_person_recognition_with_dlib.py --input_dir ~/remote/datasets/lfw/lfw_svm_10_raw --output_dir ~/remote/datasets/lfw/lfw_mtcnnpy_128_raw --image_size 128 --margin 24 --random_order --model_dir /home/xca64/remote/models/facenet/lightened/20170321-222346 --feature_dir /home/xca64/remote/feature/lfw_svm_10 --feature_name emb_array
-+ 
-+-#Train SVM 
-+-python util/train_svm.py --npz_file_dir /home/xca64/remote/feature/lfw_svm_10/emb_array.npz --C 4 --svm_model_dir ~/remote/models/svm --gamma 1 
-+ 
-+-#Detect and Tracking people
-+-python src/align/detect_tracking_recognize.py --input_dir /home/xca64/remote/datasets/lfw/test --image_size 128 --margin 24 --model_dir /home/xca64/remote/models/facenet/lightened/20170321-222346 --svm_model_dir ~/remote/models/svm
-+ 
-+diff --git a/notebook/NextAI.ipynb b/notebook/NextAI.ipynb
-+index 3d45749..e54761f 100644
-+--- a/notebook/NextAI.ipynb
-++++ b/notebook/NextAI.ipynb
-+@@ -139,10 +139,33 @@
-+     "# Solving PYTHONPATH Problem\n",
-+     "import sys\n",
-+     "import numpy as np\n",
-++    "import os\n",
-+     "sys.path.insert(0, '/home/xca64/remote/GitHub/facenet/src')\n"
-+    ]
-+   },
-+   {
-++   "cell_type": "code",
-++   "execution_count": 5,
-++   "metadata": {
-++    "collapsed": false
-++   },
-++   "outputs": [
+-diff --git a/.travis.yml b/.travis.yml
+-deleted file mode 100644
+-index 4006eaa..0000000
+---- a/.travis.yml
+-+++ /dev/null
+-@@ -1,16 +0,0 @@
+--language: python
+--sudo: required
+--python:
+--  - "2.7"
+--# command to install dependencies
+--install:
+--# numpy not using wheel to avoid problem described in 
+--#  https://github.com/tensorflow/tensorflow/issues/6968
+--  - pip install --no-binary numpy --upgrade numpy
+--  - pip install -r requirements.txt
+--# command to run tests
+--script:
+--  - export PYTHONPATH=./src:./src/models:./src/align
+--  - python -m unittest discover -s test --pattern=*.py 1>&2
+--dist: trusty
+--
+-diff --git a/Content/PeopleFeature/emb_array.npz b/Content/PeopleFeature/emb_array.npz
+-index f102197..4e0ad76 100644
+-Binary files a/Content/PeopleFeature/emb_array.npz and b/Content/PeopleFeature/emb_array.npz differ
+ diff --git a/Content/People_Cropped/revision_info.txt b/Content/People_Cropped/revision_info.txt
+-index ae78ac1..3deba10 100644
++index 78482a1..16db5c0 100644
+ --- a/Content/People_Cropped/revision_info.txt
+ +++ b/Content/People_Cropped/revision_info.txt
+-@@ -1,18 +1,116 @@
++@@ -1,665 +1,17 @@
+  arguments: ../src/align/train_person_recognition_with_dlib.py --input_dir ../Content/People --output_dir ../Content/People_Cropped --image_size 128 --margin 24 --model_dir ../Content/NetworkModel/20170321-222346 --feature_dir ../Content/PeopleFeature --feature_name emb_array
+  --------------------
+--git hash: baf222f7757df77eae473de9cc5dfb0fad5ada51
+-+git hash: 5aa4aca44e8f748591561c674cc91dcd527efee5
++-git hash: 5aa4aca44e8f748591561c674cc91dcd527efee5
+++git hash: c6865ad86f4cfcff54d80895174d0c42bcdf1d7f
+  --------------------
+--diff --git a/util/face_tracking.py b/util/face_tracking.py
+--index ee1d813..79b13ed 100644
+----- a/util/face_tracking.py
+--+++ b/util/face_tracking.py
+--@@ -64,8 +64,7 @@ def update_tracker(trackers, dets, img):
+--         trackers.append(dlib.correlation_tracker())
+--         trackers[i].start_track(img, det)
+-+diff --git a/.travis.yml b/.travis.yml
+-+deleted file mode 100644
+-+index 4006eaa..0000000
+-+--- a/.travis.yml
+-++++ /dev/null
+-+@@ -1,16 +0,0 @@
+-+-language: python
+-+-sudo: required
+-+-python:
+-+-  - "2.7"
+-+-# command to install dependencies
+-+-install:
+-+-# numpy not using wheel to avoid problem described in 
+-+-#  https://github.com/tensorflow/tensorflow/issues/6968
+-+-  - pip install --no-binary numpy --upgrade numpy
+-+-  - pip install -r requirements.txt
+-+-# command to run tests
+-+-script:
+-+-  - export PYTHONPATH=./src:./src/models:./src/align
+-+-  - python -m unittest discover -s test --pattern=*.py 1>&2
+-+-dist: trusty
+-+-
+-+diff --git a/README.md b/README.md
+-+index 5cf3265..556a5b2 100644
+-+--- a/README.md
+-++++ b/README.md
+-+@@ -1,12 +1,11 @@
+-+ #Install anaconda 
+-  
+---def ():
+---    pass
+-++Needed Library
+- +
+-- detector = dlib.get_frontal_face_detector()
+-++1. opencv: pip install opencv-python
+-++2. dlib: pip install dlib
+-++3. pip install imageio
+-  
+-- # Path to the video frames
++-diff --git a/.travis.yml b/.travis.yml
++-deleted file mode 100644
++-index 4006eaa..0000000
++---- a/.travis.yml
++-+++ /dev/null
++-@@ -1,16 +0,0 @@
++--language: python
++--sudo: required
++--python:
++--  - "2.7"
++--# command to install dependencies
++--install:
++--# numpy not using wheel to avoid problem described in 
++--#  https://github.com/tensorflow/tensorflow/issues/6968
++--  - pip install --no-binary numpy --upgrade numpy
++--  - pip install -r requirements.txt
++--# command to run tests
++--script:
++--  - export PYTHONPATH=./src:./src/models:./src/align
++--  - python -m unittest discover -s test --pattern=*.py 1>&2
++--dist: trusty
++--
++-diff --git a/Content/PeopleFeature/emb_array.npz b/Content/PeopleFeature/emb_array.npz
++-index f102197..4e0ad76 100644
++-Binary files a/Content/PeopleFeature/emb_array.npz and b/Content/PeopleFeature/emb_array.npz differ
++-diff --git a/Content/People_Cropped/revision_info.txt b/Content/People_Cropped/revision_info.txt
++-index ae78ac1..3deba10 100644
++---- a/Content/People_Cropped/revision_info.txt
++-+++ b/Content/People_Cropped/revision_info.txt
++-@@ -1,18 +1,116 @@
++- arguments: ../src/align/train_person_recognition_with_dlib.py --input_dir ../Content/People --output_dir ../Content/People_Cropped --image_size 128 --margin 24 --model_dir ../Content/NetworkModel/20170321-222346 --feature_dir ../Content/PeopleFeature --feature_name emb_array
++- --------------------
++--git hash: baf222f7757df77eae473de9cc5dfb0fad5ada51
++-+git hash: 5aa4aca44e8f748591561c674cc91dcd527efee5
++- --------------------
++--diff --git a/util/face_tracking.py b/util/face_tracking.py
++--index ee1d813..79b13ed 100644
++----- a/util/face_tracking.py
++--+++ b/util/face_tracking.py
++--@@ -64,8 +64,7 @@ def update_tracker(trackers, dets, img):
++--         trackers.append(dlib.correlation_tracker())
++--         trackers[i].start_track(img, det)
++-+diff --git a/.travis.yml b/.travis.yml
++-+deleted file mode 100644
++-+index 4006eaa..0000000
++-+--- a/.travis.yml
++-++++ /dev/null
++-+@@ -1,16 +0,0 @@
++-+-language: python
++-+-sudo: required
++-+-python:
++-+-  - "2.7"
++-+-# command to install dependencies
++-+-install:
++-+-# numpy not using wheel to avoid problem described in 
++-+-#  https://github.com/tensorflow/tensorflow/issues/6968
++-+-  - pip install --no-binary numpy --upgrade numpy
++-+-  - pip install -r requirements.txt
++-+-# command to run tests
++-+-script:
++-+-  - export PYTHONPATH=./src:./src/models:./src/align
++-+-  - python -m unittest discover -s test --pattern=*.py 1>&2
++-+-dist: trusty
++-+-
++-+diff --git a/README.md b/README.md
++-+index 5cf3265..556a5b2 100644
++-+--- a/README.md
++-++++ b/README.md
++-+@@ -1,12 +1,11 @@
++-+ #Install anaconda 
++-  
++---def ():
++---    pass
++-++Needed Library
++- +
++-- detector = dlib.get_frontal_face_detector()
++-++1. opencv: pip install opencv-python
++-++2. dlib: pip install dlib
++-++3. pip install imageio
++-  
++-- # Path to the video frames
++-\ No newline at end of file
++-+-#Train and save feature 
++-+-python src/align/train_person_recognition_with_dlib.py --input_dir ~/remote/datasets/lfw/lfw_svm_10_raw --output_dir ~/remote/datasets/lfw/lfw_mtcnnpy_128_raw --image_size 128 --margin 24 --random_order --model_dir /home/xca64/remote/models/facenet/lightened/20170321-222346 --feature_dir /home/xca64/remote/feature/lfw_svm_10 --feature_name emb_array
++-+ 
++-+-#Train SVM 
++-+-python util/train_svm.py --npz_file_dir /home/xca64/remote/feature/lfw_svm_10/emb_array.npz --C 4 --svm_model_dir ~/remote/models/svm --gamma 1 
++-+ 
++-+-#Detect and Tracking people
++-+-python src/align/detect_tracking_recognize.py --input_dir /home/xca64/remote/datasets/lfw/test --image_size 128 --margin 24 --model_dir /home/xca64/remote/models/facenet/lightened/20170321-222346 --svm_model_dir ~/remote/models/svm
++-+ 
++-+diff --git a/notebook/NextAI.ipynb b/notebook/NextAI.ipynb
++-+index 3d45749..e54761f 100644
++-+--- a/notebook/NextAI.ipynb
++-++++ b/notebook/NextAI.ipynb
++-+@@ -139,10 +139,33 @@
++-+     "# Solving PYTHONPATH Problem\n",
++-+     "import sys\n",
++-+     "import numpy as np\n",
++-++    "import os\n",
++-+     "sys.path.insert(0, '/home/xca64/remote/GitHub/facenet/src')\n"
++-+    ]
++-+   },
++-+   {
++-++   "cell_type": "code",
++-++   "execution_count": 5,
++-++   "metadata": {
++-++    "collapsed": false
++-++   },
++-++   "outputs": [
++-++    {
++-++     "data": {
++-++      "text/plain": [
++-++       "'/Users/xiaochuanchen/github/nextAI/notebook'"
++-++      ]
++-++     },
++-++     "execution_count": 5,
++-++     "metadata": {},
++-++     "output_type": "execute_result"
++-++    }
++-++   ],
++-++   "source": [
++-++    "os.getcwd()\n"
++-++   ]
++-++  },
++-++  {
++-+    "cell_type": "markdown",
++-+    "metadata": {},
++-+    "source": [
++-+diff --git a/requirements.txt b/requirements.txt
++-+index 6a01519..45c534f 100644
++-+--- a/requirements.txt
++-++++ b/requirements.txt
++-+@@ -6,4 +6,4 @@ h5py
++-+ matplotlib
++-+ Pillow
++-+ requests
++-+-psutil
++-+\ No newline at end of file
++-++psutil
++-+diff --git a/setup.py b/setup.py
++-+deleted file mode 100644
++-+index b0f999e..0000000
++-+--- a/setup.py
++-++++ /dev/null
++-+@@ -1,12 +0,0 @@
++-+-#!/usr/bin/env python
++-+-
++-+-from distutils.core import setup
++-+-
++-+-setup(name='facenet',
++-+-      version='0.1',
++-+-      description='Face Recognition using Tensorflow',
++-+-      author='David Sandberg',
++-+-      author_email='david.o.sandberg@gmail.com',
++-+-      url='https://github.com/davidsandberg/facenet/',
++-+-      packages=['src','src.align','src.models', 'test'],
++-+-     )
++-+\ No newline at end of file
++-\ No newline at end of file
++-diff --git a/README.md b/README.md
++-index 5cf3265..556a5b2 100644
++---- a/README.md
++-+++ b/README.md
++-@@ -1,12 +1,11 @@
++- #Install anaconda 
++- 
++-+Needed Library
++-+
++-+1. opencv: pip install opencv-python
++-+2. dlib: pip install dlib
++-+3. pip install imageio
++- 
++--#Train and save feature 
++--python src/align/train_person_recognition_with_dlib.py --input_dir ~/remote/datasets/lfw/lfw_svm_10_raw --output_dir ~/remote/datasets/lfw/lfw_mtcnnpy_128_raw --image_size 128 --margin 24 --random_order --model_dir /home/xca64/remote/models/facenet/lightened/20170321-222346 --feature_dir /home/xca64/remote/feature/lfw_svm_10 --feature_name emb_array
++- 
++--#Train SVM 
++--python util/train_svm.py --npz_file_dir /home/xca64/remote/feature/lfw_svm_10/emb_array.npz --C 4 --svm_model_dir ~/remote/models/svm --gamma 1 
++- 
++--#Detect and Tracking people
++--python src/align/detect_tracking_recognize.py --input_dir /home/xca64/remote/datasets/lfw/test --image_size 128 --margin 24 --model_dir /home/xca64/remote/models/facenet/lightened/20170321-222346 --svm_model_dir ~/remote/models/svm
++- 
++-diff --git a/notebook/NextAI.ipynb b/notebook/NextAI.ipynb
++-index 3d45749..2de7184 100644
++---- a/notebook/NextAI.ipynb
++-+++ b/notebook/NextAI.ipynb
++-@@ -130,7 +130,7 @@
++-   },
++-   {
++-    "cell_type": "code",
++--   "execution_count": 3,
++-+   "execution_count": 13,
++-    "metadata": {
++-     "collapsed": false
++-    },
++-@@ -139,7 +139,9 @@
++-     "# Solving PYTHONPATH Problem\n",
++-     "import sys\n",
++-     "import numpy as np\n",
++--    "sys.path.insert(0, '/home/xca64/remote/GitHub/facenet/src')\n"
++-+    "import os\n",
++-+    "current_folder_path, _ = os.path.split(os.getcwd())\n",
++-+    "sys.path.insert(0, current_folder_path+'/src')\n"
++-    ]
++-   },
++-   {
++-@@ -151,11 +153,410 @@
++-   },
++-   {
++-    "cell_type": "code",
++--   "execution_count": null,
++-+   "execution_count": 14,
++-    "metadata": {
++-     "collapsed": false
++-    },
++--   "outputs": [],
++-+   "outputs": [
++-+    {
++-+     "name": "stdout",
++-+     "output_type": "stream",
++-+     "text": [
++-+      "Creating networks and loading parameters\n",
++-+      "Model directory: ../Content/NetworkModel/20170321-222346\n",
++-+      "Loading network used to extract features\n",
++-+      "Metagraph file: model-20170321-222346.meta\n",
++-+      "Checkpoint file: model-20170321-222346.ckpt-80000\n",
++-+      "../Content/People/Ariel_Sharon/Ariel_Sharon_0001.jpg\n",
++-+      "../Content/People/Ariel_Sharon/Ariel_Sharon_0002.jpg\n",
++-+      "../Content/People/Ariel_Sharon/Ariel_Sharon_0003.jpg\n",
++-+      "../Content/People/Ariel_Sharon/Ariel_Sharon_0004.jpg\n",
++-+      "../Content/People/Ariel_Sharon/Ariel_Sharon_0005.jpg\n",
++-+      "../Content/People/Ariel_Sharon/Ariel_Sharon_0006.jpg\n",
++-+      "../Content/People/Ariel_Sharon/Ariel_Sharon_0007.jpg\n",
++-+      "../Content/People/Ariel_Sharon/Ariel_Sharon_0008.jpg\n",
++-+      "../Content/People/Ariel_Sharon/Ariel_Sharon_0009.jpg\n",
++-+      "../Content/People/Ariel_Sharon/Ariel_Sharon_0010.jpg\n",
++-+      "../Content/People/Ariel_Sharon/Ariel_Sharon_0011.jpg\n",
++-+      "../Content/People/Ariel_Sharon/Ariel_Sharon_0012.jpg\n",
++-+      "../Content/People/Ariel_Sharon/Ariel_Sharon_0013.jpg\n",
++-+      "../Content/People/Ariel_Sharon/Ariel_Sharon_0014.jpg\n",
++-+      "../Content/People/Ariel_Sharon/Ariel_Sharon_0015.jpg\n",
++-+      "../Content/People/Ariel_Sharon/Ariel_Sharon_0016.jpg\n",
++-+      "../Content/People/Ariel_Sharon/Ariel_Sharon_0017.jpg\n",
++-+      "../Content/People/Ariel_Sharon/Ariel_Sharon_0018.jpg\n",
++-+      "../Content/People/Ariel_Sharon/Ariel_Sharon_0019.jpg\n",
++-+      "../Content/People/Ariel_Sharon/Ariel_Sharon_0020.jpg\n",
++-+      "../Content/People/Bicheng/0.jpg\n",
++-+      "../Content/People/Bicheng/1.jpg\n",
++-+      "../Content/People/Bicheng/10.jpg\n",
++-+      "../Content/People/Bicheng/11.jpg\n",
++-+      "../Content/People/Bicheng/12.jpg\n",
++-+      "../Content/People/Bicheng/13.jpg\n",
++-+      "../Content/People/Bicheng/14.jpg\n",
++-+      "../Content/People/Bicheng/15.jpg\n",
++-+      "../Content/People/Bicheng/16.jpg\n",
++-+      "../Content/People/Bicheng/17.jpg\n",
++-+      "../Content/People/Bicheng/18.jpg\n",
++-+      "../Content/People/Bicheng/19.jpg\n",
++-+      "../Content/People/Bicheng/2.jpg\n",
++-+      "../Content/People/Bicheng/20.jpg\n",
++-+      "../Content/People/Bicheng/21.jpg\n",
++-+      "../Content/People/Bicheng/22.jpg\n",
++-+      "../Content/People/Bicheng/23.jpg\n",
++-+      "../Content/People/Bicheng/24.jpg\n",
++-+      "../Content/People/Bicheng/25.jpg\n",
++-+      "../Content/People/Bicheng/26.jpg\n",
++-+      "../Content/People/Bicheng/27.jpg\n",
++-+      "../Content/People/Bicheng/28.jpg\n",
++-+      "../Content/People/Bicheng/29.jpg\n",
++-+      "../Content/People/Bicheng/3.jpg\n",
++-+      "../Content/People/Bicheng/30.jpg\n",
++-+      "../Content/People/Bicheng/31.jpg\n",
++-+      "../Content/People/Bicheng/32.jpg\n",
++-+      "../Content/People/Bicheng/33.jpg\n",
++-+      "../Content/People/Bicheng/34.jpg\n",
++-+      "../Content/People/Bicheng/35.jpg\n",
++-+      "../Content/People/Bicheng/36.jpg\n",
++-+      "../Content/People/Bicheng/37.jpg\n",
++-+      "../Content/People/Bicheng/38.jpg\n",
++-+      "../Content/People/Bicheng/39.jpg\n",
++-+      "../Content/People/Bicheng/4.jpg\n",
++-+      "../Content/People/Bicheng/40.jpg\n",
++-+      "../Content/People/Bicheng/41.jpg\n",
++-+      "../Content/People/Bicheng/42.jpg\n",
++-+      "../Content/People/Bicheng/43.jpg\n",
++-+      "../Content/People/Bicheng/44.jpg\n",
++-+      "Unable to align \"../Content/People/Bicheng/44.jpg\"\n",
++-+      "../Content/People/Bicheng/45.jpg\n",
++-+      "Unable to align \"../Content/People/Bicheng/45.jpg\"\n",
++-+      "../Content/People/Bicheng/46.jpg\n",
++-+      "Unable to align \"../Content/People/Bicheng/46.jpg\"\n",
++-+      "../Content/People/Bicheng/47.jpg\n",
++-+      "Unable to align \"../Content/People/Bicheng/47.jpg\"\n",
++-+      "../Content/People/Bicheng/48.jpg\n",
++-+      "Unable to align \"../Content/People/Bicheng/48.jpg\"\n",
++-+      "../Content/People/Bicheng/49.jpg\n",
++-+      "Unable to align \"../Content/People/Bicheng/49.jpg\"\n",
++-+      "../Content/People/Bicheng/5.jpg\n",
++-+      "../Content/People/Bicheng/50.jpg\n",
++-+      "Unable to align \"../Content/People/Bicheng/50.jpg\"\n",
++-+      "../Content/People/Bicheng/51.jpg\n",
++-+      "Unable to align \"../Content/People/Bicheng/51.jpg\"\n",
++-+      "../Content/People/Bicheng/52.jpg\n",
++-+      "Unable to align \"../Content/People/Bicheng/52.jpg\"\n",
++-+      "../Content/People/Bicheng/53.jpg\n",
++-+      "Unable to align \"../Content/People/Bicheng/53.jpg\"\n",
++-+      "../Content/People/Bicheng/54.jpg\n",
++-+      "Unable to align \"../Content/People/Bicheng/54.jpg\"\n",
++-+      "../Content/People/Bicheng/55.jpg\n",
++-+      "Unable to align \"../Content/People/Bicheng/55.jpg\"\n",
++-+      "../Content/People/Bicheng/56.jpg\n",
++-+      "Unable to align \"../Content/People/Bicheng/56.jpg\"\n",
++-+      "../Content/People/Bicheng/57.jpg\n",
++-+      "../Content/People/Bicheng/58.jpg\n",
++-+      "../Content/People/Bicheng/59.jpg\n",
++-+      "../Content/People/Bicheng/6.jpg\n",
++-+      "../Content/People/Bicheng/7.jpg\n",
++-+      "../Content/People/Bicheng/8.jpg\n",
++-+      "../Content/People/Bicheng/9.jpg\n",
++-+      "../Content/People/Colin_Powell/Colin_Powell_0001.jpg\n",
++-+      "../Content/People/Colin_Powell/Colin_Powell_0002.jpg\n",
++-+      "../Content/People/Colin_Powell/Colin_Powell_0003.jpg\n",
++-+      "../Content/People/Colin_Powell/Colin_Powell_0004.jpg\n",
++-+      "../Content/People/Colin_Powell/Colin_Powell_0005.jpg\n",
++-+      "../Content/People/Colin_Powell/Colin_Powell_0006.jpg\n",
++-+      "../Content/People/Colin_Powell/Colin_Powell_0007.jpg\n",
++-+      "../Content/People/Colin_Powell/Colin_Powell_0008.jpg\n",
++-+      "../Content/People/Colin_Powell/Colin_Powell_0009.jpg\n",
++-+      "../Content/People/Colin_Powell/Colin_Powell_0010.jpg\n",
++-+      "../Content/People/Colin_Powell/Colin_Powell_0011.jpg\n",
++-+      "../Content/People/Colin_Powell/Colin_Powell_0012.jpg\n",
++-+      "../Content/People/Colin_Powell/Colin_Powell_0013.jpg\n",
++-+      "../Content/People/Colin_Powell/Colin_Powell_0014.jpg\n",
++-+      "../Content/People/Colin_Powell/Colin_Powell_0015.jpg\n",
++-+      "../Content/People/Colin_Powell/Colin_Powell_0016.jpg\n",
++-+      "../Content/People/Colin_Powell/Colin_Powell_0017.jpg\n",
++-+      "../Content/People/Colin_Powell/Colin_Powell_0018.jpg\n",
++-+      "../Content/People/Colin_Powell/Colin_Powell_0019.jpg\n",
++-+      "../Content/People/Colin_Powell/Colin_Powell_0020.jpg\n",
++-+      "../Content/People/Donald_Rumsfeld/Donald_Rumsfeld_0001.jpg\n",
++-+      "../Content/People/Donald_Rumsfeld/Donald_Rumsfeld_0002.jpg\n",
++-+      "../Content/People/Donald_Rumsfeld/Donald_Rumsfeld_0003.jpg\n",
++-+      "../Content/People/Donald_Rumsfeld/Donald_Rumsfeld_0004.jpg\n",
++-+      "../Content/People/Donald_Rumsfeld/Donald_Rumsfeld_0005.jpg\n",
++-+      "../Content/People/Donald_Rumsfeld/Donald_Rumsfeld_0006.jpg\n",
++-+      "../Content/People/Donald_Rumsfeld/Donald_Rumsfeld_0007.jpg\n",
++-+      "../Content/People/Donald_Rumsfeld/Donald_Rumsfeld_0008.jpg\n",
++-+      "../Content/People/Donald_Rumsfeld/Donald_Rumsfeld_0009.jpg\n",
++-+      "../Content/People/Donald_Rumsfeld/Donald_Rumsfeld_0010.jpg\n",
++-+      "../Content/People/Donald_Rumsfeld/Donald_Rumsfeld_0011.jpg\n",
++-+      "../Content/People/Donald_Rumsfeld/Donald_Rumsfeld_0012.jpg\n",
++-+      "../Content/People/Donald_Rumsfeld/Donald_Rumsfeld_0013.jpg\n",
++-+      "../Content/People/Donald_Rumsfeld/Donald_Rumsfeld_0014.jpg\n",
++-+      "../Content/People/Donald_Rumsfeld/Donald_Rumsfeld_0015.jpg\n",
++-+      "../Content/People/Donald_Rumsfeld/Donald_Rumsfeld_0016.jpg\n",
++-+      "../Content/People/Donald_Rumsfeld/Donald_Rumsfeld_0017.jpg\n",
++-+      "../Content/People/Donald_Rumsfeld/Donald_Rumsfeld_0018.jpg\n",
++-+      "../Content/People/Donald_Rumsfeld/Donald_Rumsfeld_0019.jpg\n",
++-+      "../Content/People/Donald_Rumsfeld/Donald_Rumsfeld_0020.jpg\n",
++-+      "../Content/People/Gerhard_Schroeder/Gerhard_Schroeder_0001.jpg\n",
++-+      "../Content/People/Gerhard_Schroeder/Gerhard_Schroeder_0002.jpg\n",
++-+      "../Content/People/Gerhard_Schroeder/Gerhard_Schroeder_0003.jpg\n",
++-+      "../Content/People/Gerhard_Schroeder/Gerhard_Schroeder_0004.jpg\n",
++-+      "../Content/People/Gerhard_Schroeder/Gerhard_Schroeder_0005.jpg\n",
++-+      "../Content/People/Gerhard_Schroeder/Gerhard_Schroeder_0006.jpg\n",
++-+      "../Content/People/Gerhard_Schroeder/Gerhard_Schroeder_0007.jpg\n",
++-+      "../Content/People/Gerhard_Schroeder/Gerhard_Schroeder_0008.jpg\n",
++-+      "../Content/People/Gerhard_Schroeder/Gerhard_Schroeder_0009.jpg\n",
++-+      "../Content/People/Gerhard_Schroeder/Gerhard_Schroeder_0010.jpg\n",
++-+      "../Content/People/Gerhard_Schroeder/Gerhard_Schroeder_0011.jpg\n",
++-+      "../Content/People/Gerhard_Schroeder/Gerhard_Schroeder_0012.jpg\n",
++-+      "../Content/People/Gerhard_Schroeder/Gerhard_Schroeder_0013.jpg\n",
++-+      "../Content/People/Gerhard_Schroeder/Gerhard_Schroeder_0014.jpg\n",
++-+      "../Content/People/Gerhard_Schroeder/Gerhard_Schroeder_0015.jpg\n",
++-+      "../Content/People/Gerhard_Schroeder/Gerhard_Schroeder_0016.jpg\n",
++-+      "../Content/People/Gerhard_Schroeder/Gerhard_Schroeder_0017.jpg\n",
++-+      "../Content/People/Gerhard_Schroeder/Gerhard_Schroeder_0018.jpg\n",
++-+      "../Content/People/Gerhard_Schroeder/Gerhard_Schroeder_0019.jpg\n",
++-+      "../Content/People/Gerhard_Schroeder/Gerhard_Schroeder_0020.jpg\n",
++-+      "../Content/People/Hugo_Chavez/Hugo_Chavez_0001.jpg\n",
++-+      "../Content/People/Hugo_Chavez/Hugo_Chavez_0002.jpg\n",
++-+      "../Content/People/Hugo_Chavez/Hugo_Chavez_0003.jpg\n",
++-+      "../Content/People/Hugo_Chavez/Hugo_Chavez_0004.jpg\n",
++-+      "../Content/People/Hugo_Chavez/Hugo_Chavez_0005.jpg\n",
++-+      "../Content/People/Hugo_Chavez/Hugo_Chavez_0006.jpg\n",
++-+      "../Content/People/Hugo_Chavez/Hugo_Chavez_0007.jpg\n",
++-+      "../Content/People/Hugo_Chavez/Hugo_Chavez_0008.jpg\n",
++-+      "../Content/People/Hugo_Chavez/Hugo_Chavez_0009.jpg\n",
++-+      "../Content/People/Hugo_Chavez/Hugo_Chavez_0010.jpg\n",
++-+      "../Content/People/Hugo_Chavez/Hugo_Chavez_0011.jpg\n",
++-+      "../Content/People/Hugo_Chavez/Hugo_Chavez_0012.jpg\n",
++-+      "../Content/People/Hugo_Chavez/Hugo_Chavez_0013.jpg\n",
++-+      "../Content/People/Hugo_Chavez/Hugo_Chavez_0014.jpg\n",
++-+      "../Content/People/Hugo_Chavez/Hugo_Chavez_0015.jpg\n",
++-+      "../Content/People/Hugo_Chavez/Hugo_Chavez_0016.jpg\n",
++-+      "../Content/People/Hugo_Chavez/Hugo_Chavez_0017.jpg\n",
++-+      "../Content/People/Hugo_Chavez/Hugo_Chavez_0018.jpg\n",
++-+      "../Content/People/Hugo_Chavez/Hugo_Chavez_0019.jpg\n",
++-+      "../Content/People/Hugo_Chavez/Hugo_Chavez_0020.jpg\n",
++-+      "../Content/People/Husha/0.jpg\n",
++-+      "../Content/People/Husha/1.jpg\n",
++-+      "../Content/People/Husha/10.jpg\n",
++-+      "../Content/People/Husha/11.jpg\n",
++-+      "../Content/People/Husha/12.jpg\n",
++-+      "../Content/People/Husha/13.jpg\n",
++-+      "../Content/People/Husha/14.jpg\n",
++-+      "../Content/People/Husha/15.jpg\n",
++-+      "../Content/People/Husha/16.jpg\n",
++-+      "../Content/People/Husha/17.jpg\n",
++-+      "../Content/People/Husha/18.jpg\n",
++-+      "../Content/People/Husha/19.jpg\n",
++-+      "../Content/People/Husha/2.jpg\n",
++-+      "../Content/People/Husha/20.jpg\n",
++-+      "../Content/People/Husha/21.jpg\n",
++-+      "../Content/People/Husha/22.jpg\n",
++-+      "Unable to align \"../Content/People/Husha/22.jpg\"\n",
++-+      "../Content/People/Husha/23.jpg\n",
++-+      "Unable to align \"../Content/People/Husha/23.jpg\"\n",
++-+      "../Content/People/Husha/24.jpg\n",
++-+      "Unable to align \"../Content/People/Husha/24.jpg\"\n",
++-+      "../Content/People/Husha/25.jpg\n",
++-+      "Unable to align \"../Content/People/Husha/25.jpg\"\n",
++-+      "../Content/People/Husha/26.jpg\n",
++-+      "Unable to align \"../Content/People/Husha/26.jpg\"\n",
++-+      "../Content/People/Husha/27.jpg\n",
++-+      "Unable to align \"../Content/People/Husha/27.jpg\"\n",
++-+      "../Content/People/Husha/28.jpg\n",
++-+      "Unable to align \"../Content/People/Husha/28.jpg\"\n",
++-+      "../Content/People/Husha/29.jpg\n",
++-+      "../Content/People/Husha/3.jpg\n",
++-+      "../Content/People/Husha/30.jpg\n",
++-+      "../Content/People/Husha/31.jpg\n",
++-+      "../Content/People/Husha/32.jpg\n",
++-+      "../Content/People/Husha/33.jpg\n",
++-+      "../Content/People/Husha/34.jpg\n",
++-+      "../Content/People/Husha/35.jpg\n",
++-+      "../Content/People/Husha/36.jpg\n",
++-+      "../Content/People/Husha/37.jpg\n",
++-+      "../Content/People/Husha/38.jpg\n",
++-+      "../Content/People/Husha/39.jpg\n",
++-+      "../Content/People/Husha/4.jpg\n",
++-+      "../Content/People/Husha/40.jpg\n",
++-+      "../Content/People/Husha/41.jpg\n",
++-+      "../Content/People/Husha/42.jpg\n",
++-+      "../Content/People/Husha/43.jpg\n",
++-+      "../Content/People/Husha/44.jpg\n",
++-+      "../Content/People/Husha/45.jpg\n",
++-+      "../Content/People/Husha/46.jpg\n",
++-+      "../Content/People/Husha/47.jpg\n",
++-+      "../Content/People/Husha/48.jpg\n",
++-+      "../Content/People/Husha/49.jpg\n",
++-+      "../Content/People/Husha/5.jpg\n",
++-+      "../Content/People/Husha/50.jpg\n",
++-+      "../Content/People/Husha/51.jpg\n",
++-+      "../Content/People/Husha/52.jpg\n",
++-+      "../Content/People/Husha/53.jpg\n",
++-+      "../Content/People/Husha/54.jpg\n",
++-+      "../Content/People/Husha/55.jpg\n",
++-+      "../Content/People/Husha/56.jpg\n",
++-+      "../Content/People/Husha/57.jpg\n",
++-+      "../Content/People/Husha/58.jpg\n",
++-+      "../Content/People/Husha/59.jpg\n",
++-+      "../Content/People/Husha/6.jpg\n",
++-+      "../Content/People/Husha/7.jpg\n",
++-+      "../Content/People/Husha/8.jpg\n",
++-+      "../Content/People/Husha/9.jpg\n",
++-+      "../Content/People/Jean_Chretien/Jean_Chretien_0001.jpg\n",
++-+      "../Content/People/Jean_Chretien/Jean_Chretien_0002.jpg\n",
++-+      "../Content/People/Jean_Chretien/Jean_Chretien_0003.jpg\n",
++-+      "../Content/People/Jean_Chretien/Jean_Chretien_0004.jpg\n",
++-+      "../Content/People/Jean_Chretien/Jean_Chretien_0005.jpg\n",
++-+      "../Content/People/Jean_Chretien/Jean_Chretien_0006.jpg\n",
++-+      "../Content/People/Jean_Chretien/Jean_Chretien_0007.jpg\n",
++-+      "../Content/People/Jean_Chretien/Jean_Chretien_0008.jpg\n",
++-+      "../Content/People/Jean_Chretien/Jean_Chretien_0009.jpg\n",
++-+      "../Content/People/Jean_Chretien/Jean_Chretien_0010.jpg\n",
++-+      "../Content/People/Jean_Chretien/Jean_Chretien_0011.jpg\n",
++-+      "../Content/People/Jean_Chretien/Jean_Chretien_0012.jpg\n",
++-+      "../Content/People/Jean_Chretien/Jean_Chretien_0013.jpg\n",
++-+      "../Content/People/Jean_Chretien/Jean_Chretien_0014.jpg\n",
++-+      "../Content/People/Jean_Chretien/Jean_Chretien_0015.jpg\n",
++-+      "../Content/People/Jean_Chretien/Jean_Chretien_0016.jpg\n",
++-+      "../Content/People/Jean_Chretien/Jean_Chretien_0017.jpg\n",
++-+      "../Content/People/Jean_Chretien/Jean_Chretien_0018.jpg\n",
++-+      "../Content/People/Jean_Chretien/Jean_Chretien_0019.jpg\n",
++-+      "../Content/People/Jean_Chretien/Jean_Chretien_0020.jpg\n",
++-+      "../Content/People/John_Ashcroft/John_Ashcroft_0001.jpg\n",
++-+      "../Content/People/John_Ashcroft/John_Ashcroft_0002.jpg\n",
++-+      "../Content/People/John_Ashcroft/John_Ashcroft_0003.jpg\n",
++-+      "../Content/People/John_Ashcroft/John_Ashcroft_0004.jpg\n",
++-+      "../Content/People/John_Ashcroft/John_Ashcroft_0005.jpg\n",
++-+      "../Content/People/John_Ashcroft/John_Ashcroft_0006.jpg\n",
++-+      "../Content/People/John_Ashcroft/John_Ashcroft_0007.jpg\n",
++-+      "../Content/People/John_Ashcroft/John_Ashcroft_0008.jpg\n",
++-+      "../Content/People/John_Ashcroft/John_Ashcroft_0009.jpg\n",
++-+      "../Content/People/John_Ashcroft/John_Ashcroft_0010.jpg\n",
++-+      "../Content/People/John_Ashcroft/John_Ashcroft_0011.jpg\n",
++-+      "../Content/People/John_Ashcroft/John_Ashcroft_0012.jpg\n",
++-+      "../Content/People/John_Ashcroft/John_Ashcroft_0013.jpg\n",
++-+      "../Content/People/John_Ashcroft/John_Ashcroft_0014.jpg\n",
++-+      "../Content/People/John_Ashcroft/John_Ashcroft_0015.jpg\n",
++-+      "../Content/People/John_Ashcroft/John_Ashcroft_0016.jpg\n",
++-+      "../Content/People/John_Ashcroft/John_Ashcroft_0017.jpg\n",
++-+      "../Content/People/John_Ashcroft/John_Ashcroft_0018.jpg\n",
++-+      "../Content/People/John_Ashcroft/John_Ashcroft_0019.jpg\n",
++-+      "../Content/People/John_Ashcroft/John_Ashcroft_0020.jpg\n",
++-+      "../Content/People/Junichiro_Koizumi/Junichiro_Koizumi_0001.jpg\n",
++-+      "../Content/People/Junichiro_Koizumi/Junichiro_Koizumi_0002.jpg\n",
++-+      "../Content/People/Junichiro_Koizumi/Junichiro_Koizumi_0003.jpg\n",
++-+      "../Content/People/Junichiro_Koizumi/Junichiro_Koizumi_0004.jpg\n",
++-+      "../Content/People/Junichiro_Koizumi/Junichiro_Koizumi_0005.jpg\n",
++-+      "../Content/People/Junichiro_Koizumi/Junichiro_Koizumi_0006.jpg\n",
++-+      "../Content/People/Junichiro_Koizumi/Junichiro_Koizumi_0007.jpg\n",
++-+      "../Content/People/Junichiro_Koizumi/Junichiro_Koizumi_0008.jpg\n",
++-+      "../Content/People/Junichiro_Koizumi/Junichiro_Koizumi_0009.jpg\n",
++-+      "../Content/People/Junichiro_Koizumi/Junichiro_Koizumi_0010.jpg\n",
++-+      "../Content/People/Junichiro_Koizumi/Junichiro_Koizumi_0011.jpg\n",
++-+      "../Content/People/Junichiro_Koizumi/Junichiro_Koizumi_0012.jpg\n",
++-+      "../Content/People/Junichiro_Koizumi/Junichiro_Koizumi_0013.jpg\n",
++-+      "../Content/People/Junichiro_Koizumi/Junichiro_Koizumi_0014.jpg\n",
++-+      "../Content/People/Junichiro_Koizumi/Junichiro_Koizumi_0015.jpg\n",
++-+      "../Content/People/Junichiro_Koizumi/Junichiro_Koizumi_0016.jpg\n",
++-+      "../Content/People/Junichiro_Koizumi/Junichiro_Koizumi_0017.jpg\n",
++-+      "../Content/People/Junichiro_Koizumi/Junichiro_Koizumi_0018.jpg\n",
++-+      "../Content/People/Junichiro_Koizumi/Junichiro_Koizumi_0019.jpg\n",
++-+      "../Content/People/Junichiro_Koizumi/Junichiro_Koizumi_0020.jpg\n",
++-+      "../Content/People/Tony_Blair/Tony_Blair_0001.jpg\n",
++-+      "../Content/People/Tony_Blair/Tony_Blair_0002.jpg\n",
++-+      "../Content/People/Tony_Blair/Tony_Blair_0003.jpg\n",
++-+      "../Content/People/Tony_Blair/Tony_Blair_0004.jpg\n",
++-+      "../Content/People/Tony_Blair/Tony_Blair_0005.jpg\n",
++-+      "../Content/People/Tony_Blair/Tony_Blair_0006.jpg\n",
++-+      "../Content/People/Tony_Blair/Tony_Blair_0007.jpg\n",
++-+      "../Content/People/Tony_Blair/Tony_Blair_0008.jpg\n",
++-+      "../Content/People/Tony_Blair/Tony_Blair_0009.jpg\n",
++-+      "../Content/People/Tony_Blair/Tony_Blair_0010.jpg\n",
++-+      "../Content/People/Tony_Blair/Tony_Blair_0011.jpg\n",
++-+      "../Content/People/Tony_Blair/Tony_Blair_0012.jpg\n",
++-+      "../Content/People/Tony_Blair/Tony_Blair_0013.jpg\n",
++-+      "../Content/People/Tony_Blair/Tony_Blair_0014.jpg\n",
++-+      "../Content/People/Tony_Blair/Tony_Blair_0015.jpg\n",
++-+      "../Content/People/Tony_Blair/Tony_Blair_0016.jpg\n",
++-+      "../Content/People/Tony_Blair/Tony_Blair_0017.jpg\n",
++-+      "../Content/People/Tony_Blair/Tony_Blair_0018.jpg\n",
++-+      "../Content/People/Tony_Blair/Tony_Blair_0019.jpg\n",
++-+      "../Content/People/Tony_Blair/Tony_Blair_0020.jpg\n",
++-+      "../Content/People/Xiaochuan/0.jpg\n",
++-+      "../Content/People/Xiaochuan/1.jpg\n",
++-+      "../Content/People/Xiaochuan/10.jpg\n",
++-+      "../Content/People/Xiaochuan/11.jpg\n",
++-+      "../Content/People/Xiaochuan/12.jpg\n",
++-+      "../Content/People/Xiaochuan/13.jpg\n",
++-+      "../Content/People/Xiaochuan/14.jpg\n",
++-+      "../Content/People/Xiaochuan/15.jpg\n",
++-+      "../Content/People/Xiaochuan/16.jpg\n",
++-+      "../Content/People/Xiaochuan/17.jpg\n",
++-+      "../Content/People/Xiaochuan/18.jpg\n",
++-+      "../Content/People/Xiaochuan/19.jpg\n",
++-+      "../Content/People/Xiaochuan/2.jpg\n",
++-+      "../Content/People/Xiaochuan/20.jpg\n",
++-+      "../Content/People/Xiaochuan/21.jpg\n",
++-+      "../Content/People/Xiaochuan/22.jpg\n",
++-+      "../Content/People/Xiaochuan/23.jpg\n",
++-+      "../Content/People/Xiaochuan/24.jpg\n",
++-+      "../Content/People/Xiaochuan/25.jpg\n",
++-+      "../Content/People/Xiaochuan/26.jpg\n",
++-+      "../Content/People/Xiaochuan/27.jpg\n",
++-+      "../Content/People/Xiaochuan/28.jpg\n",
++-+      "../Content/People/Xiaochuan/29.jpg\n",
++-+      "../Content/People/Xiaochuan/3.jpg\n",
++-+      "../Content/People/Xiaochuan/30.jpg\n",
++-+      "../Content/People/Xiaochuan/31.jpg\n",
++-+      "../Content/People/Xiaochuan/32.jpg\n",
++-+      "../Content/People/Xiaochuan/33.jpg\n",
++-+      "../Content/People/Xiaochuan/34.jpg\n",
++-+      "../Content/People/Xiaochuan/35.jpg\n",
++-+      "../Content/People/Xiaochuan/36.jpg\n",
++-+      "../Content/People/Xiaochuan/37.jpg\n",
++-+      "../Content/People/Xiaochuan/38.jpg\n",
++-+      "../Content/People/Xiaochuan/39.jpg\n",
++-+      "../Content/People/Xiaochuan/4.jpg\n",
++-+      "../Content/People/Xiaochuan/40.jpg\n",
++-+      "../Content/People/Xiaochuan/41.jpg\n",
++-+      "../Content/People/Xiaochuan/42.jpg\n",
++-+      "../Content/People/Xiaochuan/43.jpg\n",
++-+      "../Content/People/Xiaochuan/44.jpg\n",
++-+      "../Content/People/Xiaochuan/45.jpg\n",
++-+      "../Content/People/Xiaochuan/46.jpg\n",
++-+      "../Content/People/Xiaochuan/47.jpg\n",
++-+      "../Content/People/Xiaochuan/48.jpg\n",
++-+      "../Content/People/Xiaochuan/49.jpg\n",
++-+      "../Content/People/Xiaochuan/5.jpg\n",
++-+      "../Content/People/Xiaochuan/50.jpg\n",
++-+      "../Content/People/Xiaochuan/51.jpg\n",
++-+      "../Content/People/Xiaochuan/52.jpg\n",
++-+      "../Content/People/Xiaochuan/53.jpg\n",
++-+      "../Content/People/Xiaochuan/54.jpg\n",
++-+      "../Content/People/Xiaochuan/55.jpg\n",
++-+      "../Content/People/Xiaochuan/56.jpg\n",
++-+      "../Content/People/Xiaochuan/57.jpg\n",
++-+      "../Content/People/Xiaochuan/58.jpg\n",
++-+      "../Content/People/Xiaochuan/59.jpg\n",
++-+      "../Content/People/Xiaochuan/6.jpg\n",
++-+      "../Content/People/Xiaochuan/7.jpg\n",
++-+      "../Content/People/Xiaochuan/8.jpg\n",
++-+      "../Content/People/Xiaochuan/9.jpg\n",
++-+      "Total number of images: 360\n",
++-+      "Number of successfully aligned images: 0\n",
++-+      "\n",
++-+      "\n",
++-+      "Starting to extract features\n",
++-+      "Total number of images: 340\n",
++-+      "Runnning forward pass on images\n"
++-+     ]
++-+    }
++-+   ],
++-    "source": [
++-     "%run ../src/align/train_person_recognition_with_dlib.py --input_dir ../Content/People --output_dir ../Content/People_Cropped --image_size 128 --margin 24 --model_dir ../Content/NetworkModel/20170321-222346 --feature_dir ../Content/PeopleFeature --feature_name emb_array "
++-    ]
++-diff --git a/requirements.txt b/requirements.txt
++-index 6a01519..45c534f 100644
++---- a/requirements.txt
++-+++ b/requirements.txt
++-@@ -6,4 +6,4 @@ h5py
++- matplotlib
++- Pillow
++- requests
++--psutil
++-\ No newline at end of file
++-+psutil
++-diff --git a/setup.py b/setup.py
++-deleted file mode 100644
++-index b0f999e..0000000
++---- a/setup.py
++-+++ /dev/null
++-@@ -1,12 +0,0 @@
++--#!/usr/bin/env python
++--
++--from distutils.core import setup
++--
++--setup(name='facenet',
++--      version='0.1',
++--      description='Face Recognition using Tensorflow',
++--      author='David Sandberg',
++--      author_email='david.o.sandberg@gmail.com',
++--      url='https://github.com/davidsandberg/facenet/',
++--      packages=['src','src.align','src.models', 'test'],
++--     )
++-\ No newline at end of file
++ diff --git a/src/align/train_person_recognition_with_dlib.py b/src/align/train_person_recognition_with_dlib.py
++-index b0d9f80..94848c8 100644
+++index 95416ce..604ee0f 100644
++ --- a/src/align/train_person_recognition_with_dlib.py
++ +++ b/src/align/train_person_recognition_with_dlib.py
++-@@ -164,6 +164,7 @@ def main(args):
++-     nrof_batches = int(math.ceil(1.0*nrof_images / batch_size))
++-     emb_array = np.zeros((nrof_images, embedding_size))
++-     for i in range(nrof_batches):
++-+        print('Processing Patch {}/{}'.format(i,nrof_batches))
++-         start_index = i*batch_size
++-         end_index = min((i+1)*batch_size, nrof_images)
++-         paths_batch = paths[start_index:end_index]
+ \ No newline at end of file
+-+-#Train and save feature 
+-+-python src/align/train_person_recognition_with_dlib.py --input_dir ~/remote/datasets/lfw/lfw_svm_10_raw --output_dir ~/remote/datasets/lfw/lfw_mtcnnpy_128_raw --image_size 128 --margin 24 --random_order --model_dir /home/xca64/remote/models/facenet/lightened/20170321-222346 --feature_dir /home/xca64/remote/feature/lfw_svm_10 --feature_name emb_array
+-+ 
+-+-#Train SVM 
+-+-python util/train_svm.py --npz_file_dir /home/xca64/remote/feature/lfw_svm_10/emb_array.npz --C 4 --svm_model_dir ~/remote/models/svm --gamma 1 
+-+ 
+-+-#Detect and Tracking people
+-+-python src/align/detect_tracking_recognize.py --input_dir /home/xca64/remote/datasets/lfw/test --image_size 128 --margin 24 --model_dir /home/xca64/remote/models/facenet/lightened/20170321-222346 --svm_model_dir ~/remote/models/svm
+-+ 
+-+diff --git a/notebook/NextAI.ipynb b/notebook/NextAI.ipynb
+-+index 3d45749..e54761f 100644
+-+--- a/notebook/NextAI.ipynb
+-++++ b/notebook/NextAI.ipynb
+-+@@ -139,10 +139,33 @@
+-+     "# Solving PYTHONPATH Problem\n",
+-+     "import sys\n",
+-+     "import numpy as np\n",
+-++    "import os\n",
+-+     "sys.path.insert(0, '/home/xca64/remote/GitHub/facenet/src')\n"
+-+    ]
+-+   },
+-+   {
+-++   "cell_type": "code",
+-++   "execution_count": 5,
+-++   "metadata": {
+-++    "collapsed": false
+-++   },
+-++   "outputs": [
+-++    {
+-++     "data": {
+-++      "text/plain": [
+-++       "'/Users/xiaochuanchen/github/nextAI/notebook'"
+-++      ]
+-++     },
+-++     "execution_count": 5,
+-++     "metadata": {},
+-++     "output_type": "execute_result"
+-++    }
+-++   ],
+-++   "source": [
+-++    "os.getcwd()\n"
+-++   ]
+-++  },
+-++  {
+-+    "cell_type": "markdown",
+-+    "metadata": {},
+-+    "source": [
+-+diff --git a/requirements.txt b/requirements.txt
+-+index 6a01519..45c534f 100644
+-+--- a/requirements.txt
+-++++ b/requirements.txt
+-+@@ -6,4 +6,4 @@ h5py
+-+ matplotlib
+-+ Pillow
+-+ requests
+-+-psutil
+-+\ No newline at end of file
+-++psutil
+-+diff --git a/setup.py b/setup.py
+-+deleted file mode 100644
+-+index b0f999e..0000000
+-+--- a/setup.py
+-++++ /dev/null
+-+@@ -1,12 +0,0 @@
+-+-#!/usr/bin/env python
+-+-
+-+-from distutils.core import setup
+-+-
+-+-setup(name='facenet',
+-+-      version='0.1',
+-+-      description='Face Recognition using Tensorflow',
+-+-      author='David Sandberg',
+-+-      author_email='david.o.sandberg@gmail.com',
+-+-      url='https://github.com/davidsandberg/facenet/',
+-+-      packages=['src','src.align','src.models', 'test'],
+-+-     )
+-+\ No newline at end of file
+++@@ -98,7 +98,7 @@ def main(args):
+++                 nrof_images_total += 1
+++                 filename = os.path.splitext(os.path.split(image_path)[1])[0]
+++                 output_filename = os.path.join(output_class_dir, filename+'.png')
+++-                print(image_path)
++++                # print(image_path)
+++                 if not os.path.exists(output_filename):
+++                     try:
+++                         img = misc.imread(image_path)
+ \ No newline at end of file
+-diff --git a/README.md b/README.md
+-index 5cf3265..556a5b2 100644
+---- a/README.md
+-+++ b/README.md
+-@@ -1,12 +1,11 @@
+- #Install anaconda 
+- 
+-+Needed Library
+-+
+-+1. opencv: pip install opencv-python
+-+2. dlib: pip install dlib
+-+3. pip install imageio
+- 
+--#Train and save feature 
+--python src/align/train_person_recognition_with_dlib.py --input_dir ~/remote/datasets/lfw/lfw_svm_10_raw --output_dir ~/remote/datasets/lfw/lfw_mtcnnpy_128_raw --image_size 128 --margin 24 --random_order --model_dir /home/xca64/remote/models/facenet/lightened/20170321-222346 --feature_dir /home/xca64/remote/feature/lfw_svm_10 --feature_name emb_array
+- 
+--#Train SVM 
+--python util/train_svm.py --npz_file_dir /home/xca64/remote/feature/lfw_svm_10/emb_array.npz --C 4 --svm_model_dir ~/remote/models/svm --gamma 1 
+- 
+--#Detect and Tracking people
+--python src/align/detect_tracking_recognize.py --input_dir /home/xca64/remote/datasets/lfw/test --image_size 128 --margin 24 --model_dir /home/xca64/remote/models/facenet/lightened/20170321-222346 --svm_model_dir ~/remote/models/svm
+- 
+ diff --git a/notebook/NextAI.ipynb b/notebook/NextAI.ipynb
+-index 3d45749..2de7184 100644
++index d5e5f49..173c5da 100644
+ --- a/notebook/NextAI.ipynb
+ +++ b/notebook/NextAI.ipynb
+-@@ -130,7 +130,7 @@
++@@ -199,7 +199,7 @@
+    },
+    {
+     "cell_type": "code",
+--   "execution_count": 3,
+-+   "execution_count": 13,
++-   "execution_count": 13,
+++   "execution_count": 2,
+     "metadata": {
+-     "collapsed": false
+-    },
+-@@ -139,7 +139,9 @@
+-     "# Solving PYTHONPATH Problem\n",
+-     "import sys\n",
+-     "import numpy as np\n",
+--    "sys.path.insert(0, '/home/xca64/remote/GitHub/facenet/src')\n"
+-+    "import os\n",
+-+    "current_folder_path, _ = os.path.split(os.getcwd())\n",
+-+    "sys.path.insert(0, current_folder_path+'/src')\n"
+-    ]
+-   },
+-   {
+-@@ -151,11 +153,410 @@
++     "collapsed": false,
++     "deletable": true,
++@@ -227,7 +227,7 @@
+    },
+    {
+     "cell_type": "code",
+--   "execution_count": null,
+-+   "execution_count": 14,
++-   "execution_count": 16,
+++   "execution_count": 3,
+     "metadata": {
+-     "collapsed": false
+-    },
+--   "outputs": [],
+-+   "outputs": [
+-+    {
+-+     "name": "stdout",
+-+     "output_type": "stream",
+-+     "text": [
+-+      "Creating networks and loading parameters\n",
+-+      "Model directory: ../Content/NetworkModel/20170321-222346\n",
+-+      "Loading network used to extract features\n",
+-+      "Metagraph file: model-20170321-222346.meta\n",
+-+      "Checkpoint file: model-20170321-222346.ckpt-80000\n",
+-+      "../Content/People/Ariel_Sharon/Ariel_Sharon_0001.jpg\n",
+-+      "../Content/People/Ariel_Sharon/Ariel_Sharon_0002.jpg\n",
+-+      "../Content/People/Ariel_Sharon/Ariel_Sharon_0003.jpg\n",
+-+      "../Content/People/Ariel_Sharon/Ariel_Sharon_0004.jpg\n",
+-+      "../Content/People/Ariel_Sharon/Ariel_Sharon_0005.jpg\n",
+-+      "../Content/People/Ariel_Sharon/Ariel_Sharon_0006.jpg\n",
+-+      "../Content/People/Ariel_Sharon/Ariel_Sharon_0007.jpg\n",
+-+      "../Content/People/Ariel_Sharon/Ariel_Sharon_0008.jpg\n",
+-+      "../Content/People/Ariel_Sharon/Ariel_Sharon_0009.jpg\n",
+-+      "../Content/People/Ariel_Sharon/Ariel_Sharon_0010.jpg\n",
+-+      "../Content/People/Ariel_Sharon/Ariel_Sharon_0011.jpg\n",
+-+      "../Content/People/Ariel_Sharon/Ariel_Sharon_0012.jpg\n",
+-+      "../Content/People/Ariel_Sharon/Ariel_Sharon_0013.jpg\n",
+-+      "../Content/People/Ariel_Sharon/Ariel_Sharon_0014.jpg\n",
+-+      "../Content/People/Ariel_Sharon/Ariel_Sharon_0015.jpg\n",
+-+      "../Content/People/Ariel_Sharon/Ariel_Sharon_0016.jpg\n",
+-+      "../Content/People/Ariel_Sharon/Ariel_Sharon_0017.jpg\n",
+-+      "../Content/People/Ariel_Sharon/Ariel_Sharon_0018.jpg\n",
+-+      "../Content/People/Ariel_Sharon/Ariel_Sharon_0019.jpg\n",
+-+      "../Content/People/Ariel_Sharon/Ariel_Sharon_0020.jpg\n",
+-+      "../Content/People/Bicheng/0.jpg\n",
+-+      "../Content/People/Bicheng/1.jpg\n",
+-+      "../Content/People/Bicheng/10.jpg\n",
+-+      "../Content/People/Bicheng/11.jpg\n",
+-+      "../Content/People/Bicheng/12.jpg\n",
+-+      "../Content/People/Bicheng/13.jpg\n",
+-+      "../Content/People/Bicheng/14.jpg\n",
+-+      "../Content/People/Bicheng/15.jpg\n",
+-+      "../Content/People/Bicheng/16.jpg\n",
+-+      "../Content/People/Bicheng/17.jpg\n",
+-+      "../Content/People/Bicheng/18.jpg\n",
+-+      "../Content/People/Bicheng/19.jpg\n",
+-+      "../Content/People/Bicheng/2.jpg\n",
+-+      "../Content/People/Bicheng/20.jpg\n",
+-+      "../Content/People/Bicheng/21.jpg\n",
+-+      "../Content/People/Bicheng/22.jpg\n",
+-+      "../Content/People/Bicheng/23.jpg\n",
+-+      "../Content/People/Bicheng/24.jpg\n",
+-+      "../Content/People/Bicheng/25.jpg\n",
+-+      "../Content/People/Bicheng/26.jpg\n",
+-+      "../Content/People/Bicheng/27.jpg\n",
+-+      "../Content/People/Bicheng/28.jpg\n",
+-+      "../Content/People/Bicheng/29.jpg\n",
+-+      "../Content/People/Bicheng/3.jpg\n",
+-+      "../Content/People/Bicheng/30.jpg\n",
+-+      "../Content/People/Bicheng/31.jpg\n",
+-+      "../Content/People/Bicheng/32.jpg\n",
+-+      "../Content/People/Bicheng/33.jpg\n",
+-+      "../Content/People/Bicheng/34.jpg\n",
+-+      "../Content/People/Bicheng/35.jpg\n",
+-+      "../Content/People/Bicheng/36.jpg\n",
+-+      "../Content/People/Bicheng/37.jpg\n",
+-+      "../Content/People/Bicheng/38.jpg\n",
+-+      "../Content/People/Bicheng/39.jpg\n",
+-+      "../Content/People/Bicheng/4.jpg\n",
+-+      "../Content/People/Bicheng/40.jpg\n",
+-+      "../Content/People/Bicheng/41.jpg\n",
+-+      "../Content/People/Bicheng/42.jpg\n",
+-+      "../Content/People/Bicheng/43.jpg\n",
+-+      "../Content/People/Bicheng/44.jpg\n",
+-+      "Unable to align \"../Content/People/Bicheng/44.jpg\"\n",
+-+      "../Content/People/Bicheng/45.jpg\n",
+-+      "Unable to align \"../Content/People/Bicheng/45.jpg\"\n",
+-+      "../Content/People/Bicheng/46.jpg\n",
+-+      "Unable to align \"../Content/People/Bicheng/46.jpg\"\n",
+-+      "../Content/People/Bicheng/47.jpg\n",
+-+      "Unable to align \"../Content/People/Bicheng/47.jpg\"\n",
+-+      "../Content/People/Bicheng/48.jpg\n",
+-+      "Unable to align \"../Content/People/Bicheng/48.jpg\"\n",
+-+      "../Content/People/Bicheng/49.jpg\n",
+-+      "Unable to align \"../Content/People/Bicheng/49.jpg\"\n",
+-+      "../Content/People/Bicheng/5.jpg\n",
+-+      "../Content/People/Bicheng/50.jpg\n",
+-+      "Unable to align \"../Content/People/Bicheng/50.jpg\"\n",
+-+      "../Content/People/Bicheng/51.jpg\n",
+-+      "Unable to align \"../Content/People/Bicheng/51.jpg\"\n",
+-+      "../Content/People/Bicheng/52.jpg\n",
+-+      "Unable to align \"../Content/People/Bicheng/52.jpg\"\n",
+-+      "../Content/People/Bicheng/53.jpg\n",
+-+      "Unable to align \"../Content/People/Bicheng/53.jpg\"\n",
+-+      "../Content/People/Bicheng/54.jpg\n",
+-+      "Unable to align \"../Content/People/Bicheng/54.jpg\"\n",
+-+      "../Content/People/Bicheng/55.jpg\n",
+-+      "Unable to align \"../Content/People/Bicheng/55.jpg\"\n",
+-+      "../Content/People/Bicheng/56.jpg\n",
+-+      "Unable to align \"../Content/People/Bicheng/56.jpg\"\n",
+-+      "../Content/People/Bicheng/57.jpg\n",
+-+      "../Content/People/Bicheng/58.jpg\n",
+-+      "../Content/People/Bicheng/59.jpg\n",
+-+      "../Content/People/Bicheng/6.jpg\n",
+-+      "../Content/People/Bicheng/7.jpg\n",
+-+      "../Content/People/Bicheng/8.jpg\n",
+-+      "../Content/People/Bicheng/9.jpg\n",
+-+      "../Content/People/Colin_Powell/Colin_Powell_0001.jpg\n",
+-+      "../Content/People/Colin_Powell/Colin_Powell_0002.jpg\n",
+-+      "../Content/People/Colin_Powell/Colin_Powell_0003.jpg\n",
+-+      "../Content/People/Colin_Powell/Colin_Powell_0004.jpg\n",
+-+      "../Content/People/Colin_Powell/Colin_Powell_0005.jpg\n",
+-+      "../Content/People/Colin_Powell/Colin_Powell_0006.jpg\n",
+-+      "../Content/People/Colin_Powell/Colin_Powell_0007.jpg\n",
+-+      "../Content/People/Colin_Powell/Colin_Powell_0008.jpg\n",
+-+      "../Content/People/Colin_Powell/Colin_Powell_0009.jpg\n",
+-+      "../Content/People/Colin_Powell/Colin_Powell_0010.jpg\n",
+-+      "../Content/People/Colin_Powell/Colin_Powell_0011.jpg\n",
+-+      "../Content/People/Colin_Powell/Colin_Powell_0012.jpg\n",
+-+      "../Content/People/Colin_Powell/Colin_Powell_0013.jpg\n",
+-+      "../Content/People/Colin_Powell/Colin_Powell_0014.jpg\n",
+-+      "../Content/People/Colin_Powell/Colin_Powell_0015.jpg\n",
+-+      "../Content/People/Colin_Powell/Colin_Powell_0016.jpg\n",
+-+      "../Content/People/Colin_Powell/Colin_Powell_0017.jpg\n",
+-+      "../Content/People/Colin_Powell/Colin_Powell_0018.jpg\n",
+-+      "../Content/People/Colin_Powell/Colin_Powell_0019.jpg\n",
+-+      "../Content/People/Colin_Powell/Colin_Powell_0020.jpg\n",
+-+      "../Content/People/Donald_Rumsfeld/Donald_Rumsfeld_0001.jpg\n",
+-+      "../Content/People/Donald_Rumsfeld/Donald_Rumsfeld_0002.jpg\n",
+-+      "../Content/People/Donald_Rumsfeld/Donald_Rumsfeld_0003.jpg\n",
+-+      "../Content/People/Donald_Rumsfeld/Donald_Rumsfeld_0004.jpg\n",
+-+      "../Content/People/Donald_Rumsfeld/Donald_Rumsfeld_0005.jpg\n",
+-+      "../Content/People/Donald_Rumsfeld/Donald_Rumsfeld_0006.jpg\n",
+-+      "../Content/People/Donald_Rumsfeld/Donald_Rumsfeld_0007.jpg\n",
+-+      "../Content/People/Donald_Rumsfeld/Donald_Rumsfeld_0008.jpg\n",
+-+      "../Content/People/Donald_Rumsfeld/Donald_Rumsfeld_0009.jpg\n",
+-+      "../Content/People/Donald_Rumsfeld/Donald_Rumsfeld_0010.jpg\n",
+-+      "../Content/People/Donald_Rumsfeld/Donald_Rumsfeld_0011.jpg\n",
+-+      "../Content/People/Donald_Rumsfeld/Donald_Rumsfeld_0012.jpg\n",
+-+      "../Content/People/Donald_Rumsfeld/Donald_Rumsfeld_0013.jpg\n",
+-+      "../Content/People/Donald_Rumsfeld/Donald_Rumsfeld_0014.jpg\n",
+-+      "../Content/People/Donald_Rumsfeld/Donald_Rumsfeld_0015.jpg\n",
+-+      "../Content/People/Donald_Rumsfeld/Donald_Rumsfeld_0016.jpg\n",
+-+      "../Content/People/Donald_Rumsfeld/Donald_Rumsfeld_0017.jpg\n",
+-+      "../Content/People/Donald_Rumsfeld/Donald_Rumsfeld_0018.jpg\n",
+-+      "../Content/People/Donald_Rumsfeld/Donald_Rumsfeld_0019.jpg\n",
+-+      "../Content/People/Donald_Rumsfeld/Donald_Rumsfeld_0020.jpg\n",
+-+      "../Content/People/Gerhard_Schroeder/Gerhard_Schroeder_0001.jpg\n",
+-+      "../Content/People/Gerhard_Schroeder/Gerhard_Schroeder_0002.jpg\n",
+-+      "../Content/People/Gerhard_Schroeder/Gerhard_Schroeder_0003.jpg\n",
+-+      "../Content/People/Gerhard_Schroeder/Gerhard_Schroeder_0004.jpg\n",
+-+      "../Content/People/Gerhard_Schroeder/Gerhard_Schroeder_0005.jpg\n",
+-+      "../Content/People/Gerhard_Schroeder/Gerhard_Schroeder_0006.jpg\n",
+-+      "../Content/People/Gerhard_Schroeder/Gerhard_Schroeder_0007.jpg\n",
+-+      "../Content/People/Gerhard_Schroeder/Gerhard_Schroeder_0008.jpg\n",
+-+      "../Content/People/Gerhard_Schroeder/Gerhard_Schroeder_0009.jpg\n",
+-+      "../Content/People/Gerhard_Schroeder/Gerhard_Schroeder_0010.jpg\n",
+-+      "../Content/People/Gerhard_Schroeder/Gerhard_Schroeder_0011.jpg\n",
+-+      "../Content/People/Gerhard_Schroeder/Gerhard_Schroeder_0012.jpg\n",
+-+      "../Content/People/Gerhard_Schroeder/Gerhard_Schroeder_0013.jpg\n",
+-+      "../Content/People/Gerhard_Schroeder/Gerhard_Schroeder_0014.jpg\n",
+-+      "../Content/People/Gerhard_Schroeder/Gerhard_Schroeder_0015.jpg\n",
+-+      "../Content/People/Gerhard_Schroeder/Gerhard_Schroeder_0016.jpg\n",
+-+      "../Content/People/Gerhard_Schroeder/Gerhard_Schroeder_0017.jpg\n",
+-+      "../Content/People/Gerhard_Schroeder/Gerhard_Schroeder_0018.jpg\n",
+-+      "../Content/People/Gerhard_Schroeder/Gerhard_Schroeder_0019.jpg\n",
+-+      "../Content/People/Gerhard_Schroeder/Gerhard_Schroeder_0020.jpg\n",
+-+      "../Content/People/Hugo_Chavez/Hugo_Chavez_0001.jpg\n",
+-+      "../Content/People/Hugo_Chavez/Hugo_Chavez_0002.jpg\n",
+-+      "../Content/People/Hugo_Chavez/Hugo_Chavez_0003.jpg\n",
+-+      "../Content/People/Hugo_Chavez/Hugo_Chavez_0004.jpg\n",
+-+      "../Content/People/Hugo_Chavez/Hugo_Chavez_0005.jpg\n",
+-+      "../Content/People/Hugo_Chavez/Hugo_Chavez_0006.jpg\n",
+-+      "../Content/People/Hugo_Chavez/Hugo_Chavez_0007.jpg\n",
+-+      "../Content/People/Hugo_Chavez/Hugo_Chavez_0008.jpg\n",
+-+      "../Content/People/Hugo_Chavez/Hugo_Chavez_0009.jpg\n",
+-+      "../Content/People/Hugo_Chavez/Hugo_Chavez_0010.jpg\n",
+-+      "../Content/People/Hugo_Chavez/Hugo_Chavez_0011.jpg\n",
+-+      "../Content/People/Hugo_Chavez/Hugo_Chavez_0012.jpg\n",
+-+      "../Content/People/Hugo_Chavez/Hugo_Chavez_0013.jpg\n",
+-+      "../Content/People/Hugo_Chavez/Hugo_Chavez_0014.jpg\n",
+-+      "../Content/People/Hugo_Chavez/Hugo_Chavez_0015.jpg\n",
+-+      "../Content/People/Hugo_Chavez/Hugo_Chavez_0016.jpg\n",
+-+      "../Content/People/Hugo_Chavez/Hugo_Chavez_0017.jpg\n",
+-+      "../Content/People/Hugo_Chavez/Hugo_Chavez_0018.jpg\n",
+-+      "../Content/People/Hugo_Chavez/Hugo_Chavez_0019.jpg\n",
+-+      "../Content/People/Hugo_Chavez/Hugo_Chavez_0020.jpg\n",
+-+      "../Content/People/Husha/0.jpg\n",
+-+      "../Content/People/Husha/1.jpg\n",
+-+      "../Content/People/Husha/10.jpg\n",
+-+      "../Content/People/Husha/11.jpg\n",
+-+      "../Content/People/Husha/12.jpg\n",
+-+      "../Content/People/Husha/13.jpg\n",
+-+      "../Content/People/Husha/14.jpg\n",
+-+      "../Content/People/Husha/15.jpg\n",
+-+      "../Content/People/Husha/16.jpg\n",
+-+      "../Content/People/Husha/17.jpg\n",
+-+      "../Content/People/Husha/18.jpg\n",
+-+      "../Content/People/Husha/19.jpg\n",
+-+      "../Content/People/Husha/2.jpg\n",
+-+      "../Content/People/Husha/20.jpg\n",
+-+      "../Content/People/Husha/21.jpg\n",
+-+      "../Content/People/Husha/22.jpg\n",
+-+      "Unable to align \"../Content/People/Husha/22.jpg\"\n",
+-+      "../Content/People/Husha/23.jpg\n",
+-+      "Unable to align \"../Content/People/Husha/23.jpg\"\n",
+-+      "../Content/People/Husha/24.jpg\n",
+-+      "Unable to align \"../Content/People/Husha/24.jpg\"\n",
+-+      "../Content/People/Husha/25.jpg\n",
+-+      "Unable to align \"../Content/People/Husha/25.jpg\"\n",
+-+      "../Content/People/Husha/26.jpg\n",
+-+      "Unable to align \"../Content/People/Husha/26.jpg\"\n",
+-+      "../Content/People/Husha/27.jpg\n",
+-+      "Unable to align \"../Content/People/Husha/27.jpg\"\n",
+-+      "../Content/People/Husha/28.jpg\n",
+-+      "Unable to align \"../Content/People/Husha/28.jpg\"\n",
+-+      "../Content/People/Husha/29.jpg\n",
+-+      "../Content/People/Husha/3.jpg\n",
+-+      "../Content/People/Husha/30.jpg\n",
+-+      "../Content/People/Husha/31.jpg\n",
+-+      "../Content/People/Husha/32.jpg\n",
+-+      "../Content/People/Husha/33.jpg\n",
+-+      "../Content/People/Husha/34.jpg\n",
+-+      "../Content/People/Husha/35.jpg\n",
+-+      "../Content/People/Husha/36.jpg\n",
+-+      "../Content/People/Husha/37.jpg\n",
+-+      "../Content/People/Husha/38.jpg\n",
+-+      "../Content/People/Husha/39.jpg\n",
+-+      "../Content/People/Husha/4.jpg\n",
+-+      "../Content/People/Husha/40.jpg\n",
+-+      "../Content/People/Husha/41.jpg\n",
+-+      "../Content/People/Husha/42.jpg\n",
+-+      "../Content/People/Husha/43.jpg\n",
+-+      "../Content/People/Husha/44.jpg\n",
+-+      "../Content/People/Husha/45.jpg\n",
+-+      "../Content/People/Husha/46.jpg\n",
+-+      "../Content/People/Husha/47.jpg\n",
+-+      "../Content/People/Husha/48.jpg\n",
+-+      "../Content/People/Husha/49.jpg\n",
+-+      "../Content/People/Husha/5.jpg\n",
+-+      "../Content/People/Husha/50.jpg\n",
+-+      "../Content/People/Husha/51.jpg\n",
+-+      "../Content/People/Husha/52.jpg\n",
+-+      "../Content/People/Husha/53.jpg\n",
+-+      "../Content/People/Husha/54.jpg\n",
+-+      "../Content/People/Husha/55.jpg\n",
+-+      "../Content/People/Husha/56.jpg\n",
+-+      "../Content/People/Husha/57.jpg\n",
+-+      "../Content/People/Husha/58.jpg\n",
+-+      "../Content/People/Husha/59.jpg\n",
+-+      "../Content/People/Husha/6.jpg\n",
+-+      "../Content/People/Husha/7.jpg\n",
+-+      "../Content/People/Husha/8.jpg\n",
+-+      "../Content/People/Husha/9.jpg\n",
+-+      "../Content/People/Jean_Chretien/Jean_Chretien_0001.jpg\n",
+-+      "../Content/People/Jean_Chretien/Jean_Chretien_0002.jpg\n",
+-+      "../Content/People/Jean_Chretien/Jean_Chretien_0003.jpg\n",
+-+      "../Content/People/Jean_Chretien/Jean_Chretien_0004.jpg\n",
+-+      "../Content/People/Jean_Chretien/Jean_Chretien_0005.jpg\n",
+-+      "../Content/People/Jean_Chretien/Jean_Chretien_0006.jpg\n",
+-+      "../Content/People/Jean_Chretien/Jean_Chretien_0007.jpg\n",
+-+      "../Content/People/Jean_Chretien/Jean_Chretien_0008.jpg\n",
+-+      "../Content/People/Jean_Chretien/Jean_Chretien_0009.jpg\n",
+-+      "../Content/People/Jean_Chretien/Jean_Chretien_0010.jpg\n",
+-+      "../Content/People/Jean_Chretien/Jean_Chretien_0011.jpg\n",
+-+      "../Content/People/Jean_Chretien/Jean_Chretien_0012.jpg\n",
+-+      "../Content/People/Jean_Chretien/Jean_Chretien_0013.jpg\n",
+-+      "../Content/People/Jean_Chretien/Jean_Chretien_0014.jpg\n",
+-+      "../Content/People/Jean_Chretien/Jean_Chretien_0015.jpg\n",
+-+      "../Content/People/Jean_Chretien/Jean_Chretien_0016.jpg\n",
+-+      "../Content/People/Jean_Chretien/Jean_Chretien_0017.jpg\n",
+-+      "../Content/People/Jean_Chretien/Jean_Chretien_0018.jpg\n",
+-+      "../Content/People/Jean_Chretien/Jean_Chretien_0019.jpg\n",
+-+      "../Content/People/Jean_Chretien/Jean_Chretien_0020.jpg\n",
+-+      "../Content/People/John_Ashcroft/John_Ashcroft_0001.jpg\n",
+-+      "../Content/People/John_Ashcroft/John_Ashcroft_0002.jpg\n",
+-+      "../Content/People/John_Ashcroft/John_Ashcroft_0003.jpg\n",
+-+      "../Content/People/John_Ashcroft/John_Ashcroft_0004.jpg\n",
+-+      "../Content/People/John_Ashcroft/John_Ashcroft_0005.jpg\n",
+-+      "../Content/People/John_Ashcroft/John_Ashcroft_0006.jpg\n",
+-+      "../Content/People/John_Ashcroft/John_Ashcroft_0007.jpg\n",
+-+      "../Content/People/John_Ashcroft/John_Ashcroft_0008.jpg\n",
+-+      "../Content/People/John_Ashcroft/John_Ashcroft_0009.jpg\n",
+-+      "../Content/People/John_Ashcroft/John_Ashcroft_0010.jpg\n",
+-+      "../Content/People/John_Ashcroft/John_Ashcroft_0011.jpg\n",
+-+      "../Content/People/John_Ashcroft/John_Ashcroft_0012.jpg\n",
+-+      "../Content/People/John_Ashcroft/John_Ashcroft_0013.jpg\n",
+-+      "../Content/People/John_Ashcroft/John_Ashcroft_0014.jpg\n",
+-+      "../Content/People/John_Ashcroft/John_Ashcroft_0015.jpg\n",
+-+      "../Content/People/John_Ashcroft/John_Ashcroft_0016.jpg\n",
+-+      "../Content/People/John_Ashcroft/John_Ashcroft_0017.jpg\n",
+-+      "../Content/People/John_Ashcroft/John_Ashcroft_0018.jpg\n",
+-+      "../Content/People/John_Ashcroft/John_Ashcroft_0019.jpg\n",
+-+      "../Content/People/John_Ashcroft/John_Ashcroft_0020.jpg\n",
+-+      "../Content/People/Junichiro_Koizumi/Junichiro_Koizumi_0001.jpg\n",
+-+      "../Content/People/Junichiro_Koizumi/Junichiro_Koizumi_0002.jpg\n",
+-+      "../Content/People/Junichiro_Koizumi/Junichiro_Koizumi_0003.jpg\n",
+-+      "../Content/People/Junichiro_Koizumi/Junichiro_Koizumi_0004.jpg\n",
+-+      "../Content/People/Junichiro_Koizumi/Junichiro_Koizumi_0005.jpg\n",
+-+      "../Content/People/Junichiro_Koizumi/Junichiro_Koizumi_0006.jpg\n",
+-+      "../Content/People/Junichiro_Koizumi/Junichiro_Koizumi_0007.jpg\n",
+-+      "../Content/People/Junichiro_Koizumi/Junichiro_Koizumi_0008.jpg\n",
+-+      "../Content/People/Junichiro_Koizumi/Junichiro_Koizumi_0009.jpg\n",
+-+      "../Content/People/Junichiro_Koizumi/Junichiro_Koizumi_0010.jpg\n",
+-+      "../Content/People/Junichiro_Koizumi/Junichiro_Koizumi_0011.jpg\n",
+-+      "../Content/People/Junichiro_Koizumi/Junichiro_Koizumi_0012.jpg\n",
+-+      "../Content/People/Junichiro_Koizumi/Junichiro_Koizumi_0013.jpg\n",
+-+      "../Content/People/Junichiro_Koizumi/Junichiro_Koizumi_0014.jpg\n",
+-+      "../Content/People/Junichiro_Koizumi/Junichiro_Koizumi_0015.jpg\n",
+-+      "../Content/People/Junichiro_Koizumi/Junichiro_Koizumi_0016.jpg\n",
+-+      "../Content/People/Junichiro_Koizumi/Junichiro_Koizumi_0017.jpg\n",
+-+      "../Content/People/Junichiro_Koizumi/Junichiro_Koizumi_0018.jpg\n",
+-+      "../Content/People/Junichiro_Koizumi/Junichiro_Koizumi_0019.jpg\n",
+-+      "../Content/People/Junichiro_Koizumi/Junichiro_Koizumi_0020.jpg\n",
+-+      "../Content/People/Tony_Blair/Tony_Blair_0001.jpg\n",
+-+      "../Content/People/Tony_Blair/Tony_Blair_0002.jpg\n",
+-+      "../Content/People/Tony_Blair/Tony_Blair_0003.jpg\n",
+-+      "../Content/People/Tony_Blair/Tony_Blair_0004.jpg\n",
+-+      "../Content/People/Tony_Blair/Tony_Blair_0005.jpg\n",
+-+      "../Content/People/Tony_Blair/Tony_Blair_0006.jpg\n",
+-+      "../Content/People/Tony_Blair/Tony_Blair_0007.jpg\n",
+-+      "../Content/People/Tony_Blair/Tony_Blair_0008.jpg\n",
+-+      "../Content/People/Tony_Blair/Tony_Blair_0009.jpg\n",
+-+      "../Content/People/Tony_Blair/Tony_Blair_0010.jpg\n",
+-+      "../Content/People/Tony_Blair/Tony_Blair_0011.jpg\n",
+-+      "../Content/People/Tony_Blair/Tony_Blair_0012.jpg\n",
+-+      "../Content/People/Tony_Blair/Tony_Blair_0013.jpg\n",
+-+      "../Content/People/Tony_Blair/Tony_Blair_0014.jpg\n",
+-+      "../Content/People/Tony_Blair/Tony_Blair_0015.jpg\n",
+-+      "../Content/People/Tony_Blair/Tony_Blair_0016.jpg\n",
+-+      "../Content/People/Tony_Blair/Tony_Blair_0017.jpg\n",
+-+      "../Content/People/Tony_Blair/Tony_Blair_0018.jpg\n",
+-+      "../Content/People/Tony_Blair/Tony_Blair_0019.jpg\n",
+-+      "../Content/People/Tony_Blair/Tony_Blair_0020.jpg\n",
+-+      "../Content/People/Xiaochuan/0.jpg\n",
+-+      "../Content/People/Xiaochuan/1.jpg\n",
+-+      "../Content/People/Xiaochuan/10.jpg\n",
+-+      "../Content/People/Xiaochuan/11.jpg\n",
+-+      "../Content/People/Xiaochuan/12.jpg\n",
+-+      "../Content/People/Xiaochuan/13.jpg\n",
+-+      "../Content/People/Xiaochuan/14.jpg\n",
+-+      "../Content/People/Xiaochuan/15.jpg\n",
+-+      "../Content/People/Xiaochuan/16.jpg\n",
+-+      "../Content/People/Xiaochuan/17.jpg\n",
+-+      "../Content/People/Xiaochuan/18.jpg\n",
+-+      "../Content/People/Xiaochuan/19.jpg\n",
+-+      "../Content/People/Xiaochuan/2.jpg\n",
+-+      "../Content/People/Xiaochuan/20.jpg\n",
+-+      "../Content/People/Xiaochuan/21.jpg\n",
+-+      "../Content/People/Xiaochuan/22.jpg\n",
+-+      "../Content/People/Xiaochuan/23.jpg\n",
+-+      "../Content/People/Xiaochuan/24.jpg\n",
+-+      "../Content/People/Xiaochuan/25.jpg\n",
+-+      "../Content/People/Xiaochuan/26.jpg\n",
+-+      "../Content/People/Xiaochuan/27.jpg\n",
+-+      "../Content/People/Xiaochuan/28.jpg\n",
+-+      "../Content/People/Xiaochuan/29.jpg\n",
+-+      "../Content/People/Xiaochuan/3.jpg\n",
+-+      "../Content/People/Xiaochuan/30.jpg\n",
+-+      "../Content/People/Xiaochuan/31.jpg\n",
+-+      "../Content/People/Xiaochuan/32.jpg\n",
+-+      "../Content/People/Xiaochuan/33.jpg\n",
+-+      "../Content/People/Xiaochuan/34.jpg\n",
+-+      "../Content/People/Xiaochuan/35.jpg\n",
+-+      "../Content/People/Xiaochuan/36.jpg\n",
+-+      "../Content/People/Xiaochuan/37.jpg\n",
+-+      "../Content/People/Xiaochuan/38.jpg\n",
+-+      "../Content/People/Xiaochuan/39.jpg\n",
+-+      "../Content/People/Xiaochuan/4.jpg\n",
+-+      "../Content/People/Xiaochuan/40.jpg\n",
+-+      "../Content/People/Xiaochuan/41.jpg\n",
+-+      "../Content/People/Xiaochuan/42.jpg\n",
+-+      "../Content/People/Xiaochuan/43.jpg\n",
+-+      "../Content/People/Xiaochuan/44.jpg\n",
+-+      "../Content/People/Xiaochuan/45.jpg\n",
+-+      "../Content/People/Xiaochuan/46.jpg\n",
+-+      "../Content/People/Xiaochuan/47.jpg\n",
+-+      "../Content/People/Xiaochuan/48.jpg\n",
+-+      "../Content/People/Xiaochuan/49.jpg\n",
+-+      "../Content/People/Xiaochuan/5.jpg\n",
+-+      "../Content/People/Xiaochuan/50.jpg\n",
+-+      "../Content/People/Xiaochuan/51.jpg\n",
+-+      "../Content/People/Xiaochuan/52.jpg\n",
+-+      "../Content/People/Xiaochuan/53.jpg\n",
+-+      "../Content/People/Xiaochuan/54.jpg\n",
+-+      "../Content/People/Xiaochuan/55.jpg\n",
+-+      "../Content/People/Xiaochuan/56.jpg\n",
+-+      "../Content/People/Xiaochuan/57.jpg\n",
+-+      "../Content/People/Xiaochuan/58.jpg\n",
+-+      "../Content/People/Xiaochuan/59.jpg\n",
+-+      "../Content/People/Xiaochuan/6.jpg\n",
+-+      "../Content/People/Xiaochuan/7.jpg\n",
+-+      "../Content/People/Xiaochuan/8.jpg\n",
+-+      "../Content/People/Xiaochuan/9.jpg\n",
+-+      "Total number of images: 360\n",
+-+      "Number of successfully aligned images: 0\n",
+-+      "\n",
+-+      "\n",
+-+      "Starting to extract features\n",
+-+      "Total number of images: 340\n",
+-+      "Runnning forward pass on images\n"
++     "collapsed": false,
++     "deletable": true,
++@@ -243,386 +243,26 @@
++       "Loading network used to extract features\n",
++       "Metagraph file: model-20170321-222346.meta\n",
++       "Checkpoint file: model-20170321-222346.ckpt-80000\n",
++-      "../Content/People/Ariel_Sharon/Ariel_Sharon_0001.jpg\n",
++-      "../Content/People/Ariel_Sharon/Ariel_Sharon_0002.jpg\n",
++-      "../Content/People/Ariel_Sharon/Ariel_Sharon_0003.jpg\n",
++-      "../Content/People/Ariel_Sharon/Ariel_Sharon_0004.jpg\n",
++-      "../Content/People/Ariel_Sharon/Ariel_Sharon_0005.jpg\n",
++-      "../Content/People/Ariel_Sharon/Ariel_Sharon_0006.jpg\n",
++-      "../Content/People/Ariel_Sharon/Ariel_Sharon_0007.jpg\n",
++-      "../Content/People/Ariel_Sharon/Ariel_Sharon_0008.jpg\n",
++-      "../Content/People/Ariel_Sharon/Ariel_Sharon_0009.jpg\n",
++-      "../Content/People/Ariel_Sharon/Ariel_Sharon_0010.jpg\n",
++-      "../Content/People/Ariel_Sharon/Ariel_Sharon_0011.jpg\n",
++-      "../Content/People/Ariel_Sharon/Ariel_Sharon_0012.jpg\n",
++-      "../Content/People/Ariel_Sharon/Ariel_Sharon_0013.jpg\n",
++-      "../Content/People/Ariel_Sharon/Ariel_Sharon_0014.jpg\n",
++-      "../Content/People/Ariel_Sharon/Ariel_Sharon_0015.jpg\n",
++-      "../Content/People/Ariel_Sharon/Ariel_Sharon_0016.jpg\n",
++-      "../Content/People/Ariel_Sharon/Ariel_Sharon_0017.jpg\n",
++-      "../Content/People/Ariel_Sharon/Ariel_Sharon_0018.jpg\n",
++-      "../Content/People/Ariel_Sharon/Ariel_Sharon_0019.jpg\n",
++-      "../Content/People/Ariel_Sharon/Ariel_Sharon_0020.jpg\n",
++-      "../Content/People/Bicheng/0.jpg\n",
++-      "../Content/People/Bicheng/1.jpg\n",
++-      "../Content/People/Bicheng/10.jpg\n",
++-      "../Content/People/Bicheng/11.jpg\n",
++-      "../Content/People/Bicheng/12.jpg\n",
++-      "../Content/People/Bicheng/13.jpg\n",
++-      "../Content/People/Bicheng/14.jpg\n",
++-      "../Content/People/Bicheng/15.jpg\n",
++-      "../Content/People/Bicheng/16.jpg\n",
++-      "../Content/People/Bicheng/17.jpg\n",
++-      "../Content/People/Bicheng/18.jpg\n",
++-      "../Content/People/Bicheng/19.jpg\n",
++-      "../Content/People/Bicheng/2.jpg\n",
++-      "../Content/People/Bicheng/20.jpg\n",
++-      "../Content/People/Bicheng/21.jpg\n",
++-      "../Content/People/Bicheng/22.jpg\n",
++-      "../Content/People/Bicheng/23.jpg\n",
++-      "../Content/People/Bicheng/24.jpg\n",
++-      "../Content/People/Bicheng/25.jpg\n",
++-      "../Content/People/Bicheng/26.jpg\n",
++-      "../Content/People/Bicheng/27.jpg\n",
++-      "../Content/People/Bicheng/28.jpg\n",
++-      "../Content/People/Bicheng/29.jpg\n",
++-      "../Content/People/Bicheng/3.jpg\n",
++-      "../Content/People/Bicheng/30.jpg\n",
++-      "../Content/People/Bicheng/31.jpg\n",
++-      "../Content/People/Bicheng/32.jpg\n",
++-      "../Content/People/Bicheng/33.jpg\n",
++-      "../Content/People/Bicheng/34.jpg\n",
++-      "../Content/People/Bicheng/35.jpg\n",
++-      "../Content/People/Bicheng/36.jpg\n",
++-      "../Content/People/Bicheng/37.jpg\n",
++-      "../Content/People/Bicheng/38.jpg\n",
++-      "../Content/People/Bicheng/39.jpg\n",
++-      "../Content/People/Bicheng/4.jpg\n",
++-      "../Content/People/Bicheng/40.jpg\n",
++-      "../Content/People/Bicheng/41.jpg\n",
++-      "../Content/People/Bicheng/42.jpg\n",
++-      "../Content/People/Bicheng/43.jpg\n",
++-      "../Content/People/Bicheng/44.jpg\n",
++       "Unable to align \"../Content/People/Bicheng/44.jpg\"\n",
++-      "../Content/People/Bicheng/45.jpg\n",
++       "Unable to align \"../Content/People/Bicheng/45.jpg\"\n",
++-      "../Content/People/Bicheng/46.jpg\n",
++       "Unable to align \"../Content/People/Bicheng/46.jpg\"\n",
++-      "../Content/People/Bicheng/47.jpg\n",
++       "Unable to align \"../Content/People/Bicheng/47.jpg\"\n",
++-      "../Content/People/Bicheng/48.jpg\n",
++       "Unable to align \"../Content/People/Bicheng/48.jpg\"\n",
++-      "../Content/People/Bicheng/49.jpg\n",
++       "Unable to align \"../Content/People/Bicheng/49.jpg\"\n",
++-      "../Content/People/Bicheng/5.jpg\n",
++-      "../Content/People/Bicheng/50.jpg\n",
++       "Unable to align \"../Content/People/Bicheng/50.jpg\"\n",
++-      "../Content/People/Bicheng/51.jpg\n",
++       "Unable to align \"../Content/People/Bicheng/51.jpg\"\n",
++-      "../Content/People/Bicheng/52.jpg\n",
++       "Unable to align \"../Content/People/Bicheng/52.jpg\"\n",
++-      "../Content/People/Bicheng/53.jpg\n",
++       "Unable to align \"../Content/People/Bicheng/53.jpg\"\n",
++-      "../Content/People/Bicheng/54.jpg\n",
++       "Unable to align \"../Content/People/Bicheng/54.jpg\"\n",
++-      "../Content/People/Bicheng/55.jpg\n",
++       "Unable to align \"../Content/People/Bicheng/55.jpg\"\n",
++-      "../Content/People/Bicheng/56.jpg\n",
++       "Unable to align \"../Content/People/Bicheng/56.jpg\"\n",
++-      "../Content/People/Bicheng/57.jpg\n",
++-      "../Content/People/Bicheng/58.jpg\n",
++-      "../Content/People/Bicheng/59.jpg\n",
++-      "../Content/People/Bicheng/6.jpg\n",
++-      "../Content/People/Bicheng/7.jpg\n",
++-      "../Content/People/Bicheng/8.jpg\n",
++-      "../Content/People/Bicheng/9.jpg\n",
++-      "../Content/People/Colin_Powell/Colin_Powell_0001.jpg\n",
++-      "../Content/People/Colin_Powell/Colin_Powell_0002.jpg\n",
++-      "../Content/People/Colin_Powell/Colin_Powell_0003.jpg\n",
++-      "../Content/People/Colin_Powell/Colin_Powell_0004.jpg\n",
++-      "../Content/People/Colin_Powell/Colin_Powell_0005.jpg\n",
++-      "../Content/People/Colin_Powell/Colin_Powell_0006.jpg\n",
++-      "../Content/People/Colin_Powell/Colin_Powell_0007.jpg\n",
++-      "../Content/People/Colin_Powell/Colin_Powell_0008.jpg\n",
++-      "../Content/People/Colin_Powell/Colin_Powell_0009.jpg\n",
++-      "../Content/People/Colin_Powell/Colin_Powell_0010.jpg\n",
++-      "../Content/People/Colin_Powell/Colin_Powell_0011.jpg\n",
++-      "../Content/People/Colin_Powell/Colin_Powell_0012.jpg\n",
++-      "../Content/People/Colin_Powell/Colin_Powell_0013.jpg\n",
++-      "../Content/People/Colin_Powell/Colin_Powell_0014.jpg\n",
++-      "../Content/People/Colin_Powell/Colin_Powell_0015.jpg\n",
++-      "../Content/People/Colin_Powell/Colin_Powell_0016.jpg\n",
++-      "../Content/People/Colin_Powell/Colin_Powell_0017.jpg\n",
++-      "../Content/People/Colin_Powell/Colin_Powell_0018.jpg\n",
++-      "../Content/People/Colin_Powell/Colin_Powell_0019.jpg\n",
++-      "../Content/People/Colin_Powell/Colin_Powell_0020.jpg\n",
++-      "../Content/People/Donald_Rumsfeld/Donald_Rumsfeld_0001.jpg\n",
++-      "../Content/People/Donald_Rumsfeld/Donald_Rumsfeld_0002.jpg\n",
++-      "../Content/People/Donald_Rumsfeld/Donald_Rumsfeld_0003.jpg\n",
++-      "../Content/People/Donald_Rumsfeld/Donald_Rumsfeld_0004.jpg\n",
++-      "../Content/People/Donald_Rumsfeld/Donald_Rumsfeld_0005.jpg\n",
++-      "../Content/People/Donald_Rumsfeld/Donald_Rumsfeld_0006.jpg\n",
++-      "../Content/People/Donald_Rumsfeld/Donald_Rumsfeld_0007.jpg\n",
++-      "../Content/People/Donald_Rumsfeld/Donald_Rumsfeld_0008.jpg\n",
++-      "../Content/People/Donald_Rumsfeld/Donald_Rumsfeld_0009.jpg\n",
++-      "../Content/People/Donald_Rumsfeld/Donald_Rumsfeld_0010.jpg\n",
++-      "../Content/People/Donald_Rumsfeld/Donald_Rumsfeld_0011.jpg\n",
++-      "../Content/People/Donald_Rumsfeld/Donald_Rumsfeld_0012.jpg\n",
++-      "../Content/People/Donald_Rumsfeld/Donald_Rumsfeld_0013.jpg\n",
++-      "../Content/People/Donald_Rumsfeld/Donald_Rumsfeld_0014.jpg\n",
++-      "../Content/People/Donald_Rumsfeld/Donald_Rumsfeld_0015.jpg\n",
++-      "../Content/People/Donald_Rumsfeld/Donald_Rumsfeld_0016.jpg\n",
++-      "../Content/People/Donald_Rumsfeld/Donald_Rumsfeld_0017.jpg\n",
++-      "../Content/People/Donald_Rumsfeld/Donald_Rumsfeld_0018.jpg\n",
++-      "../Content/People/Donald_Rumsfeld/Donald_Rumsfeld_0019.jpg\n",
++-      "../Content/People/Donald_Rumsfeld/Donald_Rumsfeld_0020.jpg\n",
++-      "../Content/People/Gerhard_Schroeder/Gerhard_Schroeder_0001.jpg\n",
++-      "../Content/People/Gerhard_Schroeder/Gerhard_Schroeder_0002.jpg\n",
++-      "../Content/People/Gerhard_Schroeder/Gerhard_Schroeder_0003.jpg\n",
++-      "../Content/People/Gerhard_Schroeder/Gerhard_Schroeder_0004.jpg\n",
++-      "../Content/People/Gerhard_Schroeder/Gerhard_Schroeder_0005.jpg\n",
++-      "../Content/People/Gerhard_Schroeder/Gerhard_Schroeder_0006.jpg\n",
++-      "../Content/People/Gerhard_Schroeder/Gerhard_Schroeder_0007.jpg\n",
++-      "../Content/People/Gerhard_Schroeder/Gerhard_Schroeder_0008.jpg\n",
++-      "../Content/People/Gerhard_Schroeder/Gerhard_Schroeder_0009.jpg\n",
++-      "../Content/People/Gerhard_Schroeder/Gerhard_Schroeder_0010.jpg\n",
++-      "../Content/People/Gerhard_Schroeder/Gerhard_Schroeder_0011.jpg\n",
++-      "../Content/People/Gerhard_Schroeder/Gerhard_Schroeder_0012.jpg\n",
++-      "../Content/People/Gerhard_Schroeder/Gerhard_Schroeder_0013.jpg\n",
++-      "../Content/People/Gerhard_Schroeder/Gerhard_Schroeder_0014.jpg\n",
++-      "../Content/People/Gerhard_Schroeder/Gerhard_Schroeder_0015.jpg\n",
++-      "../Content/People/Gerhard_Schroeder/Gerhard_Schroeder_0016.jpg\n",
++-      "../Content/People/Gerhard_Schroeder/Gerhard_Schroeder_0017.jpg\n",
++-      "../Content/People/Gerhard_Schroeder/Gerhard_Schroeder_0018.jpg\n",
++-      "../Content/People/Gerhard_Schroeder/Gerhard_Schroeder_0019.jpg\n",
++-      "../Content/People/Gerhard_Schroeder/Gerhard_Schroeder_0020.jpg\n",
++-      "../Content/People/Hugo_Chavez/Hugo_Chavez_0001.jpg\n",
++-      "../Content/People/Hugo_Chavez/Hugo_Chavez_0002.jpg\n",
++-      "../Content/People/Hugo_Chavez/Hugo_Chavez_0003.jpg\n",
++-      "../Content/People/Hugo_Chavez/Hugo_Chavez_0004.jpg\n",
++-      "../Content/People/Hugo_Chavez/Hugo_Chavez_0005.jpg\n",
++-      "../Content/People/Hugo_Chavez/Hugo_Chavez_0006.jpg\n",
++-      "../Content/People/Hugo_Chavez/Hugo_Chavez_0007.jpg\n",
++-      "../Content/People/Hugo_Chavez/Hugo_Chavez_0008.jpg\n",
++-      "../Content/People/Hugo_Chavez/Hugo_Chavez_0009.jpg\n",
++-      "../Content/People/Hugo_Chavez/Hugo_Chavez_0010.jpg\n",
++-      "../Content/People/Hugo_Chavez/Hugo_Chavez_0011.jpg\n",
++-      "../Content/People/Hugo_Chavez/Hugo_Chavez_0012.jpg\n",
++-      "../Content/People/Hugo_Chavez/Hugo_Chavez_0013.jpg\n",
++-      "../Content/People/Hugo_Chavez/Hugo_Chavez_0014.jpg\n",
++-      "../Content/People/Hugo_Chavez/Hugo_Chavez_0015.jpg\n",
++-      "../Content/People/Hugo_Chavez/Hugo_Chavez_0016.jpg\n",
++-      "../Content/People/Hugo_Chavez/Hugo_Chavez_0017.jpg\n",
++-      "../Content/People/Hugo_Chavez/Hugo_Chavez_0018.jpg\n",
++-      "../Content/People/Hugo_Chavez/Hugo_Chavez_0019.jpg\n",
++-      "../Content/People/Hugo_Chavez/Hugo_Chavez_0020.jpg\n",
++-      "../Content/People/Husha/0.jpg\n",
++-      "../Content/People/Husha/1.jpg\n",
++-      "../Content/People/Husha/10.jpg\n",
++-      "../Content/People/Husha/11.jpg\n",
++-      "../Content/People/Husha/12.jpg\n",
++-      "../Content/People/Husha/13.jpg\n",
++-      "../Content/People/Husha/14.jpg\n",
++-      "../Content/People/Husha/15.jpg\n",
++-      "../Content/People/Husha/16.jpg\n",
++-      "../Content/People/Husha/17.jpg\n",
++-      "../Content/People/Husha/18.jpg\n",
++-      "../Content/People/Husha/19.jpg\n",
++-      "../Content/People/Husha/2.jpg\n",
++-      "../Content/People/Husha/20.jpg\n",
++-      "../Content/People/Husha/21.jpg\n",
++-      "../Content/People/Husha/22.jpg\n",
++       "Unable to align \"../Content/People/Husha/22.jpg\"\n",
++-      "../Content/People/Husha/23.jpg\n",
++       "Unable to align \"../Content/People/Husha/23.jpg\"\n",
++-      "../Content/People/Husha/24.jpg\n",
++       "Unable to align \"../Content/People/Husha/24.jpg\"\n",
++-      "../Content/People/Husha/25.jpg\n",
++       "Unable to align \"../Content/People/Husha/25.jpg\"\n",
++-      "../Content/People/Husha/26.jpg\n",
++       "Unable to align \"../Content/People/Husha/26.jpg\"\n",
++-      "../Content/People/Husha/27.jpg\n",
++       "Unable to align \"../Content/People/Husha/27.jpg\"\n",
++-      "../Content/People/Husha/28.jpg\n",
++       "Unable to align \"../Content/People/Husha/28.jpg\"\n",
++-      "../Content/People/Husha/29.jpg\n",
++-      "../Content/People/Husha/3.jpg\n",
++-      "../Content/People/Husha/30.jpg\n",
++-      "../Content/People/Husha/31.jpg\n",
++-      "../Content/People/Husha/32.jpg\n",
++-      "../Content/People/Husha/33.jpg\n",
++-      "../Content/People/Husha/34.jpg\n",
++-      "../Content/People/Husha/35.jpg\n",
++-      "../Content/People/Husha/36.jpg\n",
++-      "../Content/People/Husha/37.jpg\n",
++-      "../Content/People/Husha/38.jpg\n",
++-      "../Content/People/Husha/39.jpg\n",
++-      "../Content/People/Husha/4.jpg\n",
++-      "../Content/People/Husha/40.jpg\n",
++-      "../Content/People/Husha/41.jpg\n",
++-      "../Content/People/Husha/42.jpg\n",
++-      "../Content/People/Husha/43.jpg\n",
++-      "../Content/People/Husha/44.jpg\n",
++-      "../Content/People/Husha/45.jpg\n",
++-      "../Content/People/Husha/46.jpg\n",
++-      "../Content/People/Husha/47.jpg\n",
++-      "../Content/People/Husha/48.jpg\n",
++-      "../Content/People/Husha/49.jpg\n",
++-      "../Content/People/Husha/5.jpg\n",
++-      "../Content/People/Husha/50.jpg\n",
++-      "../Content/People/Husha/51.jpg\n",
++-      "../Content/People/Husha/52.jpg\n",
++-      "../Content/People/Husha/53.jpg\n",
++-      "../Content/People/Husha/54.jpg\n",
++-      "../Content/People/Husha/55.jpg\n",
++-      "../Content/People/Husha/56.jpg\n",
++-      "../Content/People/Husha/57.jpg\n",
++-      "../Content/People/Husha/58.jpg\n",
++-      "../Content/People/Husha/59.jpg\n",
++-      "../Content/People/Husha/6.jpg\n",
++-      "../Content/People/Husha/7.jpg\n",
++-      "../Content/People/Husha/8.jpg\n",
++-      "../Content/People/Husha/9.jpg\n",
++-      "../Content/People/Jean_Chretien/Jean_Chretien_0001.jpg\n",
++-      "../Content/People/Jean_Chretien/Jean_Chretien_0002.jpg\n",
++-      "../Content/People/Jean_Chretien/Jean_Chretien_0003.jpg\n",
++-      "../Content/People/Jean_Chretien/Jean_Chretien_0004.jpg\n",
++-      "../Content/People/Jean_Chretien/Jean_Chretien_0005.jpg\n",
++-      "../Content/People/Jean_Chretien/Jean_Chretien_0006.jpg\n",
++-      "../Content/People/Jean_Chretien/Jean_Chretien_0007.jpg\n",
++-      "../Content/People/Jean_Chretien/Jean_Chretien_0008.jpg\n",
++-      "../Content/People/Jean_Chretien/Jean_Chretien_0009.jpg\n",
++-      "../Content/People/Jean_Chretien/Jean_Chretien_0010.jpg\n",
++-      "../Content/People/Jean_Chretien/Jean_Chretien_0011.jpg\n",
++-      "../Content/People/Jean_Chretien/Jean_Chretien_0012.jpg\n",
++-      "../Content/People/Jean_Chretien/Jean_Chretien_0013.jpg\n",
++-      "../Content/People/Jean_Chretien/Jean_Chretien_0014.jpg\n",
++-      "../Content/People/Jean_Chretien/Jean_Chretien_0015.jpg\n",
++-      "../Content/People/Jean_Chretien/Jean_Chretien_0016.jpg\n",
++-      "../Content/People/Jean_Chretien/Jean_Chretien_0017.jpg\n",
++-      "../Content/People/Jean_Chretien/Jean_Chretien_0018.jpg\n",
++-      "../Content/People/Jean_Chretien/Jean_Chretien_0019.jpg\n",
++-      "../Content/People/Jean_Chretien/Jean_Chretien_0020.jpg\n",
++-      "../Content/People/John_Ashcroft/John_Ashcroft_0001.jpg\n",
++-      "../Content/People/John_Ashcroft/John_Ashcroft_0002.jpg\n",
++-      "../Content/People/John_Ashcroft/John_Ashcroft_0003.jpg\n",
++-      "../Content/People/John_Ashcroft/John_Ashcroft_0004.jpg\n",
++-      "../Content/People/John_Ashcroft/John_Ashcroft_0005.jpg\n",
++-      "../Content/People/John_Ashcroft/John_Ashcroft_0006.jpg\n",
++-      "../Content/People/John_Ashcroft/John_Ashcroft_0007.jpg\n",
++-      "../Content/People/John_Ashcroft/John_Ashcroft_0008.jpg\n",
++-      "../Content/People/John_Ashcroft/John_Ashcroft_0009.jpg\n",
++-      "../Content/People/John_Ashcroft/John_Ashcroft_0010.jpg\n",
++-      "../Content/People/John_Ashcroft/John_Ashcroft_0011.jpg\n",
++-      "../Content/People/John_Ashcroft/John_Ashcroft_0012.jpg\n",
++-      "../Content/People/John_Ashcroft/John_Ashcroft_0013.jpg\n",
++-      "../Content/People/John_Ashcroft/John_Ashcroft_0014.jpg\n",
++-      "../Content/People/John_Ashcroft/John_Ashcroft_0015.jpg\n",
++-      "../Content/People/John_Ashcroft/John_Ashcroft_0016.jpg\n",
++-      "../Content/People/John_Ashcroft/John_Ashcroft_0017.jpg\n",
++-      "../Content/People/John_Ashcroft/John_Ashcroft_0018.jpg\n",
++-      "../Content/People/John_Ashcroft/John_Ashcroft_0019.jpg\n",
++-      "../Content/People/John_Ashcroft/John_Ashcroft_0020.jpg\n",
++-      "../Content/People/Junichiro_Koizumi/Junichiro_Koizumi_0001.jpg\n",
++-      "../Content/People/Junichiro_Koizumi/Junichiro_Koizumi_0002.jpg\n",
++-      "../Content/People/Junichiro_Koizumi/Junichiro_Koizumi_0003.jpg\n",
++-      "../Content/People/Junichiro_Koizumi/Junichiro_Koizumi_0004.jpg\n",
++-      "../Content/People/Junichiro_Koizumi/Junichiro_Koizumi_0005.jpg\n",
++-      "../Content/People/Junichiro_Koizumi/Junichiro_Koizumi_0006.jpg\n",
++-      "../Content/People/Junichiro_Koizumi/Junichiro_Koizumi_0007.jpg\n",
++-      "../Content/People/Junichiro_Koizumi/Junichiro_Koizumi_0008.jpg\n",
++-      "../Content/People/Junichiro_Koizumi/Junichiro_Koizumi_0009.jpg\n",
++-      "../Content/People/Junichiro_Koizumi/Junichiro_Koizumi_0010.jpg\n",
++-      "../Content/People/Junichiro_Koizumi/Junichiro_Koizumi_0011.jpg\n",
++-      "../Content/People/Junichiro_Koizumi/Junichiro_Koizumi_0012.jpg\n",
++-      "../Content/People/Junichiro_Koizumi/Junichiro_Koizumi_0013.jpg\n",
++-      "../Content/People/Junichiro_Koizumi/Junichiro_Koizumi_0014.jpg\n",
++-      "../Content/People/Junichiro_Koizumi/Junichiro_Koizumi_0015.jpg\n",
++-      "../Content/People/Junichiro_Koizumi/Junichiro_Koizumi_0016.jpg\n",
++-      "../Content/People/Junichiro_Koizumi/Junichiro_Koizumi_0017.jpg\n",
++-      "../Content/People/Junichiro_Koizumi/Junichiro_Koizumi_0018.jpg\n",
++-      "../Content/People/Junichiro_Koizumi/Junichiro_Koizumi_0019.jpg\n",
++-      "../Content/People/Junichiro_Koizumi/Junichiro_Koizumi_0020.jpg\n",
++-      "../Content/People/Tony_Blair/Tony_Blair_0001.jpg\n",
++-      "../Content/People/Tony_Blair/Tony_Blair_0002.jpg\n",
++-      "../Content/People/Tony_Blair/Tony_Blair_0003.jpg\n",
++-      "../Content/People/Tony_Blair/Tony_Blair_0004.jpg\n",
++-      "../Content/People/Tony_Blair/Tony_Blair_0005.jpg\n",
++-      "../Content/People/Tony_Blair/Tony_Blair_0006.jpg\n",
++-      "../Content/People/Tony_Blair/Tony_Blair_0007.jpg\n",
++-      "../Content/People/Tony_Blair/Tony_Blair_0008.jpg\n",
++-      "../Content/People/Tony_Blair/Tony_Blair_0009.jpg\n",
++-      "../Content/People/Tony_Blair/Tony_Blair_0010.jpg\n",
++-      "../Content/People/Tony_Blair/Tony_Blair_0011.jpg\n",
++-      "../Content/People/Tony_Blair/Tony_Blair_0012.jpg\n",
++-      "../Content/People/Tony_Blair/Tony_Blair_0013.jpg\n",
++-      "../Content/People/Tony_Blair/Tony_Blair_0014.jpg\n",
++-      "../Content/People/Tony_Blair/Tony_Blair_0015.jpg\n",
++-      "../Content/People/Tony_Blair/Tony_Blair_0016.jpg\n",
++-      "../Content/People/Tony_Blair/Tony_Blair_0017.jpg\n",
++-      "../Content/People/Tony_Blair/Tony_Blair_0018.jpg\n",
++-      "../Content/People/Tony_Blair/Tony_Blair_0019.jpg\n",
++-      "../Content/People/Tony_Blair/Tony_Blair_0020.jpg\n",
++-      "../Content/People/Xiaochuan/0.jpg\n",
++-      "../Content/People/Xiaochuan/1.jpg\n",
++-      "../Content/People/Xiaochuan/10.jpg\n",
++-      "../Content/People/Xiaochuan/11.jpg\n",
++-      "../Content/People/Xiaochuan/12.jpg\n",
++-      "../Content/People/Xiaochuan/13.jpg\n",
++-      "../Content/People/Xiaochuan/14.jpg\n",
++-      "../Content/People/Xiaochuan/15.jpg\n",
++-      "../Content/People/Xiaochuan/16.jpg\n",
++-      "../Content/People/Xiaochuan/17.jpg\n",
++-      "../Content/People/Xiaochuan/18.jpg\n",
++-      "../Content/People/Xiaochuan/19.jpg\n",
++-      "../Content/People/Xiaochuan/2.jpg\n",
++-      "../Content/People/Xiaochuan/20.jpg\n",
++-      "../Content/People/Xiaochuan/21.jpg\n",
++-      "../Content/People/Xiaochuan/22.jpg\n",
++-      "../Content/People/Xiaochuan/23.jpg\n",
++-      "../Content/People/Xiaochuan/24.jpg\n",
++-      "../Content/People/Xiaochuan/25.jpg\n",
++-      "../Content/People/Xiaochuan/26.jpg\n",
++-      "../Content/People/Xiaochuan/27.jpg\n",
++-      "../Content/People/Xiaochuan/28.jpg\n",
++-      "../Content/People/Xiaochuan/29.jpg\n",
++-      "../Content/People/Xiaochuan/3.jpg\n",
++-      "../Content/People/Xiaochuan/30.jpg\n",
++-      "../Content/People/Xiaochuan/31.jpg\n",
++-      "../Content/People/Xiaochuan/32.jpg\n",
++-      "../Content/People/Xiaochuan/33.jpg\n",
++-      "../Content/People/Xiaochuan/34.jpg\n",
++-      "../Content/People/Xiaochuan/35.jpg\n",
++-      "../Content/People/Xiaochuan/36.jpg\n",
++-      "../Content/People/Xiaochuan/37.jpg\n",
++-      "../Content/People/Xiaochuan/38.jpg\n",
++-      "../Content/People/Xiaochuan/39.jpg\n",
++-      "../Content/People/Xiaochuan/4.jpg\n",
++-      "../Content/People/Xiaochuan/40.jpg\n",
++-      "../Content/People/Xiaochuan/41.jpg\n",
++-      "../Content/People/Xiaochuan/42.jpg\n",
++-      "../Content/People/Xiaochuan/43.jpg\n",
++-      "../Content/People/Xiaochuan/44.jpg\n",
++-      "../Content/People/Xiaochuan/45.jpg\n",
++-      "../Content/People/Xiaochuan/46.jpg\n",
++-      "../Content/People/Xiaochuan/47.jpg\n",
++-      "../Content/People/Xiaochuan/48.jpg\n",
++-      "../Content/People/Xiaochuan/49.jpg\n",
++-      "../Content/People/Xiaochuan/5.jpg\n",
++-      "../Content/People/Xiaochuan/50.jpg\n",
++-      "../Content/People/Xiaochuan/51.jpg\n",
++-      "../Content/People/Xiaochuan/52.jpg\n",
++-      "../Content/People/Xiaochuan/53.jpg\n",
++-      "../Content/People/Xiaochuan/54.jpg\n",
++-      "../Content/People/Xiaochuan/55.jpg\n",
++-      "../Content/People/Xiaochuan/56.jpg\n",
++-      "../Content/People/Xiaochuan/57.jpg\n",
++-      "../Content/People/Xiaochuan/58.jpg\n",
++-      "../Content/People/Xiaochuan/59.jpg\n",
++-      "../Content/People/Xiaochuan/6.jpg\n",
++-      "../Content/People/Xiaochuan/7.jpg\n",
++-      "../Content/People/Xiaochuan/8.jpg\n",
++-      "../Content/People/Xiaochuan/9.jpg\n",
++       "Total number of images: 360\n",
++       "Number of successfully aligned images: 0\n",
++       "\n",
++@@ -630,13 +270,24 @@
++       "Starting to extract features\n",
++       "Total number of images: 340\n",
++       "Runnning forward pass on images\n",
++-      "Processing Patch 0/7\n",
++-      "Processing Patch 1/7\n",
++-      "Processing Patch 2/7\n",
++-      "Processing Patch 3/7\n",
++-      "Processing Patch 4/7\n",
++-      "Processing Patch 5/7\n",
++-      "Processing Patch 6/7\n"
+++      "Processing Patch 0/7\n"
+ +     ]
+-+    }
+-+   ],
+-    "source": [
+-     "%run ../src/align/train_person_recognition_with_dlib.py --input_dir ../Content/People --output_dir ../Content/People_Cropped --image_size 128 --margin 24 --model_dir ../Content/NetworkModel/20170321-222346 --feature_dir ../Content/PeopleFeature --feature_name emb_array "
+-    ]
+-diff --git a/requirements.txt b/requirements.txt
+-index 6a01519..45c534f 100644
+---- a/requirements.txt
+-+++ b/requirements.txt
+-@@ -6,4 +6,4 @@ h5py
+- matplotlib
+- Pillow
+- requests
+--psutil
+-\ No newline at end of file
+-+psutil
+-diff --git a/setup.py b/setup.py
+-deleted file mode 100644
+-index b0f999e..0000000
+---- a/setup.py
+-+++ /dev/null
+-@@ -1,12 +0,0 @@
+--#!/usr/bin/env python
+--
+--from distutils.core import setup
+--
+--setup(name='facenet',
+--      version='0.1',
+--      description='Face Recognition using Tensorflow',
+--      author='David Sandberg',
+--      author_email='david.o.sandberg@gmail.com',
+--      url='https://github.com/davidsandberg/facenet/',
+--      packages=['src','src.align','src.models', 'test'],
+--     )
+-\ No newline at end of file
+++    },
 ++    {
-++     "data": {
-++      "text/plain": [
-++       "'/Users/xiaochuanchen/github/nextAI/notebook'"
-++      ]
-++     },
-++     "execution_count": 5,
-++     "metadata": {},
-++     "output_type": "execute_result"
-++    }
-++   ],
-++   "source": [
-++    "os.getcwd()\n"
-++   ]
-++  },
-++  {
-+    "cell_type": "markdown",
-+    "metadata": {},
-+    "source": [
-+diff --git a/requirements.txt b/requirements.txt
-+index 6a01519..45c534f 100644
-+--- a/requirements.txt
-++++ b/requirements.txt
-+@@ -6,4 +6,4 @@ h5py
-+ matplotlib
-+ Pillow
-+ requests
-+-psutil
-+\ No newline at end of file
-++psutil
-+diff --git a/setup.py b/setup.py
-+deleted file mode 100644
-+index b0f999e..0000000
-+--- a/setup.py
-++++ /dev/null
-+@@ -1,12 +0,0 @@
-+-#!/usr/bin/env python
-+-
-+-from distutils.core import setup
-+-
-+-setup(name='facenet',
-+-      version='0.1',
-+-      description='Face Recognition using Tensorflow',
-+-      author='David Sandberg',
-+-      author_email='david.o.sandberg@gmail.com',
-+-      url='https://github.com/davidsandberg/facenet/',
-+-      packages=['src','src.align','src.models', 'test'],
-+-     )
-+\ No newline at end of file
+++     "ename": "KeyboardInterrupt",
+++     "evalue": "",
+++     "output_type": "error",
+++     "traceback": [
+++      "\u001b[0;31m---------------------------------------------------------------------------\u001b[0m",
+++      "\u001b[0;31mKeyboardInterrupt\u001b[0m                         Traceback (most recent call last)",
+++      "\u001b[0;32m/Users/xiaochuanchen/github/nextAI/src/align/train_person_recognition_with_dlib.py\u001b[0m in \u001b[0;36m<module>\u001b[0;34m()\u001b[0m\n\u001b[1;32m    207\u001b[0m \u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m    208\u001b[0m \u001b[0;32mif\u001b[0m \u001b[0m__name__\u001b[0m \u001b[0;34m==\u001b[0m \u001b[0;34m'__main__'\u001b[0m\u001b[0;34m:\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0;32m--> 209\u001b[0;31m     \u001b[0mmain\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mparse_arguments\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0msys\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0margv\u001b[0m\u001b[0;34m[\u001b[0m\u001b[0;36m1\u001b[0m\u001b[0;34m:\u001b[0m\u001b[0;34m]\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0m",
+++      "\u001b[0;32m/Users/xiaochuanchen/github/nextAI/src/align/train_person_recognition_with_dlib.py\u001b[0m in \u001b[0;36mmain\u001b[0;34m(args)\u001b[0m\n\u001b[1;32m    170\u001b[0m         \u001b[0mimages\u001b[0m \u001b[0;34m=\u001b[0m \u001b[0mfacenet\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mload_data\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mpaths_batch\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mFalse\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mFalse\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mimage_size\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m    171\u001b[0m         \u001b[0mfeed_dict\u001b[0m \u001b[0;34m=\u001b[0m \u001b[0;34m{\u001b[0m \u001b[0mimages_placeholder\u001b[0m\u001b[0;34m:\u001b[0m\u001b[0mimages\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mphase_train_placeholder\u001b[0m\u001b[0;34m:\u001b[0m\u001b[0mFalse\u001b[0m \u001b[0;34m}\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0;32m--> 172\u001b[0;31m         \u001b[0memb_array\u001b[0m\u001b[0;34m[\u001b[0m\u001b[0mstart_index\u001b[0m\u001b[0;34m:\u001b[0m\u001b[0mend_index\u001b[0m\u001b[0;34m,\u001b[0m\u001b[0;34m:\u001b[0m\u001b[0;34m]\u001b[0m \u001b[0;34m=\u001b[0m \u001b[0msess\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mrun\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0membeddings\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mfeed_dict\u001b[0m\u001b[0;34m=\u001b[0m\u001b[0mfeed_dict\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0m\u001b[1;32m    173\u001b[0m \u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m    174\u001b[0m     \u001b[0;32mif\u001b[0m \u001b[0;32mnot\u001b[0m \u001b[0mos\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mpath\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0misdir\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0margs\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mfeature_dir\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m:\u001b[0m  \u001b[0;31m# Create the feature directory if it doesn't exist\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n",
+++      "\u001b[0;32m/Users/xiaochuanchen/anaconda2/lib/python2.7/site-packages/tensorflow/python/client/session.pyc\u001b[0m in \u001b[0;36mrun\u001b[0;34m(self, fetches, feed_dict, options, run_metadata)\u001b[0m\n\u001b[1;32m    765\u001b[0m     \u001b[0;32mtry\u001b[0m\u001b[0;34m:\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m    766\u001b[0m       result = self._run(None, fetches, feed_dict, options_ptr,\n\u001b[0;32m--> 767\u001b[0;31m                          run_metadata_ptr)\n\u001b[0m\u001b[1;32m    768\u001b[0m       \u001b[0;32mif\u001b[0m \u001b[0mrun_metadata\u001b[0m\u001b[0;34m:\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m    769\u001b[0m         \u001b[0mproto_data\u001b[0m \u001b[0;34m=\u001b[0m \u001b[0mtf_session\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mTF_GetBuffer\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mrun_metadata_ptr\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n",
+++      "\u001b[0;32m/Users/xiaochuanchen/anaconda2/lib/python2.7/site-packages/tensorflow/python/client/session.pyc\u001b[0m in \u001b[0;36m_run\u001b[0;34m(self, handle, fetches, feed_dict, options, run_metadata)\u001b[0m\n\u001b[1;32m    963\u001b[0m     \u001b[0;32mif\u001b[0m \u001b[0mfinal_fetches\u001b[0m \u001b[0;32mor\u001b[0m \u001b[0mfinal_targets\u001b[0m\u001b[0;34m:\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m    964\u001b[0m       results = self._do_run(handle, final_targets, final_fetches,\n\u001b[0;32m--> 965\u001b[0;31m                              feed_dict_string, options, run_metadata)\n\u001b[0m\u001b[1;32m    966\u001b[0m     \u001b[0;32melse\u001b[0m\u001b[0;34m:\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m    967\u001b[0m       \u001b[0mresults\u001b[0m \u001b[0;34m=\u001b[0m \u001b[0;34m[\u001b[0m\u001b[0;34m]\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n",
+++      "\u001b[0;32m/Users/xiaochuanchen/anaconda2/lib/python2.7/site-packages/tensorflow/python/client/session.pyc\u001b[0m in \u001b[0;36m_do_run\u001b[0;34m(self, handle, target_list, fetch_list, feed_dict, options, run_metadata)\u001b[0m\n\u001b[1;32m   1013\u001b[0m     \u001b[0;32mif\u001b[0m \u001b[0mhandle\u001b[0m \u001b[0;32mis\u001b[0m \u001b[0mNone\u001b[0m\u001b[0;34m:\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m   1014\u001b[0m       return self._do_call(_run_fn, self._session, feed_dict, fetch_list,\n\u001b[0;32m-> 1015\u001b[0;31m                            target_list, options, run_metadata)\n\u001b[0m\u001b[1;32m   1016\u001b[0m     \u001b[0;32melse\u001b[0m\u001b[0;34m:\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m   1017\u001b[0m       return self._do_call(_prun_fn, self._session, handle, feed_dict,\n",
+++      "\u001b[0;32m/Users/xiaochuanchen/anaconda2/lib/python2.7/site-packages/tensorflow/python/client/session.pyc\u001b[0m in \u001b[0;36m_do_call\u001b[0;34m(self, fn, *args)\u001b[0m\n\u001b[1;32m   1020\u001b[0m   \u001b[0;32mdef\u001b[0m \u001b[0m_do_call\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mself\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mfn\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0;34m*\u001b[0m\u001b[0margs\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m:\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m   1021\u001b[0m     \u001b[0;32mtry\u001b[0m\u001b[0;34m:\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0;32m-> 1022\u001b[0;31m       \u001b[0;32mreturn\u001b[0m \u001b[0mfn\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0;34m*\u001b[0m\u001b[0margs\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0m\u001b[1;32m   1023\u001b[0m     \u001b[0;32mexcept\u001b[0m \u001b[0merrors\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mOpError\u001b[0m \u001b[0;32mas\u001b[0m \u001b[0me\u001b[0m\u001b[0;34m:\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m   1024\u001b[0m       \u001b[0mmessage\u001b[0m \u001b[0;34m=\u001b[0m \u001b[0mcompat\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mas_text\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0me\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mmessage\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n",
+++      "\u001b[0;32m/Users/xiaochuanchen/anaconda2/lib/python2.7/site-packages/tensorflow/python/client/session.pyc\u001b[0m in \u001b[0;36m_run_fn\u001b[0;34m(session, feed_dict, fetch_list, target_list, options, run_metadata)\u001b[0m\n\u001b[1;32m   1002\u001b[0m         return tf_session.TF_Run(session, options,\n\u001b[1;32m   1003\u001b[0m                                  \u001b[0mfeed_dict\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mfetch_list\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mtarget_list\u001b[0m\u001b[0;34m,\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0;32m-> 1004\u001b[0;31m                                  status, run_metadata)\n\u001b[0m\u001b[1;32m   1005\u001b[0m \u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m   1006\u001b[0m     \u001b[0;32mdef\u001b[0m \u001b[0m_prun_fn\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0msession\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mhandle\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mfeed_dict\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mfetch_list\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m:\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n",
+++      "\u001b[0;31mKeyboardInterrupt\u001b[0m: "
++      ]
++     }
++    ],
+ diff --git a/src/align/train_person_recognition_with_dlib.py b/src/align/train_person_recognition_with_dlib.py
+-index b0d9f80..94848c8 100644
++index 95416ce..f68a091 100644
+ --- a/src/align/train_person_recognition_with_dlib.py
+ +++ b/src/align/train_person_recognition_with_dlib.py
+-@@ -164,6 +164,7 @@ def main(args):
+-     nrof_batches = int(math.ceil(1.0*nrof_images / batch_size))
+-     emb_array = np.zeros((nrof_images, embedding_size))
+-     for i in range(nrof_batches):
+-+        print('Processing Patch {}/{}'.format(i,nrof_batches))
+-         start_index = i*batch_size
+-         end_index = min((i+1)*batch_size, nrof_images)
+-         paths_batch = paths[start_index:end_index]
 \ No newline at end of file
-diff --git a/README.md b/README.md
-index 5cf3265..556a5b2 100644
---- a/README.md
-+++ b/README.md
-@@ -1,12 +1,11 @@
- #Install anaconda 
- 
-+Needed Library
-+
-+1. opencv: pip install opencv-python
-+2. dlib: pip install dlib
-+3. pip install imageio
- 
--#Train and save feature 
--python src/align/train_person_recognition_with_dlib.py --input_dir ~/remote/datasets/lfw/lfw_svm_10_raw --output_dir ~/remote/datasets/lfw/lfw_mtcnnpy_128_raw --image_size 128 --margin 24 --random_order --model_dir /home/xca64/remote/models/facenet/lightened/20170321-222346 --feature_dir /home/xca64/remote/feature/lfw_svm_10 --feature_name emb_array
- 
--#Train SVM 
--python util/train_svm.py --npz_file_dir /home/xca64/remote/feature/lfw_svm_10/emb_array.npz --C 4 --svm_model_dir ~/remote/models/svm --gamma 1 
- 
--#Detect and Tracking people
--python src/align/detect_tracking_recognize.py --input_dir /home/xca64/remote/datasets/lfw/test --image_size 128 --margin 24 --model_dir /home/xca64/remote/models/facenet/lightened/20170321-222346 --svm_model_dir ~/remote/models/svm
- 
++@@ -82,7 +82,8 @@ def main(args):
++     bounding_boxes_filename = os.path.join(output_dir, 'bounding_boxes_%05d.txt' % random_key)
++ 
++     ## Loaidng extract feature graph
++-
+++    print('Start to extracting features, it may take a long time')
+++    
++     with open(bounding_boxes_filename, "w") as text_file:
++         nrof_images_total = 0
++         nrof_successfully_aligned = 0
++@@ -98,7 +99,7 @@ def main(args):
++                 nrof_images_total += 1
++                 filename = os.path.splitext(os.path.split(image_path)[1])[0]
++                 output_filename = os.path.join(output_class_dir, filename+'.png')
++-                print(image_path)
+++                # print(image_path)
++                 if not os.path.exists(output_filename):
++                     try:
++                         img = misc.imread(image_path)
++@@ -107,7 +108,7 @@ def main(args):
++                         print(errorMessage)
++                     else:
++                         if img.ndim<2:
++-                            print('Unable to align "%s"' % image_path)
+++                            # print('Unable to align "%s"' % image_path)
++                             text_file.write('%s\n' % (output_filename))
++                             continue
++                         if img.ndim == 2:
++@@ -143,7 +144,7 @@ def main(args):
++                             misc.imsave(output_filename, scaled)
++                             text_file.write('%s %d %d %d %d\n' % (output_filename, bb[0], bb[1], bb[2], bb[3]))
++                         else:
++-                            print('Unable to align "%s"' % image_path)
+++                            # print('Unable to align "%s"' % image_path)
++                             text_file.write('%s\n' % (output_filename))
++                             
++     print('Total number of images: %d' % nrof_images_total)
+\ No newline at end of file
 diff --git a/notebook/NextAI.ipynb b/notebook/NextAI.ipynb
-index 3d45749..2de7184 100644
+index d5e5f49..233a6c9 100644
 --- a/notebook/NextAI.ipynb
 +++ b/notebook/NextAI.ipynb
-@@ -130,7 +130,7 @@
+@@ -199,7 +199,7 @@
    },
    {
     "cell_type": "code",
--   "execution_count": 3,
-+   "execution_count": 13,
+-   "execution_count": 13,
++   "execution_count": 2,
     "metadata": {
-     "collapsed": false
-    },
-@@ -139,7 +139,9 @@
-     "# Solving PYTHONPATH Problem\n",
-     "import sys\n",
-     "import numpy as np\n",
--    "sys.path.insert(0, '/home/xca64/remote/GitHub/facenet/src')\n"
-+    "import os\n",
-+    "current_folder_path, _ = os.path.split(os.getcwd())\n",
-+    "sys.path.insert(0, current_folder_path+'/src')\n"
-    ]
-   },
-   {
-@@ -151,11 +153,410 @@
+     "collapsed": false,
+     "deletable": true,
+@@ -227,7 +227,7 @@
    },
    {
     "cell_type": "code",
--   "execution_count": null,
-+   "execution_count": 14,
+-   "execution_count": 16,
++   "execution_count": 4,
     "metadata": {
-     "collapsed": false
-    },
--   "outputs": [],
-+   "outputs": [
-+    {
-+     "name": "stdout",
-+     "output_type": "stream",
-+     "text": [
-+      "Creating networks and loading parameters\n",
-+      "Model directory: ../Content/NetworkModel/20170321-222346\n",
-+      "Loading network used to extract features\n",
-+      "Metagraph file: model-20170321-222346.meta\n",
-+      "Checkpoint file: model-20170321-222346.ckpt-80000\n",
-+      "../Content/People/Ariel_Sharon/Ariel_Sharon_0001.jpg\n",
-+      "../Content/People/Ariel_Sharon/Ariel_Sharon_0002.jpg\n",
-+      "../Content/People/Ariel_Sharon/Ariel_Sharon_0003.jpg\n",
-+      "../Content/People/Ariel_Sharon/Ariel_Sharon_0004.jpg\n",
-+      "../Content/People/Ariel_Sharon/Ariel_Sharon_0005.jpg\n",
-+      "../Content/People/Ariel_Sharon/Ariel_Sharon_0006.jpg\n",
-+      "../Content/People/Ariel_Sharon/Ariel_Sharon_0007.jpg\n",
-+      "../Content/People/Ariel_Sharon/Ariel_Sharon_0008.jpg\n",
-+      "../Content/People/Ariel_Sharon/Ariel_Sharon_0009.jpg\n",
-+      "../Content/People/Ariel_Sharon/Ariel_Sharon_0010.jpg\n",
-+      "../Content/People/Ariel_Sharon/Ariel_Sharon_0011.jpg\n",
-+      "../Content/People/Ariel_Sharon/Ariel_Sharon_0012.jpg\n",
-+      "../Content/People/Ariel_Sharon/Ariel_Sharon_0013.jpg\n",
-+      "../Content/People/Ariel_Sharon/Ariel_Sharon_0014.jpg\n",
-+      "../Content/People/Ariel_Sharon/Ariel_Sharon_0015.jpg\n",
-+      "../Content/People/Ariel_Sharon/Ariel_Sharon_0016.jpg\n",
-+      "../Content/People/Ariel_Sharon/Ariel_Sharon_0017.jpg\n",
-+      "../Content/People/Ariel_Sharon/Ariel_Sharon_0018.jpg\n",
-+      "../Content/People/Ariel_Sharon/Ariel_Sharon_0019.jpg\n",
-+      "../Content/People/Ariel_Sharon/Ariel_Sharon_0020.jpg\n",
-+      "../Content/People/Bicheng/0.jpg\n",
-+      "../Content/People/Bicheng/1.jpg\n",
-+      "../Content/People/Bicheng/10.jpg\n",
-+      "../Content/People/Bicheng/11.jpg\n",
-+      "../Content/People/Bicheng/12.jpg\n",
-+      "../Content/People/Bicheng/13.jpg\n",
-+      "../Content/People/Bicheng/14.jpg\n",
-+      "../Content/People/Bicheng/15.jpg\n",
-+      "../Content/People/Bicheng/16.jpg\n",
-+      "../Content/People/Bicheng/17.jpg\n",
-+      "../Content/People/Bicheng/18.jpg\n",
-+      "../Content/People/Bicheng/19.jpg\n",
-+      "../Content/People/Bicheng/2.jpg\n",
-+      "../Content/People/Bicheng/20.jpg\n",
-+      "../Content/People/Bicheng/21.jpg\n",
-+      "../Content/People/Bicheng/22.jpg\n",
-+      "../Content/People/Bicheng/23.jpg\n",
-+      "../Content/People/Bicheng/24.jpg\n",
-+      "../Content/People/Bicheng/25.jpg\n",
-+      "../Content/People/Bicheng/26.jpg\n",
-+      "../Content/People/Bicheng/27.jpg\n",
-+      "../Content/People/Bicheng/28.jpg\n",
-+      "../Content/People/Bicheng/29.jpg\n",
-+      "../Content/People/Bicheng/3.jpg\n",
-+      "../Content/People/Bicheng/30.jpg\n",
-+      "../Content/People/Bicheng/31.jpg\n",
-+      "../Content/People/Bicheng/32.jpg\n",
-+      "../Content/People/Bicheng/33.jpg\n",
-+      "../Content/People/Bicheng/34.jpg\n",
-+      "../Content/People/Bicheng/35.jpg\n",
-+      "../Content/People/Bicheng/36.jpg\n",
-+      "../Content/People/Bicheng/37.jpg\n",
-+      "../Content/People/Bicheng/38.jpg\n",
-+      "../Content/People/Bicheng/39.jpg\n",
-+      "../Content/People/Bicheng/4.jpg\n",
-+      "../Content/People/Bicheng/40.jpg\n",
-+      "../Content/People/Bicheng/41.jpg\n",
-+      "../Content/People/Bicheng/42.jpg\n",
-+      "../Content/People/Bicheng/43.jpg\n",
-+      "../Content/People/Bicheng/44.jpg\n",
-+      "Unable to align \"../Content/People/Bicheng/44.jpg\"\n",
-+      "../Content/People/Bicheng/45.jpg\n",
-+      "Unable to align \"../Content/People/Bicheng/45.jpg\"\n",
-+      "../Content/People/Bicheng/46.jpg\n",
-+      "Unable to align \"../Content/People/Bicheng/46.jpg\"\n",
-+      "../Content/People/Bicheng/47.jpg\n",
-+      "Unable to align \"../Content/People/Bicheng/47.jpg\"\n",
-+      "../Content/People/Bicheng/48.jpg\n",
-+      "Unable to align \"../Content/People/Bicheng/48.jpg\"\n",
-+      "../Content/People/Bicheng/49.jpg\n",
-+      "Unable to align \"../Content/People/Bicheng/49.jpg\"\n",
-+      "../Content/People/Bicheng/5.jpg\n",
-+      "../Content/People/Bicheng/50.jpg\n",
-+      "Unable to align \"../Content/People/Bicheng/50.jpg\"\n",
-+      "../Content/People/Bicheng/51.jpg\n",
-+      "Unable to align \"../Content/People/Bicheng/51.jpg\"\n",
-+      "../Content/People/Bicheng/52.jpg\n",
-+      "Unable to align \"../Content/People/Bicheng/52.jpg\"\n",
-+      "../Content/People/Bicheng/53.jpg\n",
-+      "Unable to align \"../Content/People/Bicheng/53.jpg\"\n",
-+      "../Content/People/Bicheng/54.jpg\n",
-+      "Unable to align \"../Content/People/Bicheng/54.jpg\"\n",
-+      "../Content/People/Bicheng/55.jpg\n",
-+      "Unable to align \"../Content/People/Bicheng/55.jpg\"\n",
-+      "../Content/People/Bicheng/56.jpg\n",
-+      "Unable to align \"../Content/People/Bicheng/56.jpg\"\n",
-+      "../Content/People/Bicheng/57.jpg\n",
-+      "../Content/People/Bicheng/58.jpg\n",
-+      "../Content/People/Bicheng/59.jpg\n",
-+      "../Content/People/Bicheng/6.jpg\n",
-+      "../Content/People/Bicheng/7.jpg\n",
-+      "../Content/People/Bicheng/8.jpg\n",
-+      "../Content/People/Bicheng/9.jpg\n",
-+      "../Content/People/Colin_Powell/Colin_Powell_0001.jpg\n",
-+      "../Content/People/Colin_Powell/Colin_Powell_0002.jpg\n",
-+      "../Content/People/Colin_Powell/Colin_Powell_0003.jpg\n",
-+      "../Content/People/Colin_Powell/Colin_Powell_0004.jpg\n",
-+      "../Content/People/Colin_Powell/Colin_Powell_0005.jpg\n",
-+      "../Content/People/Colin_Powell/Colin_Powell_0006.jpg\n",
-+      "../Content/People/Colin_Powell/Colin_Powell_0007.jpg\n",
-+      "../Content/People/Colin_Powell/Colin_Powell_0008.jpg\n",
-+      "../Content/People/Colin_Powell/Colin_Powell_0009.jpg\n",
-+      "../Content/People/Colin_Powell/Colin_Powell_0010.jpg\n",
-+      "../Content/People/Colin_Powell/Colin_Powell_0011.jpg\n",
-+      "../Content/People/Colin_Powell/Colin_Powell_0012.jpg\n",
-+      "../Content/People/Colin_Powell/Colin_Powell_0013.jpg\n",
-+      "../Content/People/Colin_Powell/Colin_Powell_0014.jpg\n",
-+      "../Content/People/Colin_Powell/Colin_Powell_0015.jpg\n",
-+      "../Content/People/Colin_Powell/Colin_Powell_0016.jpg\n",
-+      "../Content/People/Colin_Powell/Colin_Powell_0017.jpg\n",
-+      "../Content/People/Colin_Powell/Colin_Powell_0018.jpg\n",
-+      "../Content/People/Colin_Powell/Colin_Powell_0019.jpg\n",
-+      "../Content/People/Colin_Powell/Colin_Powell_0020.jpg\n",
-+      "../Content/People/Donald_Rumsfeld/Donald_Rumsfeld_0001.jpg\n",
-+      "../Content/People/Donald_Rumsfeld/Donald_Rumsfeld_0002.jpg\n",
-+      "../Content/People/Donald_Rumsfeld/Donald_Rumsfeld_0003.jpg\n",
-+      "../Content/People/Donald_Rumsfeld/Donald_Rumsfeld_0004.jpg\n",
-+      "../Content/People/Donald_Rumsfeld/Donald_Rumsfeld_0005.jpg\n",
-+      "../Content/People/Donald_Rumsfeld/Donald_Rumsfeld_0006.jpg\n",
-+      "../Content/People/Donald_Rumsfeld/Donald_Rumsfeld_0007.jpg\n",
-+      "../Content/People/Donald_Rumsfeld/Donald_Rumsfeld_0008.jpg\n",
-+      "../Content/People/Donald_Rumsfeld/Donald_Rumsfeld_0009.jpg\n",
-+      "../Content/People/Donald_Rumsfeld/Donald_Rumsfeld_0010.jpg\n",
-+      "../Content/People/Donald_Rumsfeld/Donald_Rumsfeld_0011.jpg\n",
-+      "../Content/People/Donald_Rumsfeld/Donald_Rumsfeld_0012.jpg\n",
-+      "../Content/People/Donald_Rumsfeld/Donald_Rumsfeld_0013.jpg\n",
-+      "../Content/People/Donald_Rumsfeld/Donald_Rumsfeld_0014.jpg\n",
-+      "../Content/People/Donald_Rumsfeld/Donald_Rumsfeld_0015.jpg\n",
-+      "../Content/People/Donald_Rumsfeld/Donald_Rumsfeld_0016.jpg\n",
-+      "../Content/People/Donald_Rumsfeld/Donald_Rumsfeld_0017.jpg\n",
-+      "../Content/People/Donald_Rumsfeld/Donald_Rumsfeld_0018.jpg\n",
-+      "../Content/People/Donald_Rumsfeld/Donald_Rumsfeld_0019.jpg\n",
-+      "../Content/People/Donald_Rumsfeld/Donald_Rumsfeld_0020.jpg\n",
-+      "../Content/People/Gerhard_Schroeder/Gerhard_Schroeder_0001.jpg\n",
-+      "../Content/People/Gerhard_Schroeder/Gerhard_Schroeder_0002.jpg\n",
-+      "../Content/People/Gerhard_Schroeder/Gerhard_Schroeder_0003.jpg\n",
-+      "../Content/People/Gerhard_Schroeder/Gerhard_Schroeder_0004.jpg\n",
-+      "../Content/People/Gerhard_Schroeder/Gerhard_Schroeder_0005.jpg\n",
-+      "../Content/People/Gerhard_Schroeder/Gerhard_Schroeder_0006.jpg\n",
-+      "../Content/People/Gerhard_Schroeder/Gerhard_Schroeder_0007.jpg\n",
-+      "../Content/People/Gerhard_Schroeder/Gerhard_Schroeder_0008.jpg\n",
-+      "../Content/People/Gerhard_Schroeder/Gerhard_Schroeder_0009.jpg\n",
-+      "../Content/People/Gerhard_Schroeder/Gerhard_Schroeder_0010.jpg\n",
-+      "../Content/People/Gerhard_Schroeder/Gerhard_Schroeder_0011.jpg\n",
-+      "../Content/People/Gerhard_Schroeder/Gerhard_Schroeder_0012.jpg\n",
-+      "../Content/People/Gerhard_Schroeder/Gerhard_Schroeder_0013.jpg\n",
-+      "../Content/People/Gerhard_Schroeder/Gerhard_Schroeder_0014.jpg\n",
-+      "../Content/People/Gerhard_Schroeder/Gerhard_Schroeder_0015.jpg\n",
-+      "../Content/People/Gerhard_Schroeder/Gerhard_Schroeder_0016.jpg\n",
-+      "../Content/People/Gerhard_Schroeder/Gerhard_Schroeder_0017.jpg\n",
-+      "../Content/People/Gerhard_Schroeder/Gerhard_Schroeder_0018.jpg\n",
-+      "../Content/People/Gerhard_Schroeder/Gerhard_Schroeder_0019.jpg\n",
-+      "../Content/People/Gerhard_Schroeder/Gerhard_Schroeder_0020.jpg\n",
-+      "../Content/People/Hugo_Chavez/Hugo_Chavez_0001.jpg\n",
-+      "../Content/People/Hugo_Chavez/Hugo_Chavez_0002.jpg\n",
-+      "../Content/People/Hugo_Chavez/Hugo_Chavez_0003.jpg\n",
-+      "../Content/People/Hugo_Chavez/Hugo_Chavez_0004.jpg\n",
-+      "../Content/People/Hugo_Chavez/Hugo_Chavez_0005.jpg\n",
-+      "../Content/People/Hugo_Chavez/Hugo_Chavez_0006.jpg\n",
-+      "../Content/People/Hugo_Chavez/Hugo_Chavez_0007.jpg\n",
-+      "../Content/People/Hugo_Chavez/Hugo_Chavez_0008.jpg\n",
-+      "../Content/People/Hugo_Chavez/Hugo_Chavez_0009.jpg\n",
-+      "../Content/People/Hugo_Chavez/Hugo_Chavez_0010.jpg\n",
-+      "../Content/People/Hugo_Chavez/Hugo_Chavez_0011.jpg\n",
-+      "../Content/People/Hugo_Chavez/Hugo_Chavez_0012.jpg\n",
-+      "../Content/People/Hugo_Chavez/Hugo_Chavez_0013.jpg\n",
-+      "../Content/People/Hugo_Chavez/Hugo_Chavez_0014.jpg\n",
-+      "../Content/People/Hugo_Chavez/Hugo_Chavez_0015.jpg\n",
-+      "../Content/People/Hugo_Chavez/Hugo_Chavez_0016.jpg\n",
-+      "../Content/People/Hugo_Chavez/Hugo_Chavez_0017.jpg\n",
-+      "../Content/People/Hugo_Chavez/Hugo_Chavez_0018.jpg\n",
-+      "../Content/People/Hugo_Chavez/Hugo_Chavez_0019.jpg\n",
-+      "../Content/People/Hugo_Chavez/Hugo_Chavez_0020.jpg\n",
-+      "../Content/People/Husha/0.jpg\n",
-+      "../Content/People/Husha/1.jpg\n",
-+      "../Content/People/Husha/10.jpg\n",
-+      "../Content/People/Husha/11.jpg\n",
-+      "../Content/People/Husha/12.jpg\n",
-+      "../Content/People/Husha/13.jpg\n",
-+      "../Content/People/Husha/14.jpg\n",
-+      "../Content/People/Husha/15.jpg\n",
-+      "../Content/People/Husha/16.jpg\n",
-+      "../Content/People/Husha/17.jpg\n",
-+      "../Content/People/Husha/18.jpg\n",
-+      "../Content/People/Husha/19.jpg\n",
-+      "../Content/People/Husha/2.jpg\n",
-+      "../Content/People/Husha/20.jpg\n",
-+      "../Content/People/Husha/21.jpg\n",
-+      "../Content/People/Husha/22.jpg\n",
-+      "Unable to align \"../Content/People/Husha/22.jpg\"\n",
-+      "../Content/People/Husha/23.jpg\n",
-+      "Unable to align \"../Content/People/Husha/23.jpg\"\n",
-+      "../Content/People/Husha/24.jpg\n",
-+      "Unable to align \"../Content/People/Husha/24.jpg\"\n",
-+      "../Content/People/Husha/25.jpg\n",
-+      "Unable to align \"../Content/People/Husha/25.jpg\"\n",
-+      "../Content/People/Husha/26.jpg\n",
-+      "Unable to align \"../Content/People/Husha/26.jpg\"\n",
-+      "../Content/People/Husha/27.jpg\n",
-+      "Unable to align \"../Content/People/Husha/27.jpg\"\n",
-+      "../Content/People/Husha/28.jpg\n",
-+      "Unable to align \"../Content/People/Husha/28.jpg\"\n",
-+      "../Content/People/Husha/29.jpg\n",
-+      "../Content/People/Husha/3.jpg\n",
-+      "../Content/People/Husha/30.jpg\n",
-+      "../Content/People/Husha/31.jpg\n",
-+      "../Content/People/Husha/32.jpg\n",
-+      "../Content/People/Husha/33.jpg\n",
-+      "../Content/People/Husha/34.jpg\n",
-+      "../Content/People/Husha/35.jpg\n",
-+      "../Content/People/Husha/36.jpg\n",
-+      "../Content/People/Husha/37.jpg\n",
-+      "../Content/People/Husha/38.jpg\n",
-+      "../Content/People/Husha/39.jpg\n",
-+      "../Content/People/Husha/4.jpg\n",
-+      "../Content/People/Husha/40.jpg\n",
-+      "../Content/People/Husha/41.jpg\n",
-+      "../Content/People/Husha/42.jpg\n",
-+      "../Content/People/Husha/43.jpg\n",
-+      "../Content/People/Husha/44.jpg\n",
-+      "../Content/People/Husha/45.jpg\n",
-+      "../Content/People/Husha/46.jpg\n",
-+      "../Content/People/Husha/47.jpg\n",
-+      "../Content/People/Husha/48.jpg\n",
-+      "../Content/People/Husha/49.jpg\n",
-+      "../Content/People/Husha/5.jpg\n",
-+      "../Content/People/Husha/50.jpg\n",
-+      "../Content/People/Husha/51.jpg\n",
-+      "../Content/People/Husha/52.jpg\n",
-+      "../Content/People/Husha/53.jpg\n",
-+      "../Content/People/Husha/54.jpg\n",
-+      "../Content/People/Husha/55.jpg\n",
-+      "../Content/People/Husha/56.jpg\n",
-+      "../Content/People/Husha/57.jpg\n",
-+      "../Content/People/Husha/58.jpg\n",
-+      "../Content/People/Husha/59.jpg\n",
-+      "../Content/People/Husha/6.jpg\n",
-+      "../Content/People/Husha/7.jpg\n",
-+      "../Content/People/Husha/8.jpg\n",
-+      "../Content/People/Husha/9.jpg\n",
-+      "../Content/People/Jean_Chretien/Jean_Chretien_0001.jpg\n",
-+      "../Content/People/Jean_Chretien/Jean_Chretien_0002.jpg\n",
-+      "../Content/People/Jean_Chretien/Jean_Chretien_0003.jpg\n",
-+      "../Content/People/Jean_Chretien/Jean_Chretien_0004.jpg\n",
-+      "../Content/People/Jean_Chretien/Jean_Chretien_0005.jpg\n",
-+      "../Content/People/Jean_Chretien/Jean_Chretien_0006.jpg\n",
-+      "../Content/People/Jean_Chretien/Jean_Chretien_0007.jpg\n",
-+      "../Content/People/Jean_Chretien/Jean_Chretien_0008.jpg\n",
-+      "../Content/People/Jean_Chretien/Jean_Chretien_0009.jpg\n",
-+      "../Content/People/Jean_Chretien/Jean_Chretien_0010.jpg\n",
-+      "../Content/People/Jean_Chretien/Jean_Chretien_0011.jpg\n",
-+      "../Content/People/Jean_Chretien/Jean_Chretien_0012.jpg\n",
-+      "../Content/People/Jean_Chretien/Jean_Chretien_0013.jpg\n",
-+      "../Content/People/Jean_Chretien/Jean_Chretien_0014.jpg\n",
-+      "../Content/People/Jean_Chretien/Jean_Chretien_0015.jpg\n",
-+      "../Content/People/Jean_Chretien/Jean_Chretien_0016.jpg\n",
-+      "../Content/People/Jean_Chretien/Jean_Chretien_0017.jpg\n",
-+      "../Content/People/Jean_Chretien/Jean_Chretien_0018.jpg\n",
-+      "../Content/People/Jean_Chretien/Jean_Chretien_0019.jpg\n",
-+      "../Content/People/Jean_Chretien/Jean_Chretien_0020.jpg\n",
-+      "../Content/People/John_Ashcroft/John_Ashcroft_0001.jpg\n",
-+      "../Content/People/John_Ashcroft/John_Ashcroft_0002.jpg\n",
-+      "../Content/People/John_Ashcroft/John_Ashcroft_0003.jpg\n",
-+      "../Content/People/John_Ashcroft/John_Ashcroft_0004.jpg\n",
-+      "../Content/People/John_Ashcroft/John_Ashcroft_0005.jpg\n",
-+      "../Content/People/John_Ashcroft/John_Ashcroft_0006.jpg\n",
-+      "../Content/People/John_Ashcroft/John_Ashcroft_0007.jpg\n",
-+      "../Content/People/John_Ashcroft/John_Ashcroft_0008.jpg\n",
-+      "../Content/People/John_Ashcroft/John_Ashcroft_0009.jpg\n",
-+      "../Content/People/John_Ashcroft/John_Ashcroft_0010.jpg\n",
-+      "../Content/People/John_Ashcroft/John_Ashcroft_0011.jpg\n",
-+      "../Content/People/John_Ashcroft/John_Ashcroft_0012.jpg\n",
-+      "../Content/People/John_Ashcroft/John_Ashcroft_0013.jpg\n",
-+      "../Content/People/John_Ashcroft/John_Ashcroft_0014.jpg\n",
-+      "../Content/People/John_Ashcroft/John_Ashcroft_0015.jpg\n",
-+      "../Content/People/John_Ashcroft/John_Ashcroft_0016.jpg\n",
-+      "../Content/People/John_Ashcroft/John_Ashcroft_0017.jpg\n",
-+      "../Content/People/John_Ashcroft/John_Ashcroft_0018.jpg\n",
-+      "../Content/People/John_Ashcroft/John_Ashcroft_0019.jpg\n",
-+      "../Content/People/John_Ashcroft/John_Ashcroft_0020.jpg\n",
-+      "../Content/People/Junichiro_Koizumi/Junichiro_Koizumi_0001.jpg\n",
-+      "../Content/People/Junichiro_Koizumi/Junichiro_Koizumi_0002.jpg\n",
-+      "../Content/People/Junichiro_Koizumi/Junichiro_Koizumi_0003.jpg\n",
-+      "../Content/People/Junichiro_Koizumi/Junichiro_Koizumi_0004.jpg\n",
-+      "../Content/People/Junichiro_Koizumi/Junichiro_Koizumi_0005.jpg\n",
-+      "../Content/People/Junichiro_Koizumi/Junichiro_Koizumi_0006.jpg\n",
-+      "../Content/People/Junichiro_Koizumi/Junichiro_Koizumi_0007.jpg\n",
-+      "../Content/People/Junichiro_Koizumi/Junichiro_Koizumi_0008.jpg\n",
-+      "../Content/People/Junichiro_Koizumi/Junichiro_Koizumi_0009.jpg\n",
-+      "../Content/People/Junichiro_Koizumi/Junichiro_Koizumi_0010.jpg\n",
-+      "../Content/People/Junichiro_Koizumi/Junichiro_Koizumi_0011.jpg\n",
-+      "../Content/People/Junichiro_Koizumi/Junichiro_Koizumi_0012.jpg\n",
-+      "../Content/People/Junichiro_Koizumi/Junichiro_Koizumi_0013.jpg\n",
-+      "../Content/People/Junichiro_Koizumi/Junichiro_Koizumi_0014.jpg\n",
-+      "../Content/People/Junichiro_Koizumi/Junichiro_Koizumi_0015.jpg\n",
-+      "../Content/People/Junichiro_Koizumi/Junichiro_Koizumi_0016.jpg\n",
-+      "../Content/People/Junichiro_Koizumi/Junichiro_Koizumi_0017.jpg\n",
-+      "../Content/People/Junichiro_Koizumi/Junichiro_Koizumi_0018.jpg\n",
-+      "../Content/People/Junichiro_Koizumi/Junichiro_Koizumi_0019.jpg\n",
-+      "../Content/People/Junichiro_Koizumi/Junichiro_Koizumi_0020.jpg\n",
-+      "../Content/People/Tony_Blair/Tony_Blair_0001.jpg\n",
-+      "../Content/People/Tony_Blair/Tony_Blair_0002.jpg\n",
-+      "../Content/People/Tony_Blair/Tony_Blair_0003.jpg\n",
-+      "../Content/People/Tony_Blair/Tony_Blair_0004.jpg\n",
-+      "../Content/People/Tony_Blair/Tony_Blair_0005.jpg\n",
-+      "../Content/People/Tony_Blair/Tony_Blair_0006.jpg\n",
-+      "../Content/People/Tony_Blair/Tony_Blair_0007.jpg\n",
-+      "../Content/People/Tony_Blair/Tony_Blair_0008.jpg\n",
-+      "../Content/People/Tony_Blair/Tony_Blair_0009.jpg\n",
-+      "../Content/People/Tony_Blair/Tony_Blair_0010.jpg\n",
-+      "../Content/People/Tony_Blair/Tony_Blair_0011.jpg\n",
-+      "../Content/People/Tony_Blair/Tony_Blair_0012.jpg\n",
-+      "../Content/People/Tony_Blair/Tony_Blair_0013.jpg\n",
-+      "../Content/People/Tony_Blair/Tony_Blair_0014.jpg\n",
-+      "../Content/People/Tony_Blair/Tony_Blair_0015.jpg\n",
-+      "../Content/People/Tony_Blair/Tony_Blair_0016.jpg\n",
-+      "../Content/People/Tony_Blair/Tony_Blair_0017.jpg\n",
-+      "../Content/People/Tony_Blair/Tony_Blair_0018.jpg\n",
-+      "../Content/People/Tony_Blair/Tony_Blair_0019.jpg\n",
-+      "../Content/People/Tony_Blair/Tony_Blair_0020.jpg\n",
-+      "../Content/People/Xiaochuan/0.jpg\n",
-+      "../Content/People/Xiaochuan/1.jpg\n",
-+      "../Content/People/Xiaochuan/10.jpg\n",
-+      "../Content/People/Xiaochuan/11.jpg\n",
-+      "../Content/People/Xiaochuan/12.jpg\n",
-+      "../Content/People/Xiaochuan/13.jpg\n",
-+      "../Content/People/Xiaochuan/14.jpg\n",
-+      "../Content/People/Xiaochuan/15.jpg\n",
-+      "../Content/People/Xiaochuan/16.jpg\n",
-+      "../Content/People/Xiaochuan/17.jpg\n",
-+      "../Content/People/Xiaochuan/18.jpg\n",
-+      "../Content/People/Xiaochuan/19.jpg\n",
-+      "../Content/People/Xiaochuan/2.jpg\n",
-+      "../Content/People/Xiaochuan/20.jpg\n",
-+      "../Content/People/Xiaochuan/21.jpg\n",
-+      "../Content/People/Xiaochuan/22.jpg\n",
-+      "../Content/People/Xiaochuan/23.jpg\n",
-+      "../Content/People/Xiaochuan/24.jpg\n",
-+      "../Content/People/Xiaochuan/25.jpg\n",
-+      "../Content/People/Xiaochuan/26.jpg\n",
-+      "../Content/People/Xiaochuan/27.jpg\n",
-+      "../Content/People/Xiaochuan/28.jpg\n",
-+      "../Content/People/Xiaochuan/29.jpg\n",
-+      "../Content/People/Xiaochuan/3.jpg\n",
-+      "../Content/People/Xiaochuan/30.jpg\n",
-+      "../Content/People/Xiaochuan/31.jpg\n",
-+      "../Content/People/Xiaochuan/32.jpg\n",
-+      "../Content/People/Xiaochuan/33.jpg\n",
-+      "../Content/People/Xiaochuan/34.jpg\n",
-+      "../Content/People/Xiaochuan/35.jpg\n",
-+      "../Content/People/Xiaochuan/36.jpg\n",
-+      "../Content/People/Xiaochuan/37.jpg\n",
-+      "../Content/People/Xiaochuan/38.jpg\n",
-+      "../Content/People/Xiaochuan/39.jpg\n",
-+      "../Content/People/Xiaochuan/4.jpg\n",
-+      "../Content/People/Xiaochuan/40.jpg\n",
-+      "../Content/People/Xiaochuan/41.jpg\n",
-+      "../Content/People/Xiaochuan/42.jpg\n",
-+      "../Content/People/Xiaochuan/43.jpg\n",
-+      "../Content/People/Xiaochuan/44.jpg\n",
-+      "../Content/People/Xiaochuan/45.jpg\n",
-+      "../Content/People/Xiaochuan/46.jpg\n",
-+      "../Content/People/Xiaochuan/47.jpg\n",
-+      "../Content/People/Xiaochuan/48.jpg\n",
-+      "../Content/People/Xiaochuan/49.jpg\n",
-+      "../Content/People/Xiaochuan/5.jpg\n",
-+      "../Content/People/Xiaochuan/50.jpg\n",
-+      "../Content/People/Xiaochuan/51.jpg\n",
-+      "../Content/People/Xiaochuan/52.jpg\n",
-+      "../Content/People/Xiaochuan/53.jpg\n",
-+      "../Content/People/Xiaochuan/54.jpg\n",
-+      "../Content/People/Xiaochuan/55.jpg\n",
-+      "../Content/People/Xiaochuan/56.jpg\n",
-+      "../Content/People/Xiaochuan/57.jpg\n",
-+      "../Content/People/Xiaochuan/58.jpg\n",
-+      "../Content/People/Xiaochuan/59.jpg\n",
-+      "../Content/People/Xiaochuan/6.jpg\n",
-+      "../Content/People/Xiaochuan/7.jpg\n",
-+      "../Content/People/Xiaochuan/8.jpg\n",
-+      "../Content/People/Xiaochuan/9.jpg\n",
-+      "Total number of images: 360\n",
-+      "Number of successfully aligned images: 0\n",
-+      "\n",
-+      "\n",
-+      "Starting to extract features\n",
-+      "Total number of images: 340\n",
-+      "Runnning forward pass on images\n"
+     "collapsed": false,
+     "deletable": true,
+@@ -242,401 +242,26 @@
+       "Model directory: ../Content/NetworkModel/20170321-222346\n",
+       "Loading network used to extract features\n",
+       "Metagraph file: model-20170321-222346.meta\n",
+-      "Checkpoint file: model-20170321-222346.ckpt-80000\n",
+-      "../Content/People/Ariel_Sharon/Ariel_Sharon_0001.jpg\n",
+-      "../Content/People/Ariel_Sharon/Ariel_Sharon_0002.jpg\n",
+-      "../Content/People/Ariel_Sharon/Ariel_Sharon_0003.jpg\n",
+-      "../Content/People/Ariel_Sharon/Ariel_Sharon_0004.jpg\n",
+-      "../Content/People/Ariel_Sharon/Ariel_Sharon_0005.jpg\n",
+-      "../Content/People/Ariel_Sharon/Ariel_Sharon_0006.jpg\n",
+-      "../Content/People/Ariel_Sharon/Ariel_Sharon_0007.jpg\n",
+-      "../Content/People/Ariel_Sharon/Ariel_Sharon_0008.jpg\n",
+-      "../Content/People/Ariel_Sharon/Ariel_Sharon_0009.jpg\n",
+-      "../Content/People/Ariel_Sharon/Ariel_Sharon_0010.jpg\n",
+-      "../Content/People/Ariel_Sharon/Ariel_Sharon_0011.jpg\n",
+-      "../Content/People/Ariel_Sharon/Ariel_Sharon_0012.jpg\n",
+-      "../Content/People/Ariel_Sharon/Ariel_Sharon_0013.jpg\n",
+-      "../Content/People/Ariel_Sharon/Ariel_Sharon_0014.jpg\n",
+-      "../Content/People/Ariel_Sharon/Ariel_Sharon_0015.jpg\n",
+-      "../Content/People/Ariel_Sharon/Ariel_Sharon_0016.jpg\n",
+-      "../Content/People/Ariel_Sharon/Ariel_Sharon_0017.jpg\n",
+-      "../Content/People/Ariel_Sharon/Ariel_Sharon_0018.jpg\n",
+-      "../Content/People/Ariel_Sharon/Ariel_Sharon_0019.jpg\n",
+-      "../Content/People/Ariel_Sharon/Ariel_Sharon_0020.jpg\n",
+-      "../Content/People/Bicheng/0.jpg\n",
+-      "../Content/People/Bicheng/1.jpg\n",
+-      "../Content/People/Bicheng/10.jpg\n",
+-      "../Content/People/Bicheng/11.jpg\n",
+-      "../Content/People/Bicheng/12.jpg\n",
+-      "../Content/People/Bicheng/13.jpg\n",
+-      "../Content/People/Bicheng/14.jpg\n",
+-      "../Content/People/Bicheng/15.jpg\n",
+-      "../Content/People/Bicheng/16.jpg\n",
+-      "../Content/People/Bicheng/17.jpg\n",
+-      "../Content/People/Bicheng/18.jpg\n",
+-      "../Content/People/Bicheng/19.jpg\n",
+-      "../Content/People/Bicheng/2.jpg\n",
+-      "../Content/People/Bicheng/20.jpg\n",
+-      "../Content/People/Bicheng/21.jpg\n",
+-      "../Content/People/Bicheng/22.jpg\n",
+-      "../Content/People/Bicheng/23.jpg\n",
+-      "../Content/People/Bicheng/24.jpg\n",
+-      "../Content/People/Bicheng/25.jpg\n",
+-      "../Content/People/Bicheng/26.jpg\n",
+-      "../Content/People/Bicheng/27.jpg\n",
+-      "../Content/People/Bicheng/28.jpg\n",
+-      "../Content/People/Bicheng/29.jpg\n",
+-      "../Content/People/Bicheng/3.jpg\n",
+-      "../Content/People/Bicheng/30.jpg\n",
+-      "../Content/People/Bicheng/31.jpg\n",
+-      "../Content/People/Bicheng/32.jpg\n",
+-      "../Content/People/Bicheng/33.jpg\n",
+-      "../Content/People/Bicheng/34.jpg\n",
+-      "../Content/People/Bicheng/35.jpg\n",
+-      "../Content/People/Bicheng/36.jpg\n",
+-      "../Content/People/Bicheng/37.jpg\n",
+-      "../Content/People/Bicheng/38.jpg\n",
+-      "../Content/People/Bicheng/39.jpg\n",
+-      "../Content/People/Bicheng/4.jpg\n",
+-      "../Content/People/Bicheng/40.jpg\n",
+-      "../Content/People/Bicheng/41.jpg\n",
+-      "../Content/People/Bicheng/42.jpg\n",
+-      "../Content/People/Bicheng/43.jpg\n",
+-      "../Content/People/Bicheng/44.jpg\n",
+-      "Unable to align \"../Content/People/Bicheng/44.jpg\"\n",
+-      "../Content/People/Bicheng/45.jpg\n",
+-      "Unable to align \"../Content/People/Bicheng/45.jpg\"\n",
+-      "../Content/People/Bicheng/46.jpg\n",
+-      "Unable to align \"../Content/People/Bicheng/46.jpg\"\n",
+-      "../Content/People/Bicheng/47.jpg\n",
+-      "Unable to align \"../Content/People/Bicheng/47.jpg\"\n",
+-      "../Content/People/Bicheng/48.jpg\n",
+-      "Unable to align \"../Content/People/Bicheng/48.jpg\"\n",
+-      "../Content/People/Bicheng/49.jpg\n",
+-      "Unable to align \"../Content/People/Bicheng/49.jpg\"\n",
+-      "../Content/People/Bicheng/5.jpg\n",
+-      "../Content/People/Bicheng/50.jpg\n",
+-      "Unable to align \"../Content/People/Bicheng/50.jpg\"\n",
+-      "../Content/People/Bicheng/51.jpg\n",
+-      "Unable to align \"../Content/People/Bicheng/51.jpg\"\n",
+-      "../Content/People/Bicheng/52.jpg\n",
+-      "Unable to align \"../Content/People/Bicheng/52.jpg\"\n",
+-      "../Content/People/Bicheng/53.jpg\n",
+-      "Unable to align \"../Content/People/Bicheng/53.jpg\"\n",
+-      "../Content/People/Bicheng/54.jpg\n",
+-      "Unable to align \"../Content/People/Bicheng/54.jpg\"\n",
+-      "../Content/People/Bicheng/55.jpg\n",
+-      "Unable to align \"../Content/People/Bicheng/55.jpg\"\n",
+-      "../Content/People/Bicheng/56.jpg\n",
+-      "Unable to align \"../Content/People/Bicheng/56.jpg\"\n",
+-      "../Content/People/Bicheng/57.jpg\n",
+-      "../Content/People/Bicheng/58.jpg\n",
+-      "../Content/People/Bicheng/59.jpg\n",
+-      "../Content/People/Bicheng/6.jpg\n",
+-      "../Content/People/Bicheng/7.jpg\n",
+-      "../Content/People/Bicheng/8.jpg\n",
+-      "../Content/People/Bicheng/9.jpg\n",
+-      "../Content/People/Colin_Powell/Colin_Powell_0001.jpg\n",
+-      "../Content/People/Colin_Powell/Colin_Powell_0002.jpg\n",
+-      "../Content/People/Colin_Powell/Colin_Powell_0003.jpg\n",
+-      "../Content/People/Colin_Powell/Colin_Powell_0004.jpg\n",
+-      "../Content/People/Colin_Powell/Colin_Powell_0005.jpg\n",
+-      "../Content/People/Colin_Powell/Colin_Powell_0006.jpg\n",
+-      "../Content/People/Colin_Powell/Colin_Powell_0007.jpg\n",
+-      "../Content/People/Colin_Powell/Colin_Powell_0008.jpg\n",
+-      "../Content/People/Colin_Powell/Colin_Powell_0009.jpg\n",
+-      "../Content/People/Colin_Powell/Colin_Powell_0010.jpg\n",
+-      "../Content/People/Colin_Powell/Colin_Powell_0011.jpg\n",
+-      "../Content/People/Colin_Powell/Colin_Powell_0012.jpg\n",
+-      "../Content/People/Colin_Powell/Colin_Powell_0013.jpg\n",
+-      "../Content/People/Colin_Powell/Colin_Powell_0014.jpg\n",
+-      "../Content/People/Colin_Powell/Colin_Powell_0015.jpg\n",
+-      "../Content/People/Colin_Powell/Colin_Powell_0016.jpg\n",
+-      "../Content/People/Colin_Powell/Colin_Powell_0017.jpg\n",
+-      "../Content/People/Colin_Powell/Colin_Powell_0018.jpg\n",
+-      "../Content/People/Colin_Powell/Colin_Powell_0019.jpg\n",
+-      "../Content/People/Colin_Powell/Colin_Powell_0020.jpg\n",
+-      "../Content/People/Donald_Rumsfeld/Donald_Rumsfeld_0001.jpg\n",
+-      "../Content/People/Donald_Rumsfeld/Donald_Rumsfeld_0002.jpg\n",
+-      "../Content/People/Donald_Rumsfeld/Donald_Rumsfeld_0003.jpg\n",
+-      "../Content/People/Donald_Rumsfeld/Donald_Rumsfeld_0004.jpg\n",
+-      "../Content/People/Donald_Rumsfeld/Donald_Rumsfeld_0005.jpg\n",
+-      "../Content/People/Donald_Rumsfeld/Donald_Rumsfeld_0006.jpg\n",
+-      "../Content/People/Donald_Rumsfeld/Donald_Rumsfeld_0007.jpg\n",
+-      "../Content/People/Donald_Rumsfeld/Donald_Rumsfeld_0008.jpg\n",
+-      "../Content/People/Donald_Rumsfeld/Donald_Rumsfeld_0009.jpg\n",
+-      "../Content/People/Donald_Rumsfeld/Donald_Rumsfeld_0010.jpg\n",
+-      "../Content/People/Donald_Rumsfeld/Donald_Rumsfeld_0011.jpg\n",
+-      "../Content/People/Donald_Rumsfeld/Donald_Rumsfeld_0012.jpg\n",
+-      "../Content/People/Donald_Rumsfeld/Donald_Rumsfeld_0013.jpg\n",
+-      "../Content/People/Donald_Rumsfeld/Donald_Rumsfeld_0014.jpg\n",
+-      "../Content/People/Donald_Rumsfeld/Donald_Rumsfeld_0015.jpg\n",
+-      "../Content/People/Donald_Rumsfeld/Donald_Rumsfeld_0016.jpg\n",
+-      "../Content/People/Donald_Rumsfeld/Donald_Rumsfeld_0017.jpg\n",
+-      "../Content/People/Donald_Rumsfeld/Donald_Rumsfeld_0018.jpg\n",
+-      "../Content/People/Donald_Rumsfeld/Donald_Rumsfeld_0019.jpg\n",
+-      "../Content/People/Donald_Rumsfeld/Donald_Rumsfeld_0020.jpg\n",
+-      "../Content/People/Gerhard_Schroeder/Gerhard_Schroeder_0001.jpg\n",
+-      "../Content/People/Gerhard_Schroeder/Gerhard_Schroeder_0002.jpg\n",
+-      "../Content/People/Gerhard_Schroeder/Gerhard_Schroeder_0003.jpg\n",
+-      "../Content/People/Gerhard_Schroeder/Gerhard_Schroeder_0004.jpg\n",
+-      "../Content/People/Gerhard_Schroeder/Gerhard_Schroeder_0005.jpg\n",
+-      "../Content/People/Gerhard_Schroeder/Gerhard_Schroeder_0006.jpg\n",
+-      "../Content/People/Gerhard_Schroeder/Gerhard_Schroeder_0007.jpg\n",
+-      "../Content/People/Gerhard_Schroeder/Gerhard_Schroeder_0008.jpg\n",
+-      "../Content/People/Gerhard_Schroeder/Gerhard_Schroeder_0009.jpg\n",
+-      "../Content/People/Gerhard_Schroeder/Gerhard_Schroeder_0010.jpg\n",
+-      "../Content/People/Gerhard_Schroeder/Gerhard_Schroeder_0011.jpg\n",
+-      "../Content/People/Gerhard_Schroeder/Gerhard_Schroeder_0012.jpg\n",
+-      "../Content/People/Gerhard_Schroeder/Gerhard_Schroeder_0013.jpg\n",
+-      "../Content/People/Gerhard_Schroeder/Gerhard_Schroeder_0014.jpg\n",
+-      "../Content/People/Gerhard_Schroeder/Gerhard_Schroeder_0015.jpg\n",
+-      "../Content/People/Gerhard_Schroeder/Gerhard_Schroeder_0016.jpg\n",
+-      "../Content/People/Gerhard_Schroeder/Gerhard_Schroeder_0017.jpg\n",
+-      "../Content/People/Gerhard_Schroeder/Gerhard_Schroeder_0018.jpg\n",
+-      "../Content/People/Gerhard_Schroeder/Gerhard_Schroeder_0019.jpg\n",
+-      "../Content/People/Gerhard_Schroeder/Gerhard_Schroeder_0020.jpg\n",
+-      "../Content/People/Hugo_Chavez/Hugo_Chavez_0001.jpg\n",
+-      "../Content/People/Hugo_Chavez/Hugo_Chavez_0002.jpg\n",
+-      "../Content/People/Hugo_Chavez/Hugo_Chavez_0003.jpg\n",
+-      "../Content/People/Hugo_Chavez/Hugo_Chavez_0004.jpg\n",
+-      "../Content/People/Hugo_Chavez/Hugo_Chavez_0005.jpg\n",
+-      "../Content/People/Hugo_Chavez/Hugo_Chavez_0006.jpg\n",
+-      "../Content/People/Hugo_Chavez/Hugo_Chavez_0007.jpg\n",
+-      "../Content/People/Hugo_Chavez/Hugo_Chavez_0008.jpg\n",
+-      "../Content/People/Hugo_Chavez/Hugo_Chavez_0009.jpg\n",
+-      "../Content/People/Hugo_Chavez/Hugo_Chavez_0010.jpg\n",
+-      "../Content/People/Hugo_Chavez/Hugo_Chavez_0011.jpg\n",
+-      "../Content/People/Hugo_Chavez/Hugo_Chavez_0012.jpg\n",
+-      "../Content/People/Hugo_Chavez/Hugo_Chavez_0013.jpg\n",
+-      "../Content/People/Hugo_Chavez/Hugo_Chavez_0014.jpg\n",
+-      "../Content/People/Hugo_Chavez/Hugo_Chavez_0015.jpg\n",
+-      "../Content/People/Hugo_Chavez/Hugo_Chavez_0016.jpg\n",
+-      "../Content/People/Hugo_Chavez/Hugo_Chavez_0017.jpg\n",
+-      "../Content/People/Hugo_Chavez/Hugo_Chavez_0018.jpg\n",
+-      "../Content/People/Hugo_Chavez/Hugo_Chavez_0019.jpg\n",
+-      "../Content/People/Hugo_Chavez/Hugo_Chavez_0020.jpg\n",
+-      "../Content/People/Husha/0.jpg\n",
+-      "../Content/People/Husha/1.jpg\n",
+-      "../Content/People/Husha/10.jpg\n",
+-      "../Content/People/Husha/11.jpg\n",
+-      "../Content/People/Husha/12.jpg\n",
+-      "../Content/People/Husha/13.jpg\n",
+-      "../Content/People/Husha/14.jpg\n",
+-      "../Content/People/Husha/15.jpg\n",
+-      "../Content/People/Husha/16.jpg\n",
+-      "../Content/People/Husha/17.jpg\n",
+-      "../Content/People/Husha/18.jpg\n",
+-      "../Content/People/Husha/19.jpg\n",
+-      "../Content/People/Husha/2.jpg\n",
+-      "../Content/People/Husha/20.jpg\n",
+-      "../Content/People/Husha/21.jpg\n",
+-      "../Content/People/Husha/22.jpg\n",
+-      "Unable to align \"../Content/People/Husha/22.jpg\"\n",
+-      "../Content/People/Husha/23.jpg\n",
+-      "Unable to align \"../Content/People/Husha/23.jpg\"\n",
+-      "../Content/People/Husha/24.jpg\n",
+-      "Unable to align \"../Content/People/Husha/24.jpg\"\n",
+-      "../Content/People/Husha/25.jpg\n",
+-      "Unable to align \"../Content/People/Husha/25.jpg\"\n",
+-      "../Content/People/Husha/26.jpg\n",
+-      "Unable to align \"../Content/People/Husha/26.jpg\"\n",
+-      "../Content/People/Husha/27.jpg\n",
+-      "Unable to align \"../Content/People/Husha/27.jpg\"\n",
+-      "../Content/People/Husha/28.jpg\n",
+-      "Unable to align \"../Content/People/Husha/28.jpg\"\n",
+-      "../Content/People/Husha/29.jpg\n",
+-      "../Content/People/Husha/3.jpg\n",
+-      "../Content/People/Husha/30.jpg\n",
+-      "../Content/People/Husha/31.jpg\n",
+-      "../Content/People/Husha/32.jpg\n",
+-      "../Content/People/Husha/33.jpg\n",
+-      "../Content/People/Husha/34.jpg\n",
+-      "../Content/People/Husha/35.jpg\n",
+-      "../Content/People/Husha/36.jpg\n",
+-      "../Content/People/Husha/37.jpg\n",
+-      "../Content/People/Husha/38.jpg\n",
+-      "../Content/People/Husha/39.jpg\n",
+-      "../Content/People/Husha/4.jpg\n",
+-      "../Content/People/Husha/40.jpg\n",
+-      "../Content/People/Husha/41.jpg\n",
+-      "../Content/People/Husha/42.jpg\n",
+-      "../Content/People/Husha/43.jpg\n",
+-      "../Content/People/Husha/44.jpg\n",
+-      "../Content/People/Husha/45.jpg\n",
+-      "../Content/People/Husha/46.jpg\n",
+-      "../Content/People/Husha/47.jpg\n",
+-      "../Content/People/Husha/48.jpg\n",
+-      "../Content/People/Husha/49.jpg\n",
+-      "../Content/People/Husha/5.jpg\n",
+-      "../Content/People/Husha/50.jpg\n",
+-      "../Content/People/Husha/51.jpg\n",
+-      "../Content/People/Husha/52.jpg\n",
+-      "../Content/People/Husha/53.jpg\n",
+-      "../Content/People/Husha/54.jpg\n",
+-      "../Content/People/Husha/55.jpg\n",
+-      "../Content/People/Husha/56.jpg\n",
+-      "../Content/People/Husha/57.jpg\n",
+-      "../Content/People/Husha/58.jpg\n",
+-      "../Content/People/Husha/59.jpg\n",
+-      "../Content/People/Husha/6.jpg\n",
+-      "../Content/People/Husha/7.jpg\n",
+-      "../Content/People/Husha/8.jpg\n",
+-      "../Content/People/Husha/9.jpg\n",
+-      "../Content/People/Jean_Chretien/Jean_Chretien_0001.jpg\n",
+-      "../Content/People/Jean_Chretien/Jean_Chretien_0002.jpg\n",
+-      "../Content/People/Jean_Chretien/Jean_Chretien_0003.jpg\n",
+-      "../Content/People/Jean_Chretien/Jean_Chretien_0004.jpg\n",
+-      "../Content/People/Jean_Chretien/Jean_Chretien_0005.jpg\n",
+-      "../Content/People/Jean_Chretien/Jean_Chretien_0006.jpg\n",
+-      "../Content/People/Jean_Chretien/Jean_Chretien_0007.jpg\n",
+-      "../Content/People/Jean_Chretien/Jean_Chretien_0008.jpg\n",
+-      "../Content/People/Jean_Chretien/Jean_Chretien_0009.jpg\n",
+-      "../Content/People/Jean_Chretien/Jean_Chretien_0010.jpg\n",
+-      "../Content/People/Jean_Chretien/Jean_Chretien_0011.jpg\n",
+-      "../Content/People/Jean_Chretien/Jean_Chretien_0012.jpg\n",
+-      "../Content/People/Jean_Chretien/Jean_Chretien_0013.jpg\n",
+-      "../Content/People/Jean_Chretien/Jean_Chretien_0014.jpg\n",
+-      "../Content/People/Jean_Chretien/Jean_Chretien_0015.jpg\n",
+-      "../Content/People/Jean_Chretien/Jean_Chretien_0016.jpg\n",
+-      "../Content/People/Jean_Chretien/Jean_Chretien_0017.jpg\n",
+-      "../Content/People/Jean_Chretien/Jean_Chretien_0018.jpg\n",
+-      "../Content/People/Jean_Chretien/Jean_Chretien_0019.jpg\n",
+-      "../Content/People/Jean_Chretien/Jean_Chretien_0020.jpg\n",
+-      "../Content/People/John_Ashcroft/John_Ashcroft_0001.jpg\n",
+-      "../Content/People/John_Ashcroft/John_Ashcroft_0002.jpg\n",
+-      "../Content/People/John_Ashcroft/John_Ashcroft_0003.jpg\n",
+-      "../Content/People/John_Ashcroft/John_Ashcroft_0004.jpg\n",
+-      "../Content/People/John_Ashcroft/John_Ashcroft_0005.jpg\n",
+-      "../Content/People/John_Ashcroft/John_Ashcroft_0006.jpg\n",
+-      "../Content/People/John_Ashcroft/John_Ashcroft_0007.jpg\n",
+-      "../Content/People/John_Ashcroft/John_Ashcroft_0008.jpg\n",
+-      "../Content/People/John_Ashcroft/John_Ashcroft_0009.jpg\n",
+-      "../Content/People/John_Ashcroft/John_Ashcroft_0010.jpg\n",
+-      "../Content/People/John_Ashcroft/John_Ashcroft_0011.jpg\n",
+-      "../Content/People/John_Ashcroft/John_Ashcroft_0012.jpg\n",
+-      "../Content/People/John_Ashcroft/John_Ashcroft_0013.jpg\n",
+-      "../Content/People/John_Ashcroft/John_Ashcroft_0014.jpg\n",
+-      "../Content/People/John_Ashcroft/John_Ashcroft_0015.jpg\n",
+-      "../Content/People/John_Ashcroft/John_Ashcroft_0016.jpg\n",
+-      "../Content/People/John_Ashcroft/John_Ashcroft_0017.jpg\n",
+-      "../Content/People/John_Ashcroft/John_Ashcroft_0018.jpg\n",
+-      "../Content/People/John_Ashcroft/John_Ashcroft_0019.jpg\n",
+-      "../Content/People/John_Ashcroft/John_Ashcroft_0020.jpg\n",
+-      "../Content/People/Junichiro_Koizumi/Junichiro_Koizumi_0001.jpg\n",
+-      "../Content/People/Junichiro_Koizumi/Junichiro_Koizumi_0002.jpg\n",
+-      "../Content/People/Junichiro_Koizumi/Junichiro_Koizumi_0003.jpg\n",
+-      "../Content/People/Junichiro_Koizumi/Junichiro_Koizumi_0004.jpg\n",
+-      "../Content/People/Junichiro_Koizumi/Junichiro_Koizumi_0005.jpg\n",
+-      "../Content/People/Junichiro_Koizumi/Junichiro_Koizumi_0006.jpg\n",
+-      "../Content/People/Junichiro_Koizumi/Junichiro_Koizumi_0007.jpg\n",
+-      "../Content/People/Junichiro_Koizumi/Junichiro_Koizumi_0008.jpg\n",
+-      "../Content/People/Junichiro_Koizumi/Junichiro_Koizumi_0009.jpg\n",
+-      "../Content/People/Junichiro_Koizumi/Junichiro_Koizumi_0010.jpg\n",
+-      "../Content/People/Junichiro_Koizumi/Junichiro_Koizumi_0011.jpg\n",
+-      "../Content/People/Junichiro_Koizumi/Junichiro_Koizumi_0012.jpg\n",
+-      "../Content/People/Junichiro_Koizumi/Junichiro_Koizumi_0013.jpg\n",
+-      "../Content/People/Junichiro_Koizumi/Junichiro_Koizumi_0014.jpg\n",
+-      "../Content/People/Junichiro_Koizumi/Junichiro_Koizumi_0015.jpg\n",
+-      "../Content/People/Junichiro_Koizumi/Junichiro_Koizumi_0016.jpg\n",
+-      "../Content/People/Junichiro_Koizumi/Junichiro_Koizumi_0017.jpg\n",
+-      "../Content/People/Junichiro_Koizumi/Junichiro_Koizumi_0018.jpg\n",
+-      "../Content/People/Junichiro_Koizumi/Junichiro_Koizumi_0019.jpg\n",
+-      "../Content/People/Junichiro_Koizumi/Junichiro_Koizumi_0020.jpg\n",
+-      "../Content/People/Tony_Blair/Tony_Blair_0001.jpg\n",
+-      "../Content/People/Tony_Blair/Tony_Blair_0002.jpg\n",
+-      "../Content/People/Tony_Blair/Tony_Blair_0003.jpg\n",
+-      "../Content/People/Tony_Blair/Tony_Blair_0004.jpg\n",
+-      "../Content/People/Tony_Blair/Tony_Blair_0005.jpg\n",
+-      "../Content/People/Tony_Blair/Tony_Blair_0006.jpg\n",
+-      "../Content/People/Tony_Blair/Tony_Blair_0007.jpg\n",
+-      "../Content/People/Tony_Blair/Tony_Blair_0008.jpg\n",
+-      "../Content/People/Tony_Blair/Tony_Blair_0009.jpg\n",
+-      "../Content/People/Tony_Blair/Tony_Blair_0010.jpg\n",
+-      "../Content/People/Tony_Blair/Tony_Blair_0011.jpg\n",
+-      "../Content/People/Tony_Blair/Tony_Blair_0012.jpg\n",
+-      "../Content/People/Tony_Blair/Tony_Blair_0013.jpg\n",
+-      "../Content/People/Tony_Blair/Tony_Blair_0014.jpg\n",
+-      "../Content/People/Tony_Blair/Tony_Blair_0015.jpg\n",
+-      "../Content/People/Tony_Blair/Tony_Blair_0016.jpg\n",
+-      "../Content/People/Tony_Blair/Tony_Blair_0017.jpg\n",
+-      "../Content/People/Tony_Blair/Tony_Blair_0018.jpg\n",
+-      "../Content/People/Tony_Blair/Tony_Blair_0019.jpg\n",
+-      "../Content/People/Tony_Blair/Tony_Blair_0020.jpg\n",
+-      "../Content/People/Xiaochuan/0.jpg\n",
+-      "../Content/People/Xiaochuan/1.jpg\n",
+-      "../Content/People/Xiaochuan/10.jpg\n",
+-      "../Content/People/Xiaochuan/11.jpg\n",
+-      "../Content/People/Xiaochuan/12.jpg\n",
+-      "../Content/People/Xiaochuan/13.jpg\n",
+-      "../Content/People/Xiaochuan/14.jpg\n",
+-      "../Content/People/Xiaochuan/15.jpg\n",
+-      "../Content/People/Xiaochuan/16.jpg\n",
+-      "../Content/People/Xiaochuan/17.jpg\n",
+-      "../Content/People/Xiaochuan/18.jpg\n",
+-      "../Content/People/Xiaochuan/19.jpg\n",
+-      "../Content/People/Xiaochuan/2.jpg\n",
+-      "../Content/People/Xiaochuan/20.jpg\n",
+-      "../Content/People/Xiaochuan/21.jpg\n",
+-      "../Content/People/Xiaochuan/22.jpg\n",
+-      "../Content/People/Xiaochuan/23.jpg\n",
+-      "../Content/People/Xiaochuan/24.jpg\n",
+-      "../Content/People/Xiaochuan/25.jpg\n",
+-      "../Content/People/Xiaochuan/26.jpg\n",
+-      "../Content/People/Xiaochuan/27.jpg\n",
+-      "../Content/People/Xiaochuan/28.jpg\n",
+-      "../Content/People/Xiaochuan/29.jpg\n",
+-      "../Content/People/Xiaochuan/3.jpg\n",
+-      "../Content/People/Xiaochuan/30.jpg\n",
+-      "../Content/People/Xiaochuan/31.jpg\n",
+-      "../Content/People/Xiaochuan/32.jpg\n",
+-      "../Content/People/Xiaochuan/33.jpg\n",
+-      "../Content/People/Xiaochuan/34.jpg\n",
+-      "../Content/People/Xiaochuan/35.jpg\n",
+-      "../Content/People/Xiaochuan/36.jpg\n",
+-      "../Content/People/Xiaochuan/37.jpg\n",
+-      "../Content/People/Xiaochuan/38.jpg\n",
+-      "../Content/People/Xiaochuan/39.jpg\n",
+-      "../Content/People/Xiaochuan/4.jpg\n",
+-      "../Content/People/Xiaochuan/40.jpg\n",
+-      "../Content/People/Xiaochuan/41.jpg\n",
+-      "../Content/People/Xiaochuan/42.jpg\n",
+-      "../Content/People/Xiaochuan/43.jpg\n",
+-      "../Content/People/Xiaochuan/44.jpg\n",
+-      "../Content/People/Xiaochuan/45.jpg\n",
+-      "../Content/People/Xiaochuan/46.jpg\n",
+-      "../Content/People/Xiaochuan/47.jpg\n",
+-      "../Content/People/Xiaochuan/48.jpg\n",
+-      "../Content/People/Xiaochuan/49.jpg\n",
+-      "../Content/People/Xiaochuan/5.jpg\n",
+-      "../Content/People/Xiaochuan/50.jpg\n",
+-      "../Content/People/Xiaochuan/51.jpg\n",
+-      "../Content/People/Xiaochuan/52.jpg\n",
+-      "../Content/People/Xiaochuan/53.jpg\n",
+-      "../Content/People/Xiaochuan/54.jpg\n",
+-      "../Content/People/Xiaochuan/55.jpg\n",
+-      "../Content/People/Xiaochuan/56.jpg\n",
+-      "../Content/People/Xiaochuan/57.jpg\n",
+-      "../Content/People/Xiaochuan/58.jpg\n",
+-      "../Content/People/Xiaochuan/59.jpg\n",
+-      "../Content/People/Xiaochuan/6.jpg\n",
+-      "../Content/People/Xiaochuan/7.jpg\n",
+-      "../Content/People/Xiaochuan/8.jpg\n",
+-      "../Content/People/Xiaochuan/9.jpg\n",
+-      "Total number of images: 360\n",
+-      "Number of successfully aligned images: 0\n",
+-      "\n",
+-      "\n",
+-      "Starting to extract features\n",
+-      "Total number of images: 340\n",
+-      "Runnning forward pass on images\n",
+-      "Processing Patch 0/7\n",
+-      "Processing Patch 1/7\n",
+-      "Processing Patch 2/7\n",
+-      "Processing Patch 3/7\n",
+-      "Processing Patch 4/7\n",
+-      "Processing Patch 5/7\n",
+-      "Processing Patch 6/7\n"
++      "Checkpoint file: model-20170321-222346.ckpt-80000\n"
 +     ]
-+    }
-+   ],
-    "source": [
-     "%run ../src/align/train_person_recognition_with_dlib.py --input_dir ../Content/People --output_dir ../Content/People_Cropped --image_size 128 --margin 24 --model_dir ../Content/NetworkModel/20170321-222346 --feature_dir ../Content/PeopleFeature --feature_name emb_array "
-    ]
-diff --git a/requirements.txt b/requirements.txt
-index 6a01519..45c534f 100644
---- a/requirements.txt
-+++ b/requirements.txt
-@@ -6,4 +6,4 @@ h5py
- matplotlib
- Pillow
- requests
--psutil
-\ No newline at end of file
-+psutil
-diff --git a/setup.py b/setup.py
-deleted file mode 100644
-index b0f999e..0000000
---- a/setup.py
-+++ /dev/null
-@@ -1,12 +0,0 @@
--#!/usr/bin/env python
--
--from distutils.core import setup
--
--setup(name='facenet',
--      version='0.1',
--      description='Face Recognition using Tensorflow',
--      author='David Sandberg',
--      author_email='david.o.sandberg@gmail.com',
--      url='https://github.com/davidsandberg/facenet/',
--      packages=['src','src.align','src.models', 'test'],
--     )
-\ No newline at end of file
++    },
++    {
++     "ename": "KeyboardInterrupt",
++     "evalue": "",
++     "output_type": "error",
++     "traceback": [
++      "\u001b[0;31m---------------------------------------------------------------------------\u001b[0m",
++      "\u001b[0;31mKeyboardInterrupt\u001b[0m                         Traceback (most recent call last)",
++      "\u001b[0;32m/Users/xiaochuanchen/github/nextAI/src/align/train_person_recognition_with_dlib.py\u001b[0m in \u001b[0;36m<module>\u001b[0;34m()\u001b[0m\n\u001b[1;32m    208\u001b[0m \u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m    209\u001b[0m \u001b[0;32mif\u001b[0m \u001b[0m__name__\u001b[0m \u001b[0;34m==\u001b[0m \u001b[0;34m'__main__'\u001b[0m\u001b[0;34m:\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0;32m--> 210\u001b[0;31m     \u001b[0mmain\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mparse_arguments\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0msys\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0margv\u001b[0m\u001b[0;34m[\u001b[0m\u001b[0;36m1\u001b[0m\u001b[0;34m:\u001b[0m\u001b[0;34m]\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0m",
++      "\u001b[0;32m/Users/xiaochuanchen/github/nextAI/src/align/train_person_recognition_with_dlib.py\u001b[0m in \u001b[0;36mmain\u001b[0;34m(args)\u001b[0m\n\u001b[1;32m     67\u001b[0m             \u001b[0;32mprint\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0;34m'Metagraph file: %s'\u001b[0m \u001b[0;34m%\u001b[0m \u001b[0mmeta_file\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m     68\u001b[0m             \u001b[0;32mprint\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0;34m'Checkpoint file: %s'\u001b[0m \u001b[0;34m%\u001b[0m \u001b[0mckpt_file\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0;32m---> 69\u001b[0;31m             \u001b[0mfacenet\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mload_model\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0margs\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mmodel_dir\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mmeta_file\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mckpt_file\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0m\u001b[1;32m     70\u001b[0m             \u001b[0;31m# Get input and output tensors\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m     71\u001b[0m             \u001b[0mimages_placeholder\u001b[0m \u001b[0;34m=\u001b[0m \u001b[0mtf\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mget_default_graph\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mget_tensor_by_name\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0;34m\"input:0\"\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n",
++      "\u001b[0;32m/Users/xiaochuanchen/github/nextAI/src/facenet.py\u001b[0m in \u001b[0;36mload_model\u001b[0;34m(model_dir, meta_file, ckpt_file)\u001b[0m\n\u001b[1;32m    393\u001b[0m \u001b[0;32mdef\u001b[0m \u001b[0mload_model\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mmodel_dir\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mmeta_file\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mckpt_file\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m:\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m    394\u001b[0m     \u001b[0mmodel_dir_exp\u001b[0m \u001b[0;34m=\u001b[0m \u001b[0mos\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mpath\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mexpanduser\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mmodel_dir\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0;32m--> 395\u001b[0;31m     \u001b[0msaver\u001b[0m \u001b[0;34m=\u001b[0m \u001b[0mtf\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mtrain\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mimport_meta_graph\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mos\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mpath\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mjoin\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mmodel_dir_exp\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mmeta_file\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0m\u001b[1;32m    396\u001b[0m     \u001b[0msaver\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mrestore\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mtf\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mget_default_session\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mos\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mpath\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mjoin\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mmodel_dir_exp\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mckpt_file\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m    397\u001b[0m \u001b[0;34m\u001b[0m\u001b[0m\n",
++      "\u001b[0;32m/Users/xiaochuanchen/anaconda2/lib/python2.7/site-packages/tensorflow/python/training/saver.pyc\u001b[0m in \u001b[0;36mimport_meta_graph\u001b[0;34m(meta_graph_or_file, clear_devices, import_scope, **kwargs)\u001b[0m\n\u001b[1;32m   1564\u001b[0m                                       \u001b[0mclear_devices\u001b[0m\u001b[0;34m=\u001b[0m\u001b[0mclear_devices\u001b[0m\u001b[0;34m,\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m   1565\u001b[0m                                       \u001b[0mimport_scope\u001b[0m\u001b[0;34m=\u001b[0m\u001b[0mimport_scope\u001b[0m\u001b[0;34m,\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0;32m-> 1566\u001b[0;31m                                       **kwargs)\n\u001b[0m\u001b[1;32m   1567\u001b[0m   \u001b[0;32mif\u001b[0m \u001b[0mmeta_graph_def\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mHasField\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0;34m\"saver_def\"\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m:\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m   1568\u001b[0m     \u001b[0;32mreturn\u001b[0m \u001b[0mSaver\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0msaver_def\u001b[0m\u001b[0;34m=\u001b[0m\u001b[0mmeta_graph_def\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0msaver_def\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mname\u001b[0m\u001b[0;34m=\u001b[0m\u001b[0mimport_scope\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n",
++      "\u001b[0;32m/Users/xiaochuanchen/anaconda2/lib/python2.7/site-packages/tensorflow/python/framework/meta_graph.pyc\u001b[0m in \u001b[0;36mimport_scoped_meta_graph\u001b[0;34m(meta_graph_or_file, clear_devices, graph, import_scope, input_map, unbound_inputs_col_name)\u001b[0m\n\u001b[1;32m    496\u001b[0m     importer.import_graph_def(\n\u001b[1;32m    497\u001b[0m         \u001b[0minput_graph_def\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mname\u001b[0m\u001b[0;34m=\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mimport_scope\u001b[0m \u001b[0;32mor\u001b[0m \u001b[0;34m\"\"\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0minput_map\u001b[0m\u001b[0;34m=\u001b[0m\u001b[0minput_map\u001b[0m\u001b[0;34m,\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0;32m--> 498\u001b[0;31m         producer_op_list=producer_op_list)\n\u001b[0m\u001b[1;32m    499\u001b[0m \u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m    500\u001b[0m     \u001b[0;31m# Restores all the other collections.\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n",
++      "\u001b[0;32m/Users/xiaochuanchen/anaconda2/lib/python2.7/site-packages/tensorflow/python/framework/importer.pyc\u001b[0m in \u001b[0;36mimport_graph_def\u001b[0;34m(graph_def, input_map, return_elements, name, op_dict, producer_op_list)\u001b[0m\n\u001b[1;32m    286\u001b[0m           \u001b[0mnode\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mop\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0;34m[\u001b[0m\u001b[0;34m]\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0moutput_types\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mname\u001b[0m\u001b[0;34m=\u001b[0m\u001b[0mnode\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mname\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mattrs\u001b[0m\u001b[0;34m=\u001b[0m\u001b[0mnode\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mattr\u001b[0m\u001b[0;34m,\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m    287\u001b[0m           \u001b[0mcompute_shapes\u001b[0m\u001b[0;34m=\u001b[0m\u001b[0mFalse\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mcompute_device\u001b[0m\u001b[0;34m=\u001b[0m\u001b[0mFalse\u001b[0m\u001b[0;34m,\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0;32m--> 288\u001b[0;31m           op_def=op_def)\n\u001b[0m\u001b[1;32m    289\u001b[0m \u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m    290\u001b[0m     \u001b[0;31m# 2. Add inputs to the operations.\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n",
++      "\u001b[0;32m/Users/xiaochuanchen/anaconda2/lib/python2.7/site-packages/tensorflow/python/framework/ops.pyc\u001b[0m in \u001b[0;36mcreate_op\u001b[0;34m(self, op_type, inputs, dtypes, input_types, name, attrs, op_def, compute_shapes, compute_device)\u001b[0m\n\u001b[1;32m   2325\u001b[0m     ret = Operation(node_def, self, inputs=inputs, output_types=dtypes,\n\u001b[1;32m   2326\u001b[0m                     \u001b[0mcontrol_inputs\u001b[0m\u001b[0;34m=\u001b[0m\u001b[0mcontrol_inputs\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0minput_types\u001b[0m\u001b[0;34m=\u001b[0m\u001b[0minput_types\u001b[0m\u001b[0;34m,\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0;32m-> 2327\u001b[0;31m                     original_op=self._default_original_op, op_def=op_def)\n\u001b[0m\u001b[1;32m   2328\u001b[0m     \u001b[0;32mif\u001b[0m \u001b[0mcompute_shapes\u001b[0m\u001b[0;34m:\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m   2329\u001b[0m       \u001b[0mset_shapes_for_outputs\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mret\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n",
++      "\u001b[0;32m/Users/xiaochuanchen/anaconda2/lib/python2.7/site-packages/tensorflow/python/framework/ops.pyc\u001b[0m in \u001b[0;36m__init__\u001b[0;34m(self, node_def, g, inputs, output_types, control_inputs, input_types, original_op, op_def)\u001b[0m\n\u001b[1;32m   1224\u001b[0m     \u001b[0mself\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0m_original_op\u001b[0m \u001b[0;34m=\u001b[0m \u001b[0moriginal_op\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m   1225\u001b[0m     \u001b[0mself\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0m_op_def\u001b[0m \u001b[0;34m=\u001b[0m \u001b[0mop_def\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0;32m-> 1226\u001b[0;31m     \u001b[0mself\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0m_traceback\u001b[0m \u001b[0;34m=\u001b[0m \u001b[0m_extract_stack\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0m\u001b[1;32m   1227\u001b[0m     \u001b[0;31m# Add this op to the current control flow context:\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m   1228\u001b[0m     \u001b[0mself\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0m_control_flow_context\u001b[0m \u001b[0;34m=\u001b[0m \u001b[0mg\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0m_get_control_flow_context\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n",
++      "\u001b[0;32m/Users/xiaochuanchen/anaconda2/lib/python2.7/site-packages/tensorflow/python/framework/ops.pyc\u001b[0m in \u001b[0;36m_extract_stack\u001b[0;34m()\u001b[0m\n\u001b[1;32m    119\u001b[0m     \u001b[0mname\u001b[0m \u001b[0;34m=\u001b[0m \u001b[0mco\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mco_name\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m    120\u001b[0m     \u001b[0mframe_globals\u001b[0m \u001b[0;34m=\u001b[0m \u001b[0mf\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mf_globals\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0;32m--> 121\u001b[0;31m     \u001b[0mret\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mappend\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mfilename\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mlineno\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mname\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mframe_globals\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0m\u001b[1;32m    122\u001b[0m     \u001b[0mf\u001b[0m \u001b[0;34m=\u001b[0m \u001b[0mf\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mf_back\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m    123\u001b[0m   \u001b[0mret\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mreverse\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n",
++      "\u001b[0;31mKeyboardInterrupt\u001b[0m: "
+      ]
+     }
+    ],
 diff --git a/src/align/train_person_recognition_with_dlib.py b/src/align/train_person_recognition_with_dlib.py
-index b0d9f80..94848c8 100644
+index 95416ce..aab9ec4 100644
 --- a/src/align/train_person_recognition_with_dlib.py
 +++ b/src/align/train_person_recognition_with_dlib.py
-@@ -164,6 +164,7 @@ def main(args):
-     nrof_batches = int(math.ceil(1.0*nrof_images / batch_size))
-     emb_array = np.zeros((nrof_images, embedding_size))
-     for i in range(nrof_batches):
-+        print('Processing Patch {}/{}'.format(i,nrof_batches))
-         start_index = i*batch_size
-         end_index = min((i+1)*batch_size, nrof_images)
-         paths_batch = paths[start_index:end_index]
+@@ -82,6 +82,8 @@ def main(args):
+     bounding_boxes_filename = os.path.join(output_dir, 'bounding_boxes_%05d.txt' % random_key)
+ 
+     ## Loaidng extract feature graph
++    print('Start to extracting features, it usually take a long time.')
++    print('But in this repo, the images have all been cropped into the People_Cropped folder')
+ 
+     with open(bounding_boxes_filename, "w") as text_file:
+         nrof_images_total = 0
+@@ -98,7 +100,7 @@ def main(args):
+                 nrof_images_total += 1
+                 filename = os.path.splitext(os.path.split(image_path)[1])[0]
+                 output_filename = os.path.join(output_class_dir, filename+'.png')
+-                print(image_path)
++                # print(image_path)
+                 if not os.path.exists(output_filename):
+                     try:
+                         img = misc.imread(image_path)
+@@ -107,7 +109,7 @@ def main(args):
+                         print(errorMessage)
+                     else:
+                         if img.ndim<2:
+-                            print('Unable to align "%s"' % image_path)
++                            # print('Unable to align "%s"' % image_path)
+                             text_file.write('%s\n' % (output_filename))
+                             continue
+                         if img.ndim == 2:
+@@ -143,7 +145,7 @@ def main(args):
+                             misc.imsave(output_filename, scaled)
+                             text_file.write('%s %d %d %d %d\n' % (output_filename, bb[0], bb[1], bb[2], bb[3]))
+                         else:
+-                            print('Unable to align "%s"' % image_path)
++                            # print('Unable to align "%s"' % image_path)
+                             text_file.write('%s\n' % (output_filename))
+                             
+     print('Total number of images: %d' % nrof_images_total)

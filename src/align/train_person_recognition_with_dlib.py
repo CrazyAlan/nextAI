@@ -82,6 +82,8 @@ def main(args):
     bounding_boxes_filename = os.path.join(output_dir, 'bounding_boxes_%05d.txt' % random_key)
 
     ## Loaidng extract feature graph
+    print('Start to extracting features, it usually take a long time.')
+    print('But in this repo, the images have all been cropped into the People_Cropped folder')
 
     with open(bounding_boxes_filename, "w") as text_file:
         nrof_images_total = 0
@@ -98,7 +100,7 @@ def main(args):
                 nrof_images_total += 1
                 filename = os.path.splitext(os.path.split(image_path)[1])[0]
                 output_filename = os.path.join(output_class_dir, filename+'.png')
-                print(image_path)
+                # print(image_path)
                 if not os.path.exists(output_filename):
                     try:
                         img = misc.imread(image_path)
@@ -107,7 +109,7 @@ def main(args):
                         print(errorMessage)
                     else:
                         if img.ndim<2:
-                            print('Unable to align "%s"' % image_path)
+                            # print('Unable to align "%s"' % image_path)
                             text_file.write('%s\n' % (output_filename))
                             continue
                         if img.ndim == 2:
@@ -143,7 +145,7 @@ def main(args):
                             misc.imsave(output_filename, scaled)
                             text_file.write('%s %d %d %d %d\n' % (output_filename, bb[0], bb[1], bb[2], bb[3]))
                         else:
-                            print('Unable to align "%s"' % image_path)
+                            # print('Unable to align "%s"' % image_path)
                             text_file.write('%s\n' % (output_filename))
                             
     print('Total number of images: %d' % nrof_images_total)
