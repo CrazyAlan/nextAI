@@ -1,6 +1,8 @@
 MIT License
 
-Copyright (c) 2016 David Sandberg
+Copyright (c) 2017 InspiRED Robotics
+
+The project was based on David Sandberg's implementation of facenet
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
